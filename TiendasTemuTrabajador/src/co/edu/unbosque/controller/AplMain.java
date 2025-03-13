@@ -13,6 +13,7 @@ public class AplMain {
 		//Prueba de edición
 		// Si se actualizo perfectop
 		//Veamos si se soluciono
+		//Parece que si se soluciono no se ni como 
 		Controller controller = new Controller();
 		controller.run();
 	}
