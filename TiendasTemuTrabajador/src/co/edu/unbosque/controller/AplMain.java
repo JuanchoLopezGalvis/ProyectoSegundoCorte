@@ -14,6 +14,7 @@ public class AplMain {
 		// Si se actualizo perfectop
 		//Veamos si se soluciono
 		//Parece que si se soluciono no se ni como 
+		//Ultimo intento y a dormir 
 		Controller controller = new Controller();
 		controller.run();
 	}
