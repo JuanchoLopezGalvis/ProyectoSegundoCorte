@@ -72,6 +72,10 @@ public class PanelLogIn extends JPanel{
 	private Image imagenFondo;
 
 
+	/**
+	 * Este metodo se encargara de inicializar los componentes de la clase
+	 * {@link PanelLogIn}
+	 */
 	public PanelLogIn() {
 
 		setBackground(Color.black);
@@ -119,7 +123,8 @@ public class PanelLogIn extends JPanel{
 		add(saludo);
 		add(datoContraseña);
 		add(datoUsuario);
-		//Clasecompletada
+		//Clase  completada 
+		//Excelente
 
 
 
