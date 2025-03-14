@@ -3,18 +3,19 @@ package co.edu.unbosque.view;
 import javax.swing.JFrame;
 
 /**
- * {@link VentanaLogIn} contendra el {@link PanelLogIn} donde se hace el proceso de inicio
- * de sesión.
+ * {@link VentanaLogIn} contendra el {@link PanelLogIn} donde se hace el proceso
+ * de inicio de sesión.
  */
 
-public class VentanaLogIn extends JFrame{
-	
+public class VentanaLogIn extends JFrame {
+
 	private PanelLogIn pli;
+	private PanelPrueb pb;
 
 	/**
-	 * Este es el contructor de la clase {@link VentanaLogIn}, 
-	 * la cual tiene un tamaño de 1250*650 pixeles, y su ubicación es relativa a nada
-	 * por lo que aparecera en el centro de cualquier monitor.
+	 * Este es el contructor de la clase {@link VentanaLogIn}, la cual tiene un
+	 * tamaño de 1250*650 pixeles, y su ubicación es relativa a nada por lo que
+	 * aparecera en el centro de cualquier monitor.
 	 */
 
 	public VentanaLogIn() {
@@ -26,12 +27,11 @@ public class VentanaLogIn extends JFrame{
 		setTitle("Tiendas Temu trabajadores");
 		setLayout(null);
 		pli = new PanelLogIn();
-		
+		pb = new PanelPrueb();
+
 		add(pli);
-
-
+//		add(pb);
 
 	}
-
 
 }
