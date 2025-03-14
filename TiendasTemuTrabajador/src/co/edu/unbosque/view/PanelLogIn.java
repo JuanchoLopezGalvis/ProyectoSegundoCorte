@@ -119,6 +119,7 @@ public class PanelLogIn extends JPanel{
 		add(saludo);
 		add(datoContraseña);
 		add(datoUsuario);
+		//Clasecompletada
 
 
 
