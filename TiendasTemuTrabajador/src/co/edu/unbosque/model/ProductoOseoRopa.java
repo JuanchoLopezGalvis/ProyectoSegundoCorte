@@ -1,6 +1,6 @@
 package co.edu.unbosque.model;
 
 
-public class ProductoOseoRopa e{
+public class ProductoOseoRopa {
 
 }
