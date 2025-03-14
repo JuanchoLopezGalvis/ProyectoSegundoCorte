@@ -5,12 +5,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -18,78 +20,77 @@ import javax.swing.border.EmptyBorder;
  * proceso de inicio  de sesión y registro de nuevos usuarios. 
  */
 public class PanelLogIn extends JPanel{
-	
+
 	/**
-	 * El btnIngresar permitira dos cosas:
-	 * 1. Que el usuario "trabajador" ingrese al aplicativo y disponga de
-	 * sus funcionalidades.
-	 * 2. Cerrar la {@link VentanaLogIn}.
+	 * Este boton sera el encargado de enviar los datos del usuario
+	 * Y viene de la clase {@link BotonRedondeado}
 	 */
-	private JButton btnIngresar;
-	
+	private BotonRedondeado btnIngresar;
 	/**
-	 * El btnRegistrarse permitira dos cosas:
-	 * 1. Que el usuario sea registrado y almacenado en la persistencia.
-	 * 2. Cerrar la {@link VentanaLogIn}.
+	 * Este boton sera el encargado de enviar los datos del usuario
+	 * Y viene de la clase {@link BotonRedondeado}
 	 */
-	private JButton btnRegistrarse;
-	
+	private BotonRedondeado btnRegistrarse;
+
+
 	/**
 	 * Esta etiqueta sera un saludo de bienvenida
 	 */
 	private JLabel saludo;
-	
+
 	/**
 	 * Esta etiqueta le indicara al usuario que dabera hacer en la ventana.
 	 */
-	
+
 	private JLabel etiqueta0;
-	
+
 	/**
 	 * Esta etiqueta indicara cual es el campo del usuario.
 	 */
-	
+
 	private JLabel etiqueta1;
-	
+
 	/**
 	 * Esta etiqueta indicara cual es el campo de la contraseña.
 	 */
-	
+
 	private JLabel etiqueta2;
-	
+
 	/**
 	 * Este sera el campo donde el trabajador pondra su usuario
 	 */
-	private JTextField datoUsuario;
-	
+	private TextFieldRedondeado datoUsuario;
+
 	/**
 	 * Este sera el campo donde el trabajador pondra su contraseña
 	 */
 	private JPasswordField datoContraseña;
-	
+
 	/**
 	 * Esta es la imagen del logo de TEMU
 	 */
 	private Image imagenFondo;
-	
-	/**
-	 * Constructor vacio del {@link PanelLogIn} donde le damos todas 
-	 * las caracteristicas.
-	 */
+
+
 	public PanelLogIn() {
-		
-		setBackground(Color.decode("#f67704"));
+
+		setBackground(Color.black);
+		//		setBackground(Color.decode("#f67704"));
 		setSize(1250, 650);
 		setBorder(new EmptyBorder(10, 30, 30, 80));
 		setLayout(null); 
-		btnIngresar = new JButton("Ingresar");
-		btnRegistrarse = new JButton("Registrarse");
+		btnIngresar = new BotonRedondeado("Ingresar", 20, Color.white, Color.decode("#f67704"), Color.black);
+		btnRegistrarse = new BotonRedondeado("Registrarse", 20, Color.white, Color.decode("#f67704"), Color.black);
 		saludo = new JLabel("¡Bienvenid@!");
 		etiqueta0 = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ingrese su usuario y contaseña<br>Si no tiene cuenta registrese por favor</html>");
 		etiqueta1 = new JLabel("Trabajador:");
 		etiqueta2 = new JLabel("Contraseña:");
-		datoUsuario = new JTextField();
+		datoUsuario = new TextFieldRedondeado(20, Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
+		datoUsuario.setBackground(Color.DARK_GRAY);
+		datoUsuario.setForeground(Color.white);
 		datoContraseña = new JPasswordField();
+		datoContraseña.setBackground(Color.DARK_GRAY);
+		datoContraseña.setForeground(Color.white);
 		imagenFondo = new ImageIcon(getClass().getResource("/Recursos/TEMU.png")).getImage();
 		saludo.setBounds(870, 120, 300, 25);
 		etiqueta0.setBounds(765, 140, 380, 100);
@@ -108,8 +109,8 @@ public class PanelLogIn extends JPanel{
 		etiqueta0.setForeground(Color.white);
 		etiqueta1.setForeground(Color.white);
 		etiqueta2.setForeground(Color.white);
-		
-		
+
+
 		add(btnIngresar);
 		add(btnRegistrarse);
 		add(etiqueta0);
@@ -118,11 +119,11 @@ public class PanelLogIn extends JPanel{
 		add(saludo);
 		add(datoContraseña);
 		add(datoUsuario);
-		
-		
-		
+
+
+
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);  
