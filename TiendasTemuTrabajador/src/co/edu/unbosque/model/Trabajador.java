@@ -6,11 +6,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Usuario {
+public class Trabajador {
 	 private String nombre;
 	    private String contraseña;
 
-	    public Usuario(String nombre, String contraseña) {
+	    public Trabajador(String nombre, String contraseña) {
 	        this.nombre = nombre;
 	        this.contraseña = contraseña;
 	    }

@@ -86,7 +86,7 @@ public class PanelLogIn extends JPanel{
 		btnRegistrarse = new JButton("Registrarse");
 		saludo = new JLabel("¡Bienvenid@!");
 		etiqueta0 = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ingrese su usuario y contaseña<br>Si no tiene cuenta registrese por favor</html>");
-		etiqueta1 = new JLabel("Usuario:");
+		etiqueta1 = new JLabel("Trabajador:");
 		etiqueta2 = new JLabel("Contraseña:");
 		datoUsuario = new JTextField();
 		datoContraseña = new JPasswordField();
