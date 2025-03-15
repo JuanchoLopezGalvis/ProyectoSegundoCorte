@@ -6,6 +6,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * La clase Trabajador es una clase que representa a los trabajadores de la empresa.
+ * Esta clase contiene los atributos comunes de los trabajadores.
+ *
+ */
 public class Trabajador {
 	 private String nombre;
 	    private String contraseña;

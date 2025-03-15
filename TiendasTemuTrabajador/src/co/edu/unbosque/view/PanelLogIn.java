@@ -130,6 +130,10 @@ public class PanelLogIn extends JPanel{
 
 	}
 
+	/**
+	 * Este metodo se encargara de pintar la imagen de fondo
+	 * en el panel.
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);  
@@ -139,6 +143,70 @@ public class PanelLogIn extends JPanel{
 		} else {
 			System.out.println("Imagen no cargada correctamente.");
 		}
+	}
+
+	/**
+	 * Este metodo se encargara de retornar el boton de ingresar
+	 * @return btnIngresar
+	 */
+	public BotonRedondeado getBtnIngresar() {
+		return btnIngresar;
+	}
+
+	/**
+	 * Este metodo se encargara de modificar el boton de ingresar
+	 * @param btnIngresar
+	 */
+	public void setBtnIngresar(BotonRedondeado btnIngresar) {
+		this.btnIngresar = btnIngresar;
+	}
+
+	/**
+	 * Este metodo se encargara de retornar el boton de registrarse
+	 * @return btnRegistrarse
+	 */
+	public BotonRedondeado getBtnRegistrarse() {
+		return btnRegistrarse;
+	}
+
+	/**
+	 * Este metodo se encargara de modificar el boton de registrarse
+	 * @param btnRegistrarse
+	 */
+	public void setBtnRegistrarse(BotonRedondeado btnRegistrarse) {
+		this.btnRegistrarse = btnRegistrarse;
+	}
+
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de saludo
+	 * @return saludo
+	 */
+	public TextFieldRedondeado getDatoUsuario() {
+		return datoUsuario;
+	}
+
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de saludo
+	 * @param saludo
+	 */
+	public void setDatoUsuario(TextFieldRedondeado datoUsuario) {
+		this.datoUsuario = datoUsuario;
+	}
+
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de saludo
+	 * @return saludo
+	 */
+	public JPasswordField getDatoContraseña() {
+		return datoContraseña;
+	}
+
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de saludo
+	 * @param saludo
+	 */
+	public void setDatoContraseña(JPasswordField datoContraseña) {
+		this.datoContraseña = datoContraseña;
 	}
 
 

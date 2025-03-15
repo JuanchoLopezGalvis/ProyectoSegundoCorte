@@ -3,6 +3,10 @@ package co.edu.unbosque.model;
 import java.awt.Image;
 import java.io.Serializable;
 
+/**
+ * La clase ProductoHogarCocina es una clase hija de la clase ProductoHogar
+ * y representa los productos de hogar que se utilizan en la cocina.
+ */
 public class ProductoHogarCocina extends ProductoHogar implements Serializable{
 	
 	/**

@@ -3,6 +3,10 @@ package co.edu.unbosque.model;
 import java.awt.Image;
 import java.io.Serializable;
 
+/**
+ * La clase ProductoOcio es una clase hija de la clase Producto
+ * y representa los productos de ocio.
+ */
 public class ProductoOcio extends Producto implements Serializable{
 	
 	/**

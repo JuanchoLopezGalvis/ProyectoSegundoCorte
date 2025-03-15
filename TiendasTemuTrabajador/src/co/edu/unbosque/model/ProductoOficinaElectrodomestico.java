@@ -3,6 +3,10 @@ package co.edu.unbosque.model;
 import java.awt.Image;
 import java.io.Serializable;
 
+/**
+ * La clase ProductoOficinaElectrodomestico es una clase hija de la clase ProductoOficina
+ * y representa los productos de oficina que son electrodomesticos.
+ */
 public class ProductoOficinaElectrodomestico extends ProductoOficina implements Serializable{
 	
 	/**

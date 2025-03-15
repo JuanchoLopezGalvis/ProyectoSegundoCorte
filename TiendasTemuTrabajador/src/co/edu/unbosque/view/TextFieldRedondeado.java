@@ -9,6 +9,10 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JTextField;
 
+/**
+ * La clase {@link TextFieldRedondeado} se encarga de crear un campo de texto con los bordes redondeados.
+ */
+
 public class TextFieldRedondeado extends JTextField{
 
 	/**

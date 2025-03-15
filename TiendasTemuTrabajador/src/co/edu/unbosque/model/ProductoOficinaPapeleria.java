@@ -3,6 +3,10 @@ package co.edu.unbosque.model;
 import java.awt.Image;
 import java.io.Serializable;
 
+/**
+ * La clase ProductoOficinaPapeleria es una clase hija de la clase ProductoOficina
+ * y representa los productos de oficina de papeleria.
+ */
 public class ProductoOficinaPapeleria extends ProductoOficina implements Serializable{
 	
 	/**

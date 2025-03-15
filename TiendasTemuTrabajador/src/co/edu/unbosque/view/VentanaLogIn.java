@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 
 public class VentanaLogIn extends JFrame {
 
+	/**
+	 * Instancia de la clase {@link PanelLogIn}
+	 */
 	private PanelLogIn pli;
 	private PanelPrueb pb;
 	
@@ -37,5 +40,22 @@ public class VentanaLogIn extends JFrame {
 	
 
 	}
+
+
+	/**
+	 * @return the pli
+	 */
+	public PanelLogIn getPli() {
+		return pli;
+	}
+
+
+	/**
+	 * @param pli the pli to set
+	 */
+	public void setPli(PanelLogIn pli) {
+		this.pli = pli;
+	}
+	
 
 }
