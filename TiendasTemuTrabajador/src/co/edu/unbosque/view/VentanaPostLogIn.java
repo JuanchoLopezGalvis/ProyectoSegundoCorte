@@ -29,52 +29,50 @@ public class VentanaPostLogIn extends JFrame{
 	/**
 	 * agregarPhb es la opcion de agregar un producto de hogar baño
 	 * listarPhb es la opcion de listar un producto de hogar baño
-	 * buscarPhb es la opcion de buscar un producto de hogar baño
 	 * eliminarPhb es la opcion de eliminar un producto de hogar baño
 	 * actualizarPhb es la opcion de actualizar un producto de hogar baño
 	 */
-	private JMenuItem agregarPhb, listarPhb, buscarPhb, eliminarPhb, actualizarPhb;
+	private JMenuItem agregarPhb, listarPhb, eliminarPhb, actualizarPhb;
 	/**
 	 * agregarPhc es la opcion de agregar un producto de hogar cocina
 	 * listarPhc es la opcion de listar un producto de hogar cocina
-	 * buscarPhc es la opcion de buscar un producto de hogar cocina
 	 * eliminarPhc es la opcion de eliminar un producto de hogar cocina
 	 * actualizarPhc es la opcion de actualizar un producto de hogar cocina
 	 */
-	private JMenuItem agregarPhc, listarPhc, buscarPhc, eliminarPhc, actualizarPhc;
+	private JMenuItem agregarPhc, listarPhc, eliminarPhc, actualizarPhc;
 	/**
 	 * agregarPoj es la opcion de agregar un producto de ocio juguete
 	 * listarPoj es la opcion de listar un producto de ocio juguete
-	 * buscarPoj es la opcion de buscar un producto de ocio juguete
 	 * eliminarPoj es la opcion de eliminar un producto de ocio juguete
 	 * actualizarPoj es la opcion de actualizar un producto de ocio
 	 */
-	private JMenuItem agregarPoj, listarPoj, buscarPoj, eliminarPoj, actualizarPoj;
+	private JMenuItem agregarPoj, listarPoj, eliminarPoj, actualizarPoj;
 	/**
 	 * agregarPor es la opcion de agregar un producto de ocio ropa
 	 * listarPor es la opcion de listar un producto de ocio ropa
-	 * buscarPor es la opcion de buscar un producto de ocio ropa
 	 * eliminarPor es la opcion de eliminar un producto de ocio ropa
 	 * actualizarPor es la opcion de actualizar un producto de ocio ropa
 	 */
-	private JMenuItem agregarPor, listarPor, buscarPor, eliminarPor, actualizarPor;
+	private JMenuItem agregarPor, listarPor, eliminarPor, actualizarPor;
 	/**
 	 * agregarPoe es la opcion de agregar un producto de oficina electrodomestico
 	 * listarPoe es la opcion de listar un producto de oficina electrodomestico
-	 * buscarPoe es la opcion de buscar un producto de oficina electrodomestico
 	 * eliminarPoe es la opcion de eliminar un producto de oficina electrodomestico
 	 * actualizarPoe es la opcion de actualizar un producto de oficina electrodomestico
 	 */
-	private JMenuItem agregarPoe, listarPoe, buscarPoe, eliminarPoe, actualizarPoe;
+	private JMenuItem agregarPoe, listarPoe, eliminarPoe, actualizarPoe;
 	/**
 	 * agregarPop es la opcion de agregar un producto de oficina papeleria
 	 * listarPop es la opcion de listar un producto de oficina papeleria
-	 * buscarPop es la opcion de buscar un producto de oficina papeleria
 	 * eliminarPop es la opcion de eliminar un producto de oficina papeleria
 	 * actualizarPop es la opcion de actualizar un producto de oficina papeleria
 	 */
-	private JMenuItem agregarPop, listarPop, buscarPop, eliminarPop, actualizarPop;
+	private JMenuItem agregarPop, listarPop, eliminarPop, actualizarPop;
 
+	/**
+	 * panelCardLayout es el panel que contendra los paneles de las operaciones de CRUD
+	 */
+	private PanelCardLayout panelCardLayout;
 
 	/**
 	 * Constructor de la clase {@link VentanaPostLogIn} que inicializa los atributos de la clase
@@ -88,6 +86,7 @@ public class VentanaPostLogIn extends JFrame{
 		setResizable(false);
 		setLayout(new BorderLayout());
 
+		panelCardLayout = new PanelCardLayout();
 		barraMenu = new JMenuBar();
 
 		pructoHogarBanio = new JMenu("Producto Hogar Baño");
@@ -99,73 +98,61 @@ public class VentanaPostLogIn extends JFrame{
 
 		agregarPhb = new JMenuItem("Agregar");
 		listarPhb = new JMenuItem("Listar");
-		buscarPhb = new JMenuItem("Buscar");
 		eliminarPhb = new JMenuItem("Eliminar");
 		actualizarPhb = new JMenuItem("Actualizar");
 
 		agregarPhc = new JMenuItem("Agregar");
 		listarPhc = new JMenuItem("Listar");
-		buscarPhc = new JMenuItem("Buscar");
 		eliminarPhc = new JMenuItem("Eliminar");
 		actualizarPhc = new JMenuItem("Actualizar");
 
 		agregarPoj = new JMenuItem("Agregar");
 		listarPoj = new JMenuItem("Listar");
-		buscarPoj = new JMenuItem("Buscar");
 		eliminarPoj = new JMenuItem("Eliminar");
 		actualizarPoj = new JMenuItem("Actualizar");
 
 		agregarPor = new JMenuItem("Agregar");
 		listarPor = new JMenuItem("Listar");
-		buscarPor = new JMenuItem("Buscar");
 		eliminarPor = new JMenuItem("Eliminar");
 		actualizarPor = new JMenuItem("Actualizar");
 
 		agregarPoe = new JMenuItem("Agregar");
 		listarPoe = new JMenuItem("Listar");
-		buscarPoe = new JMenuItem("Buscar");
 		eliminarPoe = new JMenuItem("Eliminar");
 		actualizarPoe = new JMenuItem("Actualizar");
 
 		agregarPop = new JMenuItem("Agregar");
 		listarPop = new JMenuItem("Listar");
-		buscarPop = new JMenuItem("Buscar");
 		eliminarPop = new JMenuItem("Eliminar");
 		actualizarPop = new JMenuItem("Actualizar");
 
 		pructoHogarBanio.add(agregarPhb);
 		pructoHogarBanio.add(listarPhb);
-		pructoHogarBanio.add(buscarPhb);
 		pructoHogarBanio.add(eliminarPhb);
 		pructoHogarBanio.add(actualizarPhb);
 
 		productoHogarCocina.add(agregarPhc);
 		productoHogarCocina.add(listarPhc);
-		productoHogarCocina.add(buscarPhc);
 		productoHogarCocina.add(eliminarPhc);
 		productoHogarCocina.add(actualizarPhc);
 
 		productoOcioJuguete.add(agregarPoj);
 		productoOcioJuguete.add(listarPoj);
-		productoOcioJuguete.add(buscarPoj);
 		productoOcioJuguete.add(eliminarPoj);
 		productoOcioJuguete.add(actualizarPoj);
 
 		productoOcioRopa.add(agregarPor);
 		productoOcioRopa.add(listarPor);
-		productoOcioRopa.add(buscarPor);
 		productoOcioRopa.add(eliminarPor);
 		productoOcioRopa.add(actualizarPor);
 
 		productoOficinaElectrodomestico.add(agregarPoe);
 		productoOficinaElectrodomestico.add(listarPoe);
-		productoOficinaElectrodomestico.add(buscarPoe);
 		productoOficinaElectrodomestico.add(eliminarPoe);
 		productoOficinaElectrodomestico.add(actualizarPoe);
 
 		productoOficianPapeleria.add(agregarPop);
 		productoOficianPapeleria.add(listarPop);
-		productoOficianPapeleria.add(buscarPop);
 		productoOficianPapeleria.add(eliminarPop);
 		productoOficianPapeleria.add(actualizarPop);
 
@@ -177,10 +164,29 @@ public class VentanaPostLogIn extends JFrame{
 		barraMenu.add(productoOficianPapeleria);
 
 		setJMenuBar(barraMenu);
+		
 
 
 
 
+	}
+
+
+	/**
+	 * Este metodo retorna el valor del atributo panelCardLayout
+	 * @return panelCardLayout
+	 */
+	public PanelCardLayout getPanelCardLayout() {
+		return panelCardLayout;
+	}
+
+
+	/**
+	 * Este metodo modifica el valor del atributo panelCardLayout
+	 * @param panelCardLayout
+	 */
+	public void setPanelCardLayout(PanelCardLayout panelCardLayout) {
+		this.panelCardLayout = panelCardLayout;
 	}
 
 
@@ -203,61 +209,43 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo agregarPhb
+	 * @return agregarPhb
 	 */
 	public JMenuItem getAgregarPhb() {
 		return agregarPhb;
 	}
 
-	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
 
+  
+	/**
+	 * Este metodo modifica el valor del atributo agregarPhb
+	 * @param agregarPhb
+	 */
 	public void setAgregarPhb(JMenuItem agregarPhb) {
 		this.agregarPhb = agregarPhb;
 	}
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo listarPhb
+	 * @return listarPhb
 	 */
-
 	public JMenuItem getListarPhb() {
 		return listarPhb;
 	}
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo listarPhb
+	 * @param listarPhb
 	 */
 	public void setListarPhb(JMenuItem listarPhb) {
 		this.listarPhb = listarPhb;
 	}
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
-	 */
-
-	public JMenuItem getBuscarPhb() {
-		return buscarPhb;
-	}
-
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
-	public void setBuscarPhb(JMenuItem buscarPhb) {
-		this.buscarPhb = buscarPhb;
-	}
-
-
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo eliminarPhb
+	 * @return eliminarPhb
 	 */
 	public JMenuItem getEliminarPhb() {
 		return eliminarPhb;
@@ -265,8 +253,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo eliminarPhb
+	 * @param eliminarPhb
 	 */
 	public void setEliminarPhb(JMenuItem eliminarPhb) {
 		this.eliminarPhb = eliminarPhb;
@@ -274,8 +262,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo actualizarPhb
+	 * @return actualizarPhb
 	 */
 	public JMenuItem getActualizarPhb() {
 		return actualizarPhb;
@@ -283,8 +271,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo actualizarPhb
+	 * @param actualizarPhb
 	 */
 	public void setActualizarPhb(JMenuItem actualizarPhb) {
 		this.actualizarPhb = actualizarPhb;
@@ -292,8 +280,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo agregarPhc
+	 * @return agregarPhc
 	 */
 	public JMenuItem getAgregarPhc() {
 		return agregarPhc;
@@ -301,8 +289,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo agregarPhc
+	 * @param agregarPhc
 	 */
 	public void setAgregarPhc(JMenuItem agregarPhc) {
 		this.agregarPhc = agregarPhc;
@@ -310,8 +298,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo listarPhc
+	 * @return listarPhc
 	 */
 	public JMenuItem getListarPhc() {
 		return listarPhc;
@@ -319,35 +307,18 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo listarPhc
+	 * @param listarPhc
 	 */
 	public void setListarPhc(JMenuItem listarPhc) {
 		this.listarPhc = listarPhc;
 	}
 
 
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
-	 */
-	public JMenuItem getBuscarPhc() {
-		return buscarPhc;
-	}
-
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
-	public void setBuscarPhc(JMenuItem buscarPhc) {
-		this.buscarPhc = buscarPhc;
-	}
-
-
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo eliminarPhc
+	 * @return eliminarPhc
 	 */
 	public JMenuItem getEliminarPhc() {
 		return eliminarPhc;
@@ -355,8 +326,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo eliminarPhc
+	 * @param eliminarPhc
 	 */
 	public void setEliminarPhc(JMenuItem eliminarPhc) {
 		this.eliminarPhc = eliminarPhc;
@@ -364,8 +335,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo actualizarPhc
+	 * @return actualizarPhc
 	 */
 	public JMenuItem getActualizarPhc() {
 		return actualizarPhc;
@@ -373,8 +344,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo actualizarPhc
+	 * @param actualizarPhc
 	 */
 	public void setActualizarPhc(JMenuItem actualizarPhc) {
 		this.actualizarPhc = actualizarPhc;
@@ -382,8 +353,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo agregarPoj
+	 * @return agregarPoj
 	 */
 	public JMenuItem getAgregarPoj() {
 		return agregarPoj;
@@ -391,8 +362,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo agregarPoj
+	 * @param agregarPoj
 	 */
 	public void setAgregarPoj(JMenuItem agregarPoj) {
 		this.agregarPoj = agregarPoj;
@@ -400,8 +371,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo listarPoj
+	 * @return listarPoj
 	 */
 	public JMenuItem getListarPoj() {
 		return listarPoj;
@@ -409,8 +380,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo listarPoj
+	 * @param listarPoj
 	 */
 	public void setListarPoj(JMenuItem listarPoj) {
 		this.listarPoj = listarPoj;
@@ -418,26 +389,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
-	 */
-	public JMenuItem getBuscarPoj() {
-		return buscarPoj;
-	}
-
-
-	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
-	public void setBuscarPoj(JMenuItem buscarPoj) {
-		this.buscarPoj = buscarPoj;
-	}
-
-
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo eliminarPoj
+	 * @return eliminarPoj
 	 */
 	public JMenuItem getEliminarPoj() {
 		return eliminarPoj;
@@ -445,8 +398,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo eliminarPoj
+	 * @param eliminarPoj
 	 */
 	public void setEliminarPoj(JMenuItem eliminarPoj) {
 		this.eliminarPoj = eliminarPoj;
@@ -454,8 +407,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo actualizarPoj
+	 * @return actualizarPoj
 	 */
 	public JMenuItem getActualizarPoj() {
 		return actualizarPoj;
@@ -463,8 +416,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo actualizarPoj
+	 * @param actualizarPoj
 	 */
 	public void setActualizarPoj(JMenuItem actualizarPoj) {
 		this.actualizarPoj = actualizarPoj;
@@ -472,8 +425,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo agregarPor
+	 * @return agregarPor
 	 */
 	public JMenuItem getAgregarPor() {
 		return agregarPor;
@@ -481,8 +434,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo agregarPor
+	 * @param agregarPor
 	 */
 	public void setAgregarPor(JMenuItem agregarPor) {
 		this.agregarPor = agregarPor;
@@ -490,8 +443,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo listarPor
+	 * @return listarPor
 	 */
 	public JMenuItem getListarPor() {
 		return listarPor;
@@ -499,8 +452,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo listarPor
+	 * @param listarPor
 	 */
 	public void setListarPor(JMenuItem listarPor) {
 		this.listarPor = listarPor;
@@ -508,26 +461,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
-	 */
-	public JMenuItem getBuscarPor() {
-		return buscarPor;
-	}
-
-
-	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
-	public void setBuscarPor(JMenuItem buscarPor) {
-		this.buscarPor = buscarPor;
-	}
-
-
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo eliminarPor
+	 * @return eliminarPor
 	 */
 	public JMenuItem getEliminarPor() {
 		return eliminarPor;
@@ -535,8 +470,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo eliminarPor
+	 * @param eliminarPor
 	 */
 	public void setEliminarPor(JMenuItem eliminarPor) {
 		this.eliminarPor = eliminarPor;
@@ -544,8 +479,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo actualizarPor
+	 * @return actualizarPor
 	 */
 	public JMenuItem getActualizarPor() {
 		return actualizarPor;
@@ -553,8 +488,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo actualizarPor
+	 * @param actualizarPor
 	 */
 	public void setActualizarPor(JMenuItem actualizarPor) {
 		this.actualizarPor = actualizarPor;
@@ -562,8 +497,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo agregarPoe
+	 * @return agregarPoe
 	 */
 	public JMenuItem getAgregarPoe() {
 		return agregarPoe;
@@ -571,8 +506,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo agregarPoe
+	 * @param agregarPoe
 	 */
 	public void setAgregarPoe(JMenuItem agregarPoe) {
 		this.agregarPoe = agregarPoe;
@@ -580,8 +515,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo listarPoe
+	 * @return listarPoe
 	 */
 	public JMenuItem getListarPoe() {
 		return listarPoe;
@@ -589,35 +524,20 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo listarPoe
+	 * @param listarPoe
 	 */
 	public void setListarPoe(JMenuItem listarPoe) {
 		this.listarPoe = listarPoe;
 	}
 
 
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
-	 */
-	public JMenuItem getBuscarPoe() {
-		return buscarPoe;
-	}
+
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
-	public void setBuscarPoe(JMenuItem buscarPoe) {
-		this.buscarPoe = buscarPoe;
-	}
-
-
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo eliminarPoe
+	 * @return eliminarPoe
 	 */
 	public JMenuItem getEliminarPoe() {
 		return eliminarPoe;
@@ -625,8 +545,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo eliminarPoe
+	 * @param eliminarPoe
 	 */
 	public void setEliminarPoe(JMenuItem eliminarPoe) {
 		this.eliminarPoe = eliminarPoe;
@@ -634,8 +554,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo actualizarPoe
+	 * @return actualizarPoe
 	 */
 	public JMenuItem getActualizarPoe() {
 		return actualizarPoe;
@@ -643,8 +563,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo actualizarPoe
+	 * @param actualizarPoe
 	 */
 	public void setActualizarPoe(JMenuItem actualizarPoe) {
 		this.actualizarPoe = actualizarPoe;
@@ -652,8 +572,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo agregarPop
+	 * @return agregarPop
 	 */
 	public JMenuItem getAgregarPop() {
 		return agregarPop;
@@ -661,8 +581,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo agregarPop
+	 * @param agregarPop
 	 */
 	public void setAgregarPop(JMenuItem agregarPop) {
 		this.agregarPop = agregarPop;
@@ -670,8 +590,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo listarPop
+	 * @return listarPop
 	 */
 	public JMenuItem getListarPop() {
 		return listarPop;
@@ -679,8 +599,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo listarPop
+	 * @param listarPop
 	 */
 	public void setListarPop(JMenuItem listarPop) {
 		this.listarPop = listarPop;
@@ -688,26 +608,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
-	 */
-	public JMenuItem getBuscarPop() {
-		return buscarPop;
-	}
-
-
-	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
-	 */
-	public void setBuscarPop(JMenuItem buscarPop) {
-		this.buscarPop = buscarPop;
-	}
-
-
-	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo eliminarPop
+	 * @return eliminarPop
 	 */
 	public JMenuItem getEliminarPop() {
 		return eliminarPop;
@@ -715,8 +617,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo eliminarPop
+	 * @param eliminarPop
 	 */
 	public void setEliminarPop(JMenuItem eliminarPop) {
 		this.eliminarPop = eliminarPop;
@@ -724,8 +626,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo retorna el valor del atributo pructoHogarBanio
-	 * @return pructoHogarBanio
+	 * Este metodo retorna el valor del atributo actualizarPop
+	 * @return actualizarPop
 	 */
 	public JMenuItem getActualizarPop() {
 		return actualizarPop;
@@ -733,8 +635,8 @@ public class VentanaPostLogIn extends JFrame{
 
 
 	/**
-	 * Este metodo modifica el valor del atributo pructoHogarBanio
-	 * @param pructoHogarBanio
+	 * Este metodo modifica el valor del atributo actualizarPop
+	 * @param actualizarPop
 	 */
 	public void setActualizarPop(JMenuItem actualizarPop) {
 		this.actualizarPop = actualizarPop;
