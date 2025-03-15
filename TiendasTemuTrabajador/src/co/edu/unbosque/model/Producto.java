@@ -1,15 +1,17 @@
 package co.edu.unbosque.model;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 /**
- * La clase Producto es la clase padre de la jerarquia de clases {@link ProductoOseo}, {@link ProductoHogar} 
+ * La clase Producto es la clase padre de la jerarquia de clases {@link ProductoOcio}, {@link ProductoHogar} 
  * y {@link ProductoOficina}. 
  * Esta clase contiene los atributos comunes de los productos.
  *
  */
-public class Producto {
 
+public class Producto implements Serializable{
+	
 	/**
 	 * El atributo imagen es la imagen del producto.
 	 */
@@ -27,10 +29,6 @@ public class Producto {
 	 */
 	private int cantidad;
 	/**
-	 * El atributo tipo es el tipo de producto.
-	 */
-	private String tipo;
-	/**
 	 * El atributo marca es la marca del producto.
 	 */
 	private String marca;
@@ -46,14 +44,12 @@ public class Producto {
 	 * @param nombre es el nombre del producto.
 	 * @param precio es el precio del producto.
 	 * @param cantidad es la cantidad de productos.
-	 * @param tipo es el tipo de producto.
 	 * @param marca es la marca del producto.
 	 */
-	public Producto(String nombre, double precio, int cantidad, String tipo, String marca, Image imagen) {
+	public Producto(String nombre, double precio, int cantidad, String marca, Image imagen) {
 		this.nombre = nombre;
 		this.precio = precio;
 		this.cantidad = cantidad;
-		this.tipo = tipo;
 		this.marca = marca;
 		this.imagen = imagen;
 
@@ -78,13 +74,6 @@ public class Producto {
 	 */
 	public int getCantidad() {
 		return cantidad;
-	}
-	/**
-	 * Metodo que retorna el tipo de producto.
-	 * @return tipo es el tipo de producto.
-	 */
-	public String getTipo() {
-		return tipo;
 	}
 	/**
 	 * Metodo que retorna la marca del producto.
@@ -117,15 +106,6 @@ public class Producto {
 		this.cantidad = cantidad;
 	}
 	/**
-	 * Metodo que modifica el tipo de producto.
-	 * @param tipo es el tipo de producto.
-	 */
-
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	/**
 	 * Metodo que modifica la marca del producto.
 	 * @param marca es la marca del producto.
 	 */
@@ -147,5 +127,12 @@ public class Producto {
 	public void setImagen(Image imagen) {
 		this.imagen = imagen;
 	}
+	@Override
+	public String toString() {
+		return "Producto [imagen=" + imagen + ", nombre=" + nombre + ", precio=" + precio + ", cantidad=" + cantidad
+				+ ", marca=" + marca + "]";
+	}
+	
+	
 
 }
