@@ -1,8 +1,9 @@
 package co.edu.unbosque.model;
 
 import java.awt.Image;
+import java.io.Serializable;
 
-public class ProductoHogar extends Producto {
+public class ProductoHogar extends Producto implements Serializable{
 	
 	/**
 	 * El atributo material es de tipo String y representa el material del producto
@@ -33,31 +34,31 @@ public class ProductoHogar extends Producto {
 	 * @param nombre es el nombre del producto
 	 * @param precio es el precio del producto
 	 * @param cantidad es la cantidad de productos
-	 * @param tipo es el tipo de producto
 	 * @param marca es la marca del producto
 	 * @param imagen es la imagen del producto
 	 * @param material es el material del producto
 	 * @param color es el color del producto
 	 */
-	public ProductoHogar(String nombre, double precio, int cantidad, String tipo, String marca, Image imagen,
-			String material, String color) {
-		super(nombre, precio, cantidad, tipo, marca, imagen);
+	public ProductoHogar(String nombre, double precio, int cantidad, String marca, Image imagen, String material,
+			String color) {
+		super(nombre, precio, cantidad, marca, imagen);
 		this.material = material;
 		this.color = color;
 	}
+ 
 	/**
 	 * Constructor de la clase ProductoHogar desde la clase padre Producto
 	 * @param nombre es el nombre del producto
 	 * @param precio es el precio del producto
 	 * @param cantidad es la cantidad de productos
-	 * @param tipo es el tipo de producto
 	 * @param marca es la marca del producto
 	 * @param imagen es la imagen del producto
 	 */
-	public ProductoHogar(String nombre, double precio, int cantidad, String tipo, String marca, Image imagen) {
-		super(nombre, precio, cantidad, tipo, marca, imagen);
+	public ProductoHogar(String nombre, double precio, int cantidad, String marca, Image imagen) {
+		super(nombre, precio, cantidad, marca, imagen);
 		// TODO Auto-generated constructor stub
 	}
+
 	/**
 	 * Metodo que retorna el material del producto
 	 * @return material
@@ -65,6 +66,7 @@ public class ProductoHogar extends Producto {
 	public String getMaterial() {
 		return material;
 	}
+	
 	/**
 	 * Metodo que modifica el material del producto
 	 * @param material es el material del producto
@@ -86,7 +88,11 @@ public class ProductoHogar extends Producto {
 	public void setColor(String color) {
 		this.color = color;
 	}
-
-
+	@Override
+	public String toString() {
+		return super.toString() + "Hogar [material=" + material + ", color=" + color + "]";
+	}
+	
+	
 
 }
