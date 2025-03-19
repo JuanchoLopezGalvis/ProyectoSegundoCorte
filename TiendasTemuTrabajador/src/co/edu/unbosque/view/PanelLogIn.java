@@ -89,7 +89,7 @@ public class PanelLogIn extends JPanel{
 		etiqueta0 = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ingrese su usuario y contaseña<br>Si no tiene cuenta registrese por favor</html>");
 		etiqueta1 = new JLabel("Trabajador:");
 		etiqueta2 = new JLabel("Contraseña:");
-		datoUsuario = new TextFieldRedondeado(20, Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
+		datoUsuario = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoUsuario.setBackground(Color.DARK_GRAY);
 		datoUsuario.setForeground(Color.white);
 		datoContraseña = new JPasswordField();

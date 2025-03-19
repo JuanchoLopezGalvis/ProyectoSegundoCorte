@@ -43,15 +43,15 @@ public class BotonRedondeado extends JButton{
 	 * @param cornerRadius
 	 * @param colorPorDefecto
 	 * @param colorInteraccion
-	 * @param colorBorde
+	 * @param colorForegraund
 	 */
-    public BotonRedondeado(String text, int cornerRadius, Color colorPorDefecto, Color colorInteraccion, Color colorBorde) {
+    public BotonRedondeado(String text, int cornerRadius, Color colorPorDefecto, Color colorInteraccion, Color colorForegraund) {
         super(text);
         this.cornerRadius = cornerRadius;
         this.colorPorDefecto = colorPorDefecto;
         this.colorInteraccion = colorInteraccion;
-        this.colorBorde = colorBorde;
         setContentAreaFilled(false);
+        setForeground(colorForegraund);
     }
 
     /**

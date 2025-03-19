@@ -6,7 +6,8 @@ import java.io.Serializable;
 /**
  * La clase ProductoHogar es una clase hija de la clase Producto
  * y representa los productos de hogar.
- */
+ */	
+
 public class ProductoHogar extends Producto implements Serializable{
 	
 	/**

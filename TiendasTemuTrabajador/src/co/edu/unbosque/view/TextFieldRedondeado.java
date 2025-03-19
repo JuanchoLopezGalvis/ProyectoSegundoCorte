@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  * La clase {@link TextFieldRedondeado} se encarga de crear un campo de texto con los bordes redondeados.
@@ -38,7 +39,6 @@ public class TextFieldRedondeado extends JTextField{
     
     /**
 	 * Este es el constructor de la clase {@link TextFieldRedondeado} que recibe
-	 * @param columns
 	 * @param foregraund
 	 * @param backgraund
 	 * @param cornerRadius
@@ -46,8 +46,7 @@ public class TextFieldRedondeado extends JTextField{
 	 * @param borderWidth
 	 */
 
-    public TextFieldRedondeado(int columns,Color foregraund, Color backgraund ,int cornerRadius, Color borderColor, float borderWidth) {
-        super(columns);
+    public TextFieldRedondeado(Color foregraund, Color backgraund ,int cornerRadius, Color borderColor, float borderWidth) {
         this.cornerRadius = cornerRadius;
         this.borderColor = borderColor;
         this.borderWidth = borderWidth;
@@ -55,6 +54,7 @@ public class TextFieldRedondeado extends JTextField{
         this.foreground = foregraund;
         setOpaque(false);
         setForeground(foreground);
+        setHorizontalAlignment(SwingConstants.RIGHT);
     }
     /**
 	 * Este metodo se encarga de pintar el boton con los bordes redondeados.
@@ -63,10 +63,13 @@ public class TextFieldRedondeado extends JTextField{
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
         g2.setColor(background);
         g2.fill(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius));
-        super.paintComponent(g2);
+        
         g2.dispose();
+        
+        super.paintComponent(g);
     }
     
     /**
@@ -78,7 +81,8 @@ public class TextFieldRedondeado extends JTextField{
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(borderColor);
         g2.setStroke(new BasicStroke(borderWidth));
-        g2.draw(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius));
+        g2.draw(new RoundRectangle2D.Float(borderWidth / 2, borderWidth / 2, 
+        	    getWidth() - borderWidth, getHeight() - borderWidth, cornerRadius, cornerRadius));
         g2.dispose();
     }
 }

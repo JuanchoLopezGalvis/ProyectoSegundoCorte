@@ -3,6 +3,7 @@ package co.edu.unbosque.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
 
 import co.edu.unbosque.view.ViewFacade;
 
@@ -33,6 +34,7 @@ public class Controller implements ActionListener{
 	public void run() {
 
 		vf.getVli().setVisible(true);
+		vf.getVpli().setVisible(false);
 		asignarLectores();
 
 	}
@@ -115,8 +117,14 @@ public class Controller implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "btnIngresar":{
+			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
+			if(usuario.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
+			}else {
 			vf.getVpli().setVisible(true);
-			vf.getVli().setVisible(false);
+			vf.getVli().dispose();
+			}
+			
 
 		}
 		break;
@@ -145,27 +153,27 @@ public class Controller implements ActionListener{
 		}
 		break;
 		case "agregarPhb":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcphb");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagphb");
 		}
 		break;
 		case "agregarPhc":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcphc");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagphc");
 		}
 		break;
 		case "agregarPoj":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpoj");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpoj");
 		}
 		break;
 		case "agregarPor":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpor");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpor");
 		}
 		break;
 		case "agregarPoe":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpoe");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpoe");
 		}
 		break;
 		case "agregarPop":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpop");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpop");
 		}
 		break;
 		case "eliminarPhb":{

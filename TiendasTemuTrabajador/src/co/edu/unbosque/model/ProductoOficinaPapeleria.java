@@ -12,7 +12,7 @@ public class ProductoOficinaPapeleria extends ProductoOficina implements Seriali
 	/**
 	 * el color de la tinta que maneja
 	 */
-	private String colorTinta;
+	private String funcion;
 	
 	/**
 	 * Constructor vacio de la clase ProductoOficinaPapeleria
@@ -25,9 +25,9 @@ public class ProductoOficinaPapeleria extends ProductoOficina implements Seriali
 	 * Constructor propio de la clase ProductoOficinaPapeleria
 	 * @param colorTinta es el color de la tinta que usa
 	 */
-	public ProductoOficinaPapeleria(String colorTinta) {
+	public ProductoOficinaPapeleria(String funcion) {
 		super();
-		this.colorTinta = colorTinta;
+		this.funcion = funcion;
 	}
 
 
@@ -40,12 +40,12 @@ public class ProductoOficinaPapeleria extends ProductoOficina implements Seriali
 	 * @param marca es la marca del producto
 	 * @param imagen es la imagen del producto
 	 * @param nivelRuido el nivel de ruido que genera
-	 * @param colorTinta el color que maneja
+	 * @param funcion para que se usa
 	*/
 	public ProductoOficinaPapeleria(String nombre, double precio, int cantidad, String marca, Image imagen,
-			String nivelRuido, String colorTinta) {
+			String nivelRuido, String funcion) {
 		super(nombre, precio, cantidad, marca, imagen, nivelRuido);
-		this.colorTinta = colorTinta;
+		this.funcion = funcion;
 	}
 
 	/**
@@ -64,24 +64,24 @@ public class ProductoOficinaPapeleria extends ProductoOficina implements Seriali
 	}
 
 	/**
-	 * Metodo que retorna el color de tinta
-	 * @return colorTinta
+	 * Metodo que retorna la funcion
+	 * @return funcion
 	 */
-	public String getColorTinta() {
-		return colorTinta;
+	public String getFuncion() {
+		return funcion;
 	}
 
 	/**
-	 * Metodo que modifica el color de tinta
-	 * @param colorTinta
+	 * Metodo que modifica la funcion
+	 * @param funcion
 	 */
-	public void setColorTinta(String colorTinta) {
-		this.colorTinta = colorTinta;
+	public void setFuncion(String colorTinta) {
+		this.funcion = colorTinta;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() +" ProductoOficinaPapeleria [colorTinta=" + colorTinta + "]";
+		return super.toString() +" ProductoOficinaPapeleria [colorTinta=" + funcion + "]";
 	}
 	
 	
