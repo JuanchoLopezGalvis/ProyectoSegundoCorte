@@ -812,6 +812,7 @@ public class VentanaPostLogIn extends JFrame{
 		barraMenu.add(productoOficianPapeleria);
 
 		setJMenuBar(barraMenu);
+		add(panelCardLayout);
 		
 
 

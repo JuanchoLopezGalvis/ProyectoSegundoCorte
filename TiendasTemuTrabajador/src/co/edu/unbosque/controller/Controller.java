@@ -379,27 +379,27 @@ public class Controller implements ActionListener{
 		}
 		break;
 		case "agregarPhb":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcphb");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagphb");
 		}
 		break;
 		case "agregarPhc":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcphc");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagphc");
 		}
 		break;
 		case "agregarPoj":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpoj");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpoj");
 		}
 		break;
 		case "agregarPor":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpor");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpor");
 		}
 		break;
 		case "agregarPoe":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpoe");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpoe");
 		}
 		break;
 		case "agregarPop":{
-			vf.getVpli().getPanelCardLayout().mostrarPanel("pcpop");
+			vf.getVpli().getPanelCardLayout().mostrarPanel("pagpop");
 		}
 		break;
 		case "eliminarPhb":{
