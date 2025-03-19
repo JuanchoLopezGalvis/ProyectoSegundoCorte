@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package co.edu.unbosque.view;
 
 import java.awt.BasicStroke;
