@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /**
  * 
  */
@@ -14,7 +14,3 @@ module TiendasTemuTrabajador {
 /**
  * 
  */
-module TiendasTemuTrabajador {
-	requires java.desktop;
->>>>>>> branch 'master' of git@github.com:JuanchoLopezGalvis/ProyectoSegundoCorte.git
-}
