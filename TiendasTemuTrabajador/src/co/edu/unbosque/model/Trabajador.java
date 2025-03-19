@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package co.edu.unbosque.model;
 
 import java.io.BufferedReader;
@@ -50,22 +50,8 @@ public class Trabajador {
 	// Pasar Metodos al modelFacade/Dao pq es manejo de datos
 
 }
-=======
-package co.edu.unbosque.model;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-/**
- * La clase Trabajador es una clase que representa a los trabajadores de la empresa.
- * Esta clase contiene los atributos comunes de los trabajadores.
- *
- */
-public class Trabajador {
-	 private String nombre;
+	/* private String nombre;
 	    private String contraseña;
 
 	    public Trabajador(String nombre, String contraseña) {
@@ -92,5 +78,4 @@ public class Trabajador {
 	        }
 	        return false; 
 	    }
-	}
->>>>>>> branch 'master' of git@github.com:JuanchoLopezGalvis/ProyectoSegundoCorte.git
+}*/
