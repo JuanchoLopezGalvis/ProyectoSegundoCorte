@@ -118,12 +118,13 @@ public class Controller implements ActionListener{
 		case "btnIngresar":{
 			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
 			if(usuario.isEmpty()) {
-				JOptionPane.showConfirmDialog(null, "llene los campos"," Error",JOptionPane.ERROR_MESSAGE );
+				JOptionPane.showMessageDialog(null, "Error llene los campos");
 			}else {
 				vf.getVpli().setVisible(true);
 				vf.getVli().setVisible(false);
 				
 			}
+			
 		
 
 		}
