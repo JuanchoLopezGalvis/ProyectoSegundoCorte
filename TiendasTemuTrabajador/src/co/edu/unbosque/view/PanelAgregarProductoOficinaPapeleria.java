@@ -1,6 +1,7 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -10,9 +11,16 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
+/**
+ * Esta clase se encargara de crear el panel que permitira agregar un producto de oficina o papeleria.
+ * Esta clase extiende de {@link JPanel} y ademas implementa la interfaz {@link ActionListener}.
+ */
 public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 	/**
 	 * Este atributo es el encargado de guardar la imagen de fondo del panel.
@@ -33,11 +41,11 @@ public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 	/**
 	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara el precio del producto.
 	 */
-	private TextFieldRedondeado datoPrecio;
+	private JSpinner datoPrecio;
 	/**
 	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la cantidad del producto.
 	 */
-	private TextFieldRedondeado datoCantidad;
+	private JSpinner datoCantidad;
 	/**
 	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la marca del producto.
 	 */
@@ -92,8 +100,8 @@ public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 		seleccionImagen = new BotonRedondeado("Seleccionar", 20, Color.DARK_GRAY, Color.decode("#f67704"), Color.white);
 		botonAgregar = new BotonRedondeado("Agregar", 20, Color.DARK_GRAY, Color.decode("#f67704"), Color.white);
 		datoNombre = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
-		datoPrecio = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);	
-		datoCantidad = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
+		datoPrecio = new JSpinner();	
+		datoCantidad = new JSpinner();
 		datoMarca = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		String[] niveles = {"Bajo", "Medio", "Alto"};
 		datoNivelRuido = new JComboBox<String>(niveles);
@@ -129,7 +137,20 @@ public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 		etiquetaImagen.setForeground(Color.white);
 		datoNivelRuido.setBackground(Color.DARK_GRAY);
 		datoNivelRuido.setForeground(Color.white);
-		
+		datoPrecio.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1000));
+		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
+		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setForeground(Color.WHITE);
+		JFormattedTextField txt = ((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField();
+		NumberFormatter formatter = (NumberFormatter) txt.getFormatter();
+		formatter.setAllowsInvalid(false);  // No permite caracteres no numéricos
+		formatter.setMinimum(0); 
+		datoCantidad.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
+		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setForeground(Color.WHITE);
+		JFormattedTextField txt2 = ((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField();
+		NumberFormatter formatter2 = (NumberFormatter) txt2.getFormatter();
+		formatter2.setAllowsInvalid(false);  // No permite caracteres no numéricos
+		formatter2.setMinimum(0); 
 		add(etiquetaImagen);
 		add(botonAgregar);
 		add(etiquetaNombre);

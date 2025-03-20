@@ -2,6 +2,11 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -22,6 +27,10 @@ public class Controller implements ActionListener{
 	 */
 	private ViewFacade vf; 
 	/**
+	 * Instancia de la clase {@link Properties} para acceder a los archivos de propiedades.
+	 */
+	private Properties prop;
+	/**
 	 * Constructor vacio del {@link Controller}.
 	 */
 	public Controller() {
@@ -33,6 +42,7 @@ public class Controller implements ActionListener{
 	 */
 	public void run() {
 
+		prop = new Properties();
 		vf.getVli().setVisible(true);
 		vf.getVpli().setVisible(false);
 		asignarLectores();
@@ -105,6 +115,10 @@ public class Controller implements ActionListener{
 		vf.getVpli().getListarPop().addActionListener(this);
 		vf.getVpli().getListarPop().setActionCommand("listarPop");
 
+		vf.getVli().getPli().getCheckEspañol().addActionListener(this);
+		vf.getVli().getPli().getCheckEspañol().setActionCommand("checkEspañol");
+		vf.getVli().getPli().getCheckIngles().addActionListener(this);
+		vf.getVli().getPli().getCheckIngles().setActionCommand("checkIngles");
 
 	}
 	/**
@@ -116,15 +130,60 @@ public class Controller implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "checkEspañol":{
+			if(vf.getVli().getPli().getCheckEspañol().isSelected()) {
+			try {
+				prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+				vf.getVli().getPli().getSeleccioneIdioma().setText(prop.getProperty("archivosdepropiedades.panellogin.contenidoetiquetaidioma"));
+				vf.getVli().getPli().getBtnIngresar().setText(prop.getProperty("archivosdepropiedades.panellogin.contenidobtningresar"));
+				vf.getVli().getPli().getBtnRegistrarse().setText(prop.getProperty("archivosdepropiedades.panellogin.contenidobtnregistrarse"));
+				vf.getVli().getPli().getEtiqueta1().setText(prop.getProperty("archivosdepropiedades.panellogin.textousuario"));
+				vf.getVli().getPli().getSaludo().setText(prop.getProperty("archivosdepropiedades.panellogin.textobienvenida"));
+				vf.getVli().getPli().getEtiqueta2().setText(prop.getProperty("archivosdepropiedades.panellogin.textocontraseña"));
+				vf.getVli().getPli().getEtiqueta0().setText(prop.getProperty("archivosdepropiedades.panellogin.textoetiqueta0"));
+				vf.getVli().getPli().revalidate();
+				vf.getVli().getPli().repaint();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			vf.getVli().getPli().getCheckIngles().setSelected(false);
+		}
+		}
+		break;
+		case "checkIngles":{
+			if(vf.getVli().getPli().getCheckIngles().isSelected()) {
+			try {
+				prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+				vf.getVli().getPli().getSeleccioneIdioma().setText(prop.getProperty("archivosdepropiedades.panellogin.contenidoetiquetaidioma"));
+				vf.getVli().getPli().getBtnIngresar().setText(prop.getProperty("archivosdepropiedades.panellogin.contenidobtningresar"));
+				vf.getVli().getPli().getBtnRegistrarse().setText(prop.getProperty("archivosdepropiedades.panellogin.contenidobtnregistrarse"));
+				vf.getVli().getPli().getEtiqueta1().setText(prop.getProperty("archivosdepropiedades.panellogin.textousuario"));
+				vf.getVli().getPli().getSaludo().setText(prop.getProperty("archivosdepropiedades.panellogin.textobienvenida"));
+				vf.getVli().getPli().getEtiqueta2().setText(prop.getProperty("archivosdepropiedades.panellogin.textocontraseña"));
+				vf.getVli().getPli().getEtiqueta0().setText(prop.getProperty("archivosdepropiedades.panellogin.textoetiqueta0"));
+				
+				vf.getVli().getPli().revalidate();
+				vf.getVli().getPli().repaint();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			vf.getVli().getPli().getCheckEspañol().setSelected(false);
+		}
+		}
+		break;
 		case "btnIngresar":{
 			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
 			if(usuario.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
 			}else {
-			vf.getVpli().setVisible(true);
-			vf.getVli().dispose();
+				vf.getVpli().setVisible(true);
+				vf.getVli().dispose();
 			}
-			
+
 
 		}
 		break;

@@ -11,7 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Esta clase se encargara de crear el panel que permitira agregar un producto de la categoria Hogar y Cocina.
+ */
 public class PanelAgregarProductoHogarCocina extends JPanel{
 
 	/**

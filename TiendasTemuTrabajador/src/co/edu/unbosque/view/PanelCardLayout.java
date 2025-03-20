@@ -72,18 +72,18 @@ public class PanelCardLayout extends JPanel{
 		plpoe = new PanelListarProductoOficinaElectrodomestico();
 		plpop = new PanelListarProductoOficinaPapeleria();
 		
-		add(pacphb, "pacphb");
-		add(pacphc, "pacphc");
-		add(pacpoj, "pacpoj");
-		add(pacpor, "pacpor");
-		add(pacpoe, "pacpoe");
-		add(pacpop, "pacpop");
 		add(pagphb, "pagphb");
 		add(pagphc, "pagphc");
 		add(pagpoj, "pagpoj");
 		add(pagpor, "pagpor");
 		add(pagpoe, "pagpoe");
 		add(pagpop, "pagpop");
+		add(pacphb, "pacphb");
+		add(pacphc, "pacphc");
+		add(pacpoj, "pacpoj");
+		add(pacpor, "pacpor");
+		add(pacpoe, "pacpoe");
+		add(pacpop, "pacpop");
 		add(pephb, "pephb");
 		add(pephc, "pephc");
 		add(pepoj, "pepoj");

@@ -12,7 +12,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Esta clase se encargara de crear el panel que permitira agregar un producto de oficina o electrodomestico.
+ * Esta clase extiende de {@link JPanel} y ademas implementa la interfaz {@link ActionListener}.
+ */
 public class PanelAgregarProductoOficinaElectrodomestico extends JPanel{
 
 	/**

@@ -1,11 +1,14 @@
 package co.edu.unbosque.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import co.edu.unbosque.model.ProductoHogarBanio;
 
 /**
  * La clase {@link VentanaPostLogIn} se encargara de mostrar la ventana principal
@@ -25,7 +28,7 @@ public class VentanaPostLogIn extends JFrame{
 	 * productoOcioRopa es el menu que contendra las opciones de los productos de ocio ropa
 	 * productoOficinaElectrodomestico es el menu que contendra las opciones de los productos de oficina electrodomestico
 	 */
-	private JMenu pructoHogarBanio, productoHogarCocina, productoOcioJuguete, productoOcioRopa, productoOficinaElectrodomestico, productoOficianPapeleria;
+	private JMenu productoHogarBanio, productoHogarCocina, productoOcioJuguete, productoOcioRopa, productoOficinaElectrodomestico, productoOficianPapeleria;
 	/**
 	 * agregarPhb es la opcion de agregar un producto de hogar baño
 	 * listarPhb es la opcion de listar un producto de hogar baño
@@ -89,7 +92,7 @@ public class VentanaPostLogIn extends JFrame{
 		panelCardLayout = new PanelCardLayout();
 		barraMenu = new JMenuBar();
 
-		pructoHogarBanio = new JMenu("Producto Hogar Baño");
+		productoHogarBanio = new JMenu("Producto Hogar Baño");
 		productoHogarCocina = new JMenu("Producto Hogar Cocina");
 		productoOcioJuguete = new JMenu("Producto Ocio Juguete");
 		productoOcioRopa = new JMenu("Producto Ocio Ropa");
@@ -126,10 +129,10 @@ public class VentanaPostLogIn extends JFrame{
 		eliminarPop = new JMenuItem("Eliminar");
 		actualizarPop = new JMenuItem("Actualizar");
 
-		pructoHogarBanio.add(agregarPhb);
-		pructoHogarBanio.add(listarPhb);
-		pructoHogarBanio.add(eliminarPhb);
-		pructoHogarBanio.add(actualizarPhb);
+		productoHogarBanio.add(agregarPhb);
+		productoHogarBanio.add(listarPhb);
+		productoHogarBanio.add(eliminarPhb);
+		productoHogarBanio.add(actualizarPhb);
 
 		productoHogarCocina.add(agregarPhc);
 		productoHogarCocina.add(listarPhc);
@@ -156,13 +159,20 @@ public class VentanaPostLogIn extends JFrame{
 		productoOficianPapeleria.add(eliminarPop);
 		productoOficianPapeleria.add(actualizarPop);
 
-		barraMenu.add(pructoHogarBanio);
+		barraMenu.add(productoHogarBanio);
 		barraMenu.add(productoHogarCocina);
 		barraMenu.add(productoOcioJuguete);
 		barraMenu.add(productoOcioRopa);
 		barraMenu.add(productoOficinaElectrodomestico);
 		barraMenu.add(productoOficianPapeleria);
 
+		barraMenu.setBackground(Color.DARK_GRAY);
+		productoHogarCocina.setForeground(Color.white);
+		productoHogarBanio.setForeground(Color.white);
+		productoOcioJuguete.setForeground(Color.white);
+		productoOcioRopa.setForeground(Color.white);
+		productoOficianPapeleria.setForeground(Color.white);
+		productoOficinaElectrodomestico.setForeground(Color.white);
 		setJMenuBar(barraMenu);
 		add(panelCardLayout);
 

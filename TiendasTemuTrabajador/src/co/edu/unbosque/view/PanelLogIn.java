@@ -8,10 +8,12 @@ import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
@@ -21,6 +23,12 @@ import javax.swing.border.EmptyBorder;
  */
 public class PanelLogIn extends JPanel{
 
+	private JCheckBox checkEspañol;
+	private JCheckBox checkIngles;
+	/**
+	 * Este label sera el encargado de indicarle al usuario que seleccione el idioma
+	 */
+	private JLabel seleccioneIdioma;
 	/**
 	 * Este boton sera el encargado de enviar los datos del usuario
 	 * Y viene de la clase {@link BotonRedondeado}
@@ -79,16 +87,18 @@ public class PanelLogIn extends JPanel{
 	public PanelLogIn() {
 
 		setBackground(Color.black);
-		//		setBackground(Color.decode("#f67704"));
 		setSize(1250, 650);
 		setBorder(new EmptyBorder(10, 30, 30, 80));
 		setLayout(null); 
-		btnIngresar = new BotonRedondeado("Ingresar", 20, Color.white, Color.decode("#f67704"), Color.black);
-		btnRegistrarse = new BotonRedondeado("Registrarse", 20, Color.white, Color.decode("#f67704"), Color.black);
-		saludo = new JLabel("¡Bienvenid@!");
-		etiqueta0 = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ingrese su usuario y contaseña<br>Si no tiene cuenta registrese por favor</html>");
-		etiqueta1 = new JLabel("Trabajador:");
-		etiqueta2 = new JLabel("Contraseña:");
+		checkEspañol = new JCheckBox("Spanish");
+		checkIngles = new JCheckBox("English");
+		seleccioneIdioma = new JLabel("Select your language");
+		btnIngresar = new BotonRedondeado("Sign in", 20, Color.white, Color.decode("#f67704"), Color.black);
+		btnRegistrarse = new BotonRedondeado("Sign up", 20, Color.white, Color.decode("#f67704"), Color.black);
+		saludo = new JLabel("<html>&nbsp;&nbsp;Welcome!<html>");
+		etiqueta0 = new JLabel("<html>&nbsp;Enter your user and password. If you<br>don´t have an account, please sign up</html>");
+		etiqueta1 = new JLabel("User:");
+		etiqueta2 = new JLabel("Password:");
 		datoUsuario = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoUsuario.setBackground(Color.DARK_GRAY);
 		datoUsuario.setForeground(Color.white);
@@ -97,24 +107,35 @@ public class PanelLogIn extends JPanel{
 		datoContraseña.setForeground(Color.white);
 		imagenFondo = new ImageIcon(getClass().getResource("/Recursos/TEMU.png")).getImage();
 		saludo.setBounds(870, 120, 300, 25);
-		etiqueta0.setBounds(765, 140, 380, 100);
+		etiqueta0.setBounds(755, 140, 380, 100);
 		etiqueta1.setBounds(740, 240, 300, 25);
 		etiqueta2.setBounds(740, 280, 300, 25);
 		datoUsuario.setBounds(935, 240, 200, 25);
 		datoContraseña.setBounds(935, 280, 200, 25);
 		btnIngresar.setBounds(945, 360, 200, 40);
 		btnRegistrarse.setBounds(725, 360, 200, 40);
+		seleccioneIdioma.setBounds(20, 20, 200, 25);
+		checkEspañol.setBounds(250, 20, 80, 25);
+		checkIngles.setBounds(350, 20, 80, 25);
 		//leerNombre.setBounds(760, 350, 300, 25);
 		etiqueta0.setFont(new Font("Arial", Font.BOLD, 20));
+		seleccioneIdioma.setFont(new Font("Arial", Font.BOLD, 18));
 		saludo.setFont(new Font("Arial", Font.BOLD, 20));
 		etiqueta1.setFont(new Font("Arial", Font.BOLD, 20));
 		etiqueta2.setFont(new Font("Arial", Font.BOLD, 20));
 		saludo.setForeground(Color.white);
+		seleccioneIdioma.setForeground(Color.white);
 		etiqueta0.setForeground(Color.white);
 		etiqueta1.setForeground(Color.white);
 		etiqueta2.setForeground(Color.white);
-
-
+		checkEspañol.setForeground(Color.white);
+		checkIngles.setForeground(Color.white);
+		checkEspañol.setBackground(Color.DARK_GRAY);
+		checkIngles.setBackground(Color.DARK_GRAY);
+		datoContraseña.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(checkEspañol);
+		add(checkIngles);
+		add(seleccioneIdioma);
 		add(btnIngresar);
 		add(btnRegistrarse);
 		add(etiqueta0);
@@ -207,6 +228,62 @@ public class PanelLogIn extends JPanel{
 	 */
 	public void setDatoContraseña(JPasswordField datoContraseña) {
 		this.datoContraseña = datoContraseña;
+	}
+
+	public JCheckBox getCheckEspañol() {
+		return checkEspañol;
+	}
+
+	public void setCheckEspañol(JCheckBox checkEspañol) {
+		this.checkEspañol = checkEspañol;
+	}
+
+	public JCheckBox getCheckIngles() {
+		return checkIngles;
+	}
+
+	public void setCheckIngles(JCheckBox checkIngles) {
+		this.checkIngles = checkIngles;
+	}
+
+	public JLabel getSeleccioneIdioma() {
+		return seleccioneIdioma;
+	}
+
+	public void setSeleccioneIdioma(JLabel seleccioneIdioma) {
+		this.seleccioneIdioma = seleccioneIdioma;
+	}
+
+	public JLabel getSaludo() {
+		return saludo;
+	}
+
+	public void setSaludo(JLabel saludo) {
+		this.saludo = saludo;
+	}
+
+	public JLabel getEtiqueta0() {
+		return etiqueta0;
+	}
+
+	public void setEtiqueta0(JLabel etiqueta0) {
+		this.etiqueta0 = etiqueta0;
+	}
+
+	public JLabel getEtiqueta1() {
+		return etiqueta1;
+	}
+
+	public void setEtiqueta1(JLabel etiqueta1) {
+		this.etiqueta1 = etiqueta1;
+	}
+
+	public JLabel getEtiqueta2() {
+		return etiqueta2;
+	}
+
+	public void setEtiqueta2(JLabel etiqueta2) {
+		this.etiqueta2 = etiqueta2;
 	}
 
 
