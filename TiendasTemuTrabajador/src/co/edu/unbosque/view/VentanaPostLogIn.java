@@ -84,8 +84,6 @@ public class VentanaPostLogIn extends JFrame{
 		setSize(1250, 650);
 		setTitle("Administracion de productos");
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
 		setResizable(false);
 		setLayout(new BorderLayout());
 

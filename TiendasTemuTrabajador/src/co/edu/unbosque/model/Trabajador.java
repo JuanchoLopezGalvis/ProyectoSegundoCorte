@@ -12,18 +12,18 @@ import java.io.IOException;
  *
  */
 public class Trabajador {
-	 private String nombre;
+	 private String usuario;
 	    private String contraseña;
 
-	    public Trabajador(String nombre, String contraseña) {
-	        this.nombre = nombre;
+	    public Trabajador(String usuario, String contraseña) {
+	        this.usuario = usuario;
 	        this.contraseña = contraseña;
 	    }
 	//Pasar Metodos al modelFacade/Dao pq es manejo de datos
 	 
 	    public void guardar() throws IOException {
 	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/camposTexto/usuarios.txt" , true))) {
-	            writer.write(nombre + "," + contraseña);
+	            writer.write(usuario + "," + contraseña);
 	            writer.newLine();
 	        }
 	    }

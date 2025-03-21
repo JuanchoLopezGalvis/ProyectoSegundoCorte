@@ -130,6 +130,10 @@ public class Controller implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "btnRegistrarse":{
+			vf.getVsu().setVisible(true);
+		}
+		break;
 		case "checkEspañol":{
 			if(vf.getVli().getPli().getCheckEspañol().isSelected()) {
 			try {
@@ -177,11 +181,11 @@ public class Controller implements ActionListener{
 		break;
 		case "btnIngresar":{
 			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
-			if(usuario.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
-			}else {
+			if(!usuario.isEmpty()) {
 				vf.getVpli().setVisible(true);
-				vf.getVli().dispose();
+				vf.getVli().setVisible(false);
+			}else {
+				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
 			}
 
 

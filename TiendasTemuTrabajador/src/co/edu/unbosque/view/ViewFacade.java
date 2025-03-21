@@ -6,6 +6,7 @@ package co.edu.unbosque.view;
  */
 public class ViewFacade {
 
+	private VentanaSignUp vsu;
 	/**
 	 * Instancia de la {@link VentanaPostLogIn}
 	 */
@@ -24,7 +25,16 @@ public class ViewFacade {
 
 		vli = new VentanaLogIn(); 
 		vpli = new VentanaPostLogIn();
+		vsu = new VentanaSignUp();
 
+	}
+
+	public VentanaSignUp getVsu() {
+		return vsu;
+	}
+
+	public void setVsu(VentanaSignUp vsu) {
+		this.vsu = vsu;
 	}
 
 	/**
