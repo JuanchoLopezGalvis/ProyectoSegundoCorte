@@ -181,13 +181,19 @@ public class Controller implements ActionListener{
 		break;
 		case "btnIngresar":{
 			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
+			String password = vf.getVli().getPli().getDatoContraseña().getText();
 			if(!usuario.isEmpty()) {
 				vf.getVpli().setVisible(true);
 				vf.getVli().setVisible(false);
 			}else {
 				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
 			}
-
+			if(!password.isEmpty() || password.length() > 3) {
+				vf.getVpli().setVisible(true);
+				vf.getVli().setVisible(false);
+			}else {
+				JOptionPane.showMessageDialog(null, "El campo contraseña debe ser valido");
+			}
 
 		}
 		break;
