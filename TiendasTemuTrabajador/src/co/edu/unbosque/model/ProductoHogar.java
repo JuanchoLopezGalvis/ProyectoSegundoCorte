@@ -8,7 +8,7 @@ import java.io.Serializable;
  * y representa los productos de hogar.
  */	
 
-public class ProductoHogar extends Producto implements Serializable{
+public abstract class ProductoHogar extends Producto implements Serializable{
 	
 	/**
 	 * El atributo material es de tipo String y representa el material del producto
