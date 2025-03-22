@@ -59,7 +59,7 @@ public class PanelAgregarProductoHogarBanio extends JPanel{
 	 */
 	private TextFieldRedondeado datoColor;
 	/**
-	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la funcionalidad del producto.
+	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la zona de uso del producto.
 	 */
 	private TextFieldRedondeado datoZona;
 	/**
@@ -87,7 +87,7 @@ public class PanelAgregarProductoHogarBanio extends JPanel{
 	 */
 	private JLabel etiquetaColor;
 	/**
-	 * Este atributo es el encargado de guardar la etiqueta que indica la funcionalidad del producto.
+	 * Este atributo es el encargado de guardar la etiqueta que indica la zona de uso del producto.
 	 */
 	private JLabel etiquetaZona;
 	/**
@@ -114,6 +114,20 @@ public class PanelAgregarProductoHogarBanio extends JPanel{
 		datoMaterial = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoColor = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoZona = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
+		datoPrecio.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1000));
+		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
+		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setForeground(Color.WHITE);
+		JFormattedTextField txt = ((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField();
+		NumberFormatter formatter = (NumberFormatter) txt.getFormatter();
+		formatter.setAllowsInvalid(false);  // No permite caracteres no numéricos
+		formatter.setMinimum(0); 
+		datoCantidad.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
+		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setForeground(Color.WHITE);
+		JFormattedTextField txt2 = ((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField();
+		NumberFormatter formatter2 = (NumberFormatter) txt2.getFormatter();
+		formatter2.setAllowsInvalid(false);  // No permite caracteres no numéricos
+		formatter2.setMinimum(0); 
 		etiquetaNombre = new JLabel("Nombre:");
 		etiquetaPrecio = new JLabel("Precio:");
 		etiquetaCantidad = new JLabel("Cantidad:");
@@ -147,20 +161,7 @@ public class PanelAgregarProductoHogarBanio extends JPanel{
 		etiquetaColor.setForeground(Color.white);
 		etiquetaZona.setForeground(Color.white);
 		etiquetaImagen.setForeground(Color.white);
-		datoPrecio.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1000));
-		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
-		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setForeground(Color.WHITE);
-		JFormattedTextField txt = ((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField();
-		NumberFormatter formatter = (NumberFormatter) txt.getFormatter();
-		formatter.setAllowsInvalid(false);  // No permite caracteres no numéricos
-		formatter.setMinimum(0); 
-		datoCantidad.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
-		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setForeground(Color.WHITE);
-		JFormattedTextField txt2 = ((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField();
-		NumberFormatter formatter2 = (NumberFormatter) txt2.getFormatter();
-		formatter2.setAllowsInvalid(false);  // No permite caracteres no numéricos
-		formatter2.setMinimum(0); 
+		
 
 		add(etiquetaImagen);
 		add(botonAgregar);
@@ -207,61 +208,246 @@ public class PanelAgregarProductoHogarBanio extends JPanel{
 			System.out.println("Imagen no cargada correctamente.");
 		}
 	}
+	/**
+	 * Este metodo se encargara de retornar la imagen de fondo.
+	 * @return imagenFondo
+	 */
 	public BotonRedondeado getSeleccionImagen() {
 		return seleccionImagen;
 	}
+	/**
+	 * Este metodo se encargara de modificar la imagen de fondo.
+	 * @param seleccionImagen
+	 */
 	public void setSeleccionImagen(BotonRedondeado seleccionImagen) {
 		this.seleccionImagen = seleccionImagen;
 	}
+	/**
+	 * Este metodo se encargara de retornar el boton de agregar.
+	 * @return botonAgregar
+	 */
 	public BotonRedondeado getBotonAgregar() {
 		return botonAgregar;
 	}
+	/**
+	 * Este metodo se encargara de modificar el boton de agregar.
+	 * @param botonAgregar
+	 */
 	public void setBotonAgregar(BotonRedondeado botonAgregar) {
 		this.botonAgregar = botonAgregar;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del nombre.
+	 * @return datoNombre
+	 */
 	public TextFieldRedondeado getDatoNombre() {
 		return datoNombre;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del nombre.
+	 * @param datoNombre
+	 */
 	public void setDatoNombre(TextFieldRedondeado datoNombre) {
 		this.datoNombre = datoNombre;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo numerico del precio.
+	 * @return datoPrecio
+	 */
 	public JSpinner getDatoPrecio() {
 		return datoPrecio;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo numerica del precio.
+	 * @param datoPrecio
+	 */
 	public void setDatoPrecio(JSpinner datoPrecio) {
 		this.datoPrecio = datoPrecio;
 	}
 
+	/**
+	 * Este metodo se encargara de retornar el campo numerico de la cantidad.
+	 * @return datoCantidad
+	 */
 	public JSpinner getDatoCantidad() {
 		return datoCantidad;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo numerico de la cantidad.
+	 * @param datoCantidad
+	 */
 	public void setDatoCantidad(JSpinner datoCantidad) {
 		this.datoCantidad = datoCantidad;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la marca.
+	 * @return datoMarca
+	 */
 	public TextFieldRedondeado getDatoMarca() {
 		return datoMarca;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la marca.
+	 * @param datoMarca
+	 */
 	public void setDatoMarca(TextFieldRedondeado datoMarca) {
 		this.datoMarca = datoMarca;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del material.
+	 * @return datoMaterial
+	 */
 	public TextFieldRedondeado getDatoMaterial() {
 		return datoMaterial;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del material.
+	 * @param datoMaterial
+	 */
 	public void setDatoMaterial(TextFieldRedondeado datoMaterial) {
 		this.datoMaterial = datoMaterial;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del color.
+	 * @return datoColor
+	 */
 	public TextFieldRedondeado getDatoColor() {
 		return datoColor;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del color.
+	 * @param datoColor
+	 */
 	public void setDatoColor(TextFieldRedondeado datoColor) {
 		this.datoColor = datoColor;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la zona.
+	 * @return datoZona
+	 */
 	public TextFieldRedondeado getDatoZona() {
 		return datoZona;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la zona.
+	 * @param datoZona
+	 */
 	public void setDatoZona(TextFieldRedondeado datoZona) {
 		this.datoZona = datoZona;
 	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del nombre.
+	 * @return etiquetaNombre
+	 */
+	public JLabel getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del nombre.
+	 * @param etiquetaNombre
+	 */
+	public void setEtiquetaNombre(JLabel etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del precio.
+	 * @return etiquetaPrecio
+	 */
+	public JLabel getEtiquetaPrecio() {
+		return etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del precio.
+	 * @param etiquetaPrecio
+	 */
+	public void setEtiquetaPrecio(JLabel etiquetaPrecio) {
+		this.etiquetaPrecio = etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la cantidad.
+	 * @return etiquetaCantidad
+	 */
+	public JLabel getEtiquetaCantidad() {
+		return etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la cantidad.
+	 * @param etiquetaCantidad
+	 */
+	public void setEtiquetaCantidad(JLabel etiquetaCantidad) {
+		this.etiquetaCantidad = etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la marca.
+	 * @return etiquetaMarca
+	 */
+	public JLabel getEtiquetaMarca() {
+		return etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la marca.
+	 * @param etiquetaMarca
+	 */
+	public void setEtiquetaMarca(JLabel etiquetaMarca) {
+		this.etiquetaMarca = etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del material.
+	 * @return etiquetaMaterial
+	 */
+	public JLabel getEtiquetaMaterial() {
+		return etiquetaMaterial;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del material.
+	 * @param etiquetaMaterial
+	 */
+	public void setEtiquetaMaterial(JLabel etiquetaMaterial) {
+		this.etiquetaMaterial = etiquetaMaterial;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del color.
+	 * @return etiquetaColor
+	 */
+	public JLabel getEtiquetaColor() {
+		return etiquetaColor;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del color.
+	 * @param etiquetaColor
+	 */
+	public void setEtiquetaColor(JLabel etiquetaColor) {
+		this.etiquetaColor = etiquetaColor;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la zona.
+	 * @return etiquetaZona
+	 */
+	public JLabel getEtiquetaZona() {
+		return etiquetaZona;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la zona.
+	 * @param etiquetaZona
+	 */
+	public void setEtiquetaZona(JLabel etiquetaZona) {
+		this.etiquetaZona = etiquetaZona;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la imagen.
+	 * @return etiquetaImagen
+	 */
+	public JLabel getEtiquetaImagen() {
+		return etiquetaImagen;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la imagen.
+	 * @param etiquetaImagen
+	 */
+	public void setEtiquetaImagen(JLabel etiquetaImagen) {
+		this.etiquetaImagen = etiquetaImagen;
+	}
+	
 
 
 }

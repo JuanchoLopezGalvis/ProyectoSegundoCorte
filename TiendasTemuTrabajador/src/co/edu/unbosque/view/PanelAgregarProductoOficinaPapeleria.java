@@ -51,7 +51,7 @@ public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 	 */
 	private TextFieldRedondeado datoMarca;
 	/**
-	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara el material del producto.
+	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara el nivel de ruido del producto.
 	 */
 	private JComboBox<String> datoNivelRuido;
 	/**
@@ -75,7 +75,7 @@ public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 	 */
 	private JLabel etiquetaMarca;
 	/**
-	 * Este atributo es el encargado de guardar la etiqueta que indica el material del producto.
+	 * Este atributo es el encargado de guardar la etiqueta que indica el nivel de ruido del producto.
 	 */
 	private JLabel etiquetaNivelRuido;
 	/**
@@ -194,4 +194,216 @@ public class PanelAgregarProductoOficinaPapeleria extends JPanel{
 			System.out.println("Imagen no cargada correctamente.");
 		}
 	}
+	/**
+	 * Este metodo se encargara de retornar la imagen de fondo.
+	 * @return imagenFondo
+	 */
+	public BotonRedondeado getSeleccionImagen() {
+		return seleccionImagen;
+	}
+	/**
+	 * Este metodo se encargara de modificar la imagen de fondo.
+	 * @param seleccionImagen
+	 */
+	public void setSeleccionImagen(BotonRedondeado seleccionImagen) {
+		this.seleccionImagen = seleccionImagen;
+	}
+	/**
+	 * Este metodo se encargara de retornar el boton de agregar.
+	 * @return botonAgregar
+	 */
+	public BotonRedondeado getBotonAgregar() {
+		return botonAgregar;
+	}
+	/**
+	 * Este metodo se encargara de modificar el boton de agregar.
+	 * @param botonAgregar
+	 */
+	public void setBotonAgregar(BotonRedondeado botonAgregar) {
+		this.botonAgregar = botonAgregar;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del nombre.
+	 * @return datoNombre
+	 */
+	public TextFieldRedondeado getDatoNombre() {
+		return datoNombre;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del nombre.
+	 * @param datoNombre
+	 */
+	public void setDatoNombre(TextFieldRedondeado datoNombre) {
+		this.datoNombre = datoNombre;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo numerico del precio.
+	 * @return datoPrecio
+	 */
+	public JSpinner getDatoPrecio() {
+		return datoPrecio;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo numerica del precio.
+	 * @param datoPrecio
+	 */
+	public void setDatoPrecio(JSpinner datoPrecio) {
+		this.datoPrecio = datoPrecio;
+	}
+
+	/**
+	 * Este metodo se encargara de retornar el campo numerico de la cantidad.
+	 * @return datoCantidad
+	 */
+	public JSpinner getDatoCantidad() {
+		return datoCantidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo numerico de la cantidad.
+	 * @param datoCantidad
+	 */
+	public void setDatoCantidad(JSpinner datoCantidad) {
+		this.datoCantidad = datoCantidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la marca.
+	 * @return datoMarca
+	 */
+	public TextFieldRedondeado getDatoMarca() {
+		return datoMarca;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la marca.
+	 * @param datoMarca
+	 */
+	public void setDatoMarca(TextFieldRedondeado datoMarca) {
+		this.datoMarca = datoMarca;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del material.
+	 * @return etiquetaMaterial
+	 */
+	public JLabel getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del material.
+	 * @param etiquetaMaterial
+	 */
+	public void setEtiquetaNombre(JLabel etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del color.
+	 * @return etiquetaColor
+	 */
+	public JLabel getEtiquetaPrecio() {
+		return etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del color.
+	 * @param etiquetaColor
+	 */
+	public void setEtiquetaPrecio(JLabel etiquetaPrecio) {
+		this.etiquetaPrecio = etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la funcionalidad.
+	 * @return etiquetaFuncionalidad
+	 */
+	public JLabel getEtiquetaCantidad() {
+		return etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la funcionalidad.
+	 * @param etiquetaFuncionalidad
+	 */
+	public void setEtiquetaCantidad(JLabel etiquetaCantidad) {
+		this.etiquetaCantidad = etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la imagen.
+	 * @return etiquetaImagen
+	 */
+	public JLabel getEtiquetaMarca() {
+		return etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la imagen.
+	 * @param etiquetaImagen
+	 */
+	public void setEtiquetaMarca(JLabel etiquetaMarca) {
+		this.etiquetaMarca = etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de retornar la comboBox del nivel de ruido.
+	 * @return datoNivelRuido
+	 */
+	public JComboBox<String> getDatoNivelRuido() {
+		return datoNivelRuido;
+	}
+	/**
+	 * Este metodo se encargara de modificar la comboBox del nivel de ruido.
+	 * @param datoNivelRuido
+	 */
+	public void setDatoNivelRuido(JComboBox<String> datoNivelRuido) {
+		this.datoNivelRuido = datoNivelRuido;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la funcion.
+	 * @return datoFuncion
+	 */
+	public TextFieldRedondeado getDatoFuncion() {
+		return datoFuncion;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la funcion.
+	 * @param datoFuncion
+	 */
+	public void setDatoFuncion(TextFieldRedondeado datoFuncion) {
+		this.datoFuncion = datoFuncion;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del nivel de ruido.
+	 * @return etiquetaNivelRuido
+	 */
+	public JLabel getEtiquetaNivelRuido() {
+		return etiquetaNivelRuido;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del nivel de ruido.
+	 * @param etiquetaNivelRuido
+	 */
+	public void setEtiquetaNivelRuido(JLabel etiquetaNivelRuido) {
+		this.etiquetaNivelRuido = etiquetaNivelRuido;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la funcionalidad.
+	 * @return etiquetaFuncion
+	 */
+	public JLabel getEtiquetaFuncion() {
+		return etiquetaFuncion;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la funcionalidad.
+	 * @param etiquetaFuncion
+	 */
+	public void setEtiquetaFuncion(JLabel etiquetaFuncion) {
+		this.etiquetaFuncion = etiquetaFuncion;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la imagen.
+	 * @return etiquetaImagen
+	 */
+	public JLabel getEtiquetaImagen() {
+		return etiquetaImagen;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la imagen.
+	 * @param etiquetaImagen
+	 */
+	public void setEtiquetaImagen(JLabel etiquetaImagen) {
+		this.etiquetaImagen = etiquetaImagen;
+	}
+	
 }

@@ -51,11 +51,11 @@ public class PanelAgregarProductoOcioRopa extends JPanel{
 	 */
 	private TextFieldRedondeado datoMarca;
 	/**
-	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara el material del producto.
+	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara el nivel de calidad del producto.
 	 */
 	private JComboBox<String> datoNivelCalidad;
 	/**
-	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la funcionalidad del producto.
+	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la talla del producto.
 	 */
 	private TextFieldRedondeado datoTalla;
 	/**
@@ -75,11 +75,11 @@ public class PanelAgregarProductoOcioRopa extends JPanel{
 	 */
 	private JLabel etiquetaMarca;
 	/**
-	 * Este atributo es el encargado de guardar la etiqueta que indica el material del producto.
+	 * Este atributo es el encargado de guardar la etiqueta que indica el nivel de calidad del producto.
 	 */
 	private JLabel etiquetaNivelCalidad;
 	/**
-	 * Este atributo es el encargado de guardar la etiqueta que indica la funcionalidad del producto.
+	 * Este atributo es el encargado de guardar la etiqueta que indica la talla del producto.
 	 */
 	private JLabel etiquetaTalla;
 	/**
@@ -195,4 +195,216 @@ public class PanelAgregarProductoOcioRopa extends JPanel{
 			System.out.println("Imagen no cargada correctamente.");
 		}
 	}
+	/**
+	 * Este metodo se encargara de retornar la imagen de fondo.
+	 * @return imagenFondo
+	 */
+	public BotonRedondeado getSeleccionImagen() {
+		return seleccionImagen;
+	}
+	/**
+	 * Este metodo se encargara de modificar la imagen de fondo.
+	 * @param seleccionImagen
+	 */
+	public void setSeleccionImagen(BotonRedondeado seleccionImagen) {
+		this.seleccionImagen = seleccionImagen;
+	}
+	/**
+	 * Este metodo se encargara de retornar el boton de agregar.
+	 * @return botonAgregar
+	 */
+	public BotonRedondeado getBotonAgregar() {
+		return botonAgregar;
+	}
+	/**
+	 * Este metodo se encargara de modificar el boton de agregar.
+	 * @param botonAgregar
+	 */
+	public void setBotonAgregar(BotonRedondeado botonAgregar) {
+		this.botonAgregar = botonAgregar;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del nombre.
+	 * @return datoNombre
+	 */
+	public TextFieldRedondeado getDatoNombre() {
+		return datoNombre;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del nombre.
+	 * @param datoNombre
+	 */
+	public void setDatoNombre(TextFieldRedondeado datoNombre) {
+		this.datoNombre = datoNombre;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo numerico del precio.
+	 * @return datoPrecio
+	 */
+	public JSpinner getDatoPrecio() {
+		return datoPrecio;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo numerica del precio.
+	 * @param datoPrecio
+	 */
+	public void setDatoPrecio(JSpinner datoPrecio) {
+		this.datoPrecio = datoPrecio;
+	}
+
+	/**
+	 * Este metodo se encargara de retornar el campo numerico de la cantidad.
+	 * @return datoCantidad
+	 */
+	public JSpinner getDatoCantidad() {
+		return datoCantidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo numerico de la cantidad.
+	 * @param datoCantidad
+	 */
+	public void setDatoCantidad(JSpinner datoCantidad) {
+		this.datoCantidad = datoCantidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la marca.
+	 * @return datoMarca
+	 */
+	public TextFieldRedondeado getDatoMarca() {
+		return datoMarca;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la marca.
+	 * @param datoMarca
+	 */
+	public void setDatoMarca(TextFieldRedondeado datoMarca) {
+		this.datoMarca = datoMarca;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del nivel de calidad.
+	 * @return datoNivelCalidad
+	 */
+	public JComboBox<String> getDatoNivelCalidad() {
+		return datoNivelCalidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del nivel de calidad.
+	 * @param datoNivelCalidad
+	 */
+	public void setDatoNivelCalidad(JComboBox<String> datoNivelCalidad) {
+		this.datoNivelCalidad = datoNivelCalidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la talla.
+	 * @return datoTalla
+	 */
+	public TextFieldRedondeado getDatoTalla() {
+		return datoTalla;
+	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la talla.
+	 * @param datoTalla
+	 */
+	public void setDatoTalla(TextFieldRedondeado datoTalla) {
+		this.datoTalla = datoTalla;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del material.
+	 * @return etiquetaMaterial
+	 */
+	public JLabel getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del material.
+	 * @param etiquetaMaterial
+	 */
+	public void setEtiquetaNombre(JLabel etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del color.
+	 * @return etiquetaColor
+	 */
+	public JLabel getEtiquetaPrecio() {
+		return etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del color.
+	 * @param etiquetaColor
+	 */
+	public void setEtiquetaPrecio(JLabel etiquetaPrecio) {
+		this.etiquetaPrecio = etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la funcionalidad.
+	 * @return etiquetaFuncionalidad
+	 */
+	public JLabel getEtiquetaCantidad() {
+		return etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la funcionalidad.
+	 * @param etiquetaFuncionalidad
+	 */
+	public void setEtiquetaCantidad(JLabel etiquetaCantidad) {
+		this.etiquetaCantidad = etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la imagen.
+	 * @return etiquetaImagen
+	 */
+	public JLabel getEtiquetaMarca() {
+		return etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la imagen.
+	 * @param etiquetaImagen
+	 */
+	public void setEtiquetaMarca(JLabel etiquetaMarca) {
+		this.etiquetaMarca = etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del nivel de calidad.
+	 * @return etiquetaNivelCalidad
+	 */
+	public JLabel getEtiquetaNivelCalidad() {
+		return etiquetaNivelCalidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del nivel de calidad.
+	 * @param etiquetaNivelCalidad
+	 */
+	public void setEtiquetaNivelCalidad(JLabel etiquetaNivelCalidad) {
+		this.etiquetaNivelCalidad = etiquetaNivelCalidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la talla.
+	 * @return etiquetaTalla
+	 */
+	public JLabel getEtiquetaTalla() {
+		return etiquetaTalla;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la talla.
+	 * @param etiquetaTalla
+	 */
+	public void setEtiquetaTalla(JLabel etiquetaTalla) {
+		this.etiquetaTalla = etiquetaTalla;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la imagen.
+	 * @return etiquetaImagen
+	 */
+	public JLabel getEtiquetaImagen() {
+		return etiquetaImagen;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la imagen.
+	 * @param etiquetaImagen
+	 */
+	public void setEtiquetaImagen(JLabel etiquetaImagen) {
+		this.etiquetaImagen = etiquetaImagen;
+	}
+	
 }

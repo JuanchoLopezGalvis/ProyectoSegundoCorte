@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
 
 public class PanelSignUp extends JPanel{
 
@@ -50,6 +51,8 @@ public class PanelSignUp extends JPanel{
 		datoContraseñaConfirmacion.setBackground(Color.DARK_GRAY);
 		datoContraseña.setForeground(Color.white);
 		datoContraseñaConfirmacion.setForeground(Color.white);
+		datoContraseña.setHorizontalAlignment(SwingConstants.RIGHT);
+		datoContraseñaConfirmacion.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(imagenContraseñaConfirmacion);
 		add(botonAgregarTrabajador);
 		add(imagenUser);

@@ -9,8 +9,12 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
 /**
  * Esta clase se encargara de crear el panel que permitira agregar un producto de la categoria Hogar y Cocina.
  */
@@ -35,11 +39,11 @@ public class PanelAgregarProductoHogarCocina extends JPanel{
 	/**
 	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara el precio del producto.
 	 */
-	private TextFieldRedondeado datoPrecio;
+	private JSpinner datoPrecio;
 	/**
 	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la cantidad del producto.
 	 */
-	private TextFieldRedondeado datoCantidad;
+	private JSpinner datoCantidad;
 	/**
 	 * Este atributo es el encargado de guardar el campo de texto donde se ingresara la marca del producto.
 	 */
@@ -102,12 +106,26 @@ public class PanelAgregarProductoHogarCocina extends JPanel{
 		seleccionImagen = new BotonRedondeado("Seleccionar", 20, Color.DARK_GRAY, Color.decode("#f67704"), Color.white);
 		botonAgregar = new BotonRedondeado("Agregar", 20, Color.DARK_GRAY, Color.decode("#f67704"), Color.white);
 		datoNombre = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
-		datoPrecio = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);	
-		datoCantidad = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
+		datoPrecio = new JSpinner();
+		datoCantidad = new JSpinner();	
 		datoMarca = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoMaterial = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoColor = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
 		datoFuncionalidad = new TextFieldRedondeado(Color.white, Color.DARK_GRAY, 20, Color.decode("#f67704"), 1.5f);
+		datoPrecio.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1000));
+		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
+		((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField().setForeground(Color.WHITE);
+		JFormattedTextField txt = ((JSpinner.DefaultEditor) datoPrecio.getEditor()).getTextField();
+		NumberFormatter formatter = (NumberFormatter) txt.getFormatter();
+		formatter.setAllowsInvalid(false);  // No permite caracteres no numéricos
+		formatter.setMinimum(0); 
+		datoCantidad.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setBackground(Color.DARK_GRAY);
+		((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField().setForeground(Color.WHITE);
+		JFormattedTextField txt2 = ((JSpinner.DefaultEditor) datoCantidad.getEditor()).getTextField();
+		NumberFormatter formatter2 = (NumberFormatter) txt2.getFormatter();
+		formatter2.setAllowsInvalid(false);  // No permite caracteres no numéricos
+		formatter2.setMinimum(0); 
 		etiquetaNombre = new JLabel("Nombre:");
 		etiquetaPrecio = new JLabel("Precio:");
 		etiquetaCantidad = new JLabel("Cantidad:");
@@ -187,59 +205,245 @@ public class PanelAgregarProductoHogarCocina extends JPanel{
 			System.out.println("Imagen no cargada correctamente.");
 		}
 	}
+	/**
+	 * Este metodo se encargara de retornar la imagen de fondo.
+	 * @return imagenFondo
+	 */
 	public BotonRedondeado getSeleccionImagen() {
 		return seleccionImagen;
 	}
+	/**
+	 * Este metodo se encargara de modificar la imagen de fondo.
+	 * @param seleccionImagen
+	 */
 	public void setSeleccionImagen(BotonRedondeado seleccionImagen) {
 		this.seleccionImagen = seleccionImagen;
 	}
+	/**
+	 * Este metodo se encargara de retornar el boton de agregar.
+	 * @return botonAgregar
+	 */
 	public BotonRedondeado getBotonAgregar() {
 		return botonAgregar;
 	}
+	/**
+	 * Este metodo se encargara de modificar el boton de agregar.
+	 * @param botonAgregar
+	 */
 	public void setBotonAgregar(BotonRedondeado botonAgregar) {
 		this.botonAgregar = botonAgregar;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto del nombre.
+	 * @return datoNombre
+	 */
 	public TextFieldRedondeado getDatoNombre() {
 		return datoNombre;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto del nombre.
+	 * @param datoNombre
+	 */
 	public void setDatoNombre(TextFieldRedondeado datoNombre) {
 		this.datoNombre = datoNombre;
 	}
-	public TextFieldRedondeado getDatoPrecio() {
+
+	/**
+	 * Este metodo se encargara de retornar el campo numerico del precio.
+	 * @return datoPrecio
+	 */
+	public JSpinner getDatoPrecio() {
 		return datoPrecio;
 	}
-	public void setDatoPrecio(TextFieldRedondeado datoPrecio) {
+	/**
+	 * Este metodo se encargara de modificar el campo numerico del precio.
+	 * @param datoPrecio
+	 */
+	public void setDatoPrecio(JSpinner datoPrecio) {
 		this.datoPrecio = datoPrecio;
 	}
-	public TextFieldRedondeado getDatoCantidad() {
+	/**
+	 * Este metodo se encargara de retornar el campo numerico de la cantidad.
+	 * @return datoCantidad
+	 */
+	public JSpinner getDatoCantidad() {
 		return datoCantidad;
 	}
-	public void setDatoCantidad(TextFieldRedondeado datoCantidad) {
+	/**
+	 * Este metodo se encargara de modificar el campo numerico de la cantidad.
+	 * @param datoCantidad
+	 */
+	public void setDatoCantidad(JSpinner datoCantidad) {
 		this.datoCantidad = datoCantidad;
 	}
+	/**
+	 * Este metodo se encargara de retornar el campo de texto de la marca.
+	 * @return datoMarca
+	 */
 	public TextFieldRedondeado getDatoMarca() {
 		return datoMarca;
 	}
+	/**
+	 * Este metodo se encargara de modificar el campo de texto de la marca.
+	 * @param datoMarca
+	 */
 	public void setDatoMarca(TextFieldRedondeado datoMarca) {
 		this.datoMarca = datoMarca;
 	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del nombre.
+	 * @return etiquetaNombre
+	 */
 	public TextFieldRedondeado getDatoMaterial() {
 		return datoMaterial;
 	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del nombre.
+	 * @param etiquetaNombre
+	 */
 	public void setDatoMaterial(TextFieldRedondeado datoMaterial) {
 		this.datoMaterial = datoMaterial;
 	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del precio.
+	 * @return etiquetaPrecio
+	 */
 	public TextFieldRedondeado getDatoColor() {
 		return datoColor;
 	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del precio.
+	 * @param etiquetaPrecio
+	 */
 	public void setDatoColor(TextFieldRedondeado datoColor) {
 		this.datoColor = datoColor;
 	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la cantidad.
+	 * @return etiquetaCantidad
+	 */
 	public TextFieldRedondeado getDatoFuncionalidad() {
 		return datoFuncionalidad;
 	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la cantidad.
+	 * @param etiquetaCantidad
+	 */
 	public void setDatoFuncionalidad(TextFieldRedondeado datoFuncionalidad) {
 		this.datoFuncionalidad = datoFuncionalidad;
 	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la marca.
+	 * @return etiquetaMarca
+	 */
+	public Image getImagenFondo() {
+		return imagenFondo;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la marca.
+	 * @param etiquetaMarca
+	 */
+	public void setImagenFondo(Image imagenFondo) {
+		this.imagenFondo = imagenFondo;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del material.
+	 * @return etiquetaMaterial
+	 */
+	public JLabel getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del material.
+	 * @param etiquetaMaterial
+	 */
+	public void setEtiquetaNombre(JLabel etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del color.
+	 * @return etiquetaColor
+	 */
+	public JLabel getEtiquetaPrecio() {
+		return etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del color.
+	 * @param etiquetaColor
+	 */
+	public void setEtiquetaPrecio(JLabel etiquetaPrecio) {
+		this.etiquetaPrecio = etiquetaPrecio;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la funcionalidad.
+	 * @return etiquetaFuncionalidad
+	 */
+	public JLabel getEtiquetaCantidad() {
+		return etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la funcionalidad.
+	 * @param etiquetaFuncionalidad
+	 */
+	public void setEtiquetaCantidad(JLabel etiquetaCantidad) {
+		this.etiquetaCantidad = etiquetaCantidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de la imagen.
+	 * @return etiquetaImagen
+	 */
+	public JLabel getEtiquetaMarca() {
+		return etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de la imagen.
+	 * @param etiquetaImagen
+	 */
+	public void setEtiquetaMarca(JLabel etiquetaMarca) {
+		this.etiquetaMarca = etiquetaMarca;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del material.
+	 * @return etiquetaMaterial
+	 */
+	public JLabel getEtiquetaMaterial() {
+		return etiquetaMaterial;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del material.
+	 * @param etiquetaMaterial
+	 */
+	public void setEtiquetaMaterial(JLabel etiquetaMaterial) {
+		this.etiquetaMaterial = etiquetaMaterial;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del color.
+	 * @return etiquetaColor
+	 */
+	public JLabel getEtiquetaFuncionalidad() {
+		return etiquetaFuncionalidad;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del color.
+	 * @param etiquetaColor
+	 */
+	public void setEtiquetaFuncionalidad(JLabel etiquetaFuncionalidad) {
+		this.etiquetaFuncionalidad = etiquetaFuncionalidad;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta del color.
+	 * @return etiquetaColor
+	 */
+	public JLabel getEtiquetaColor() {
+		return etiquetaColor;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta del color.
+	 * @param etiquetaColor
+	 */
+	public void setEtiquetaColor(JLabel etiquetaColor) {
+		this.etiquetaColor = etiquetaColor;
+	}
+	
 	
 }

@@ -86,6 +86,7 @@ public class VentanaPostLogIn extends JFrame{
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(new BorderLayout());
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		panelCardLayout = new PanelCardLayout();
 		barraMenu = new JMenuBar();
