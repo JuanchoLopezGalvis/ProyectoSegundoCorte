@@ -20,6 +20,7 @@ import co.edu.unbosque.model.ProductoOcioJuguete;
 import co.edu.unbosque.model.ProductoOcioRopa;
 import co.edu.unbosque.model.ProductoOficinaElectrodomestico;
 import co.edu.unbosque.model.ProductoOficinaPapeleria;
+import co.edu.unbosque.model.persistence.FileManager;
 import co.edu.unbosque.view.ViewFacade;
 
 /**
@@ -50,6 +51,12 @@ public class Controller implements ActionListener{
 	public Controller() {
 		vf = new ViewFacade();
 		mf = new ModelFacade();
+		mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla());
+		mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla());
+		mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla());
+		mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla());
+		mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla());
+		mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla());
 	}
 	/**
 	 * La funcion run permite el inicio de la ejecución
@@ -57,6 +64,7 @@ public class Controller implements ActionListener{
 	 */
 	public void run() {
 
+		FileManager.crearCarpeta();
 		prop = new Properties();
 		vf.getVli().setVisible(true);
 		vf.getVpli().setVisible(false);

@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ProductoHogarBanio extends ProductoHogar implements Serializable {
 
 	/**
-	 * la zona en la que se utiliza el producto ejmplo:(Ducha, lavamanos, inodoro
+	 * la zona en la que se utiliza el producto ejemplo:(Ducha, lavamanos, inodoro
 	 */
 	private String zona;
 

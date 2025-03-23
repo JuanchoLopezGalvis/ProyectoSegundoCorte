@@ -14,6 +14,9 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 	
 	private ArrayList<ProductoOficinaElectrodomestico> listaProductosOficinaElectrodomestico;
 
+	public ProductoOficinaElectrodomesticoDAO() {
+		listaProductosOficinaElectrodomestico = new ArrayList<ProductoOficinaElectrodomestico>();
+	}
 	@Override
 	public void guardar(ProductoOficinaElectrodomestico c) {
 		// TODO Auto-generated method stub
