@@ -56,6 +56,7 @@ public class Controller implements ActionListener{
 
 	}
 
+
 	public void cargarProductosHogarBanioEnTabla() {
 		DefaultTableModel modelo = (DefaultTableModel) vf.getVpli().getPanelCardLayout().getPlphb().getTabla().getModel();
 		modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
@@ -63,11 +64,12 @@ public class Controller implements ActionListener{
 
 		for (ProductoHogarBanio p : mf.getProductoHogarBanioDAO().getListaProductosHogarBanio()) {
 			Image imagenEscalada = p.getImagen().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-	        ImageIcon imagen = new ImageIcon(imagenEscalada);
+			ImageIcon imagen = new ImageIcon(imagenEscalada);
 
 			modelo.addRow(new Object[]{p.getNombre(), p.getPrecio(), p.getCantidad(), p.getMarca(),  p.getMaterial(), p.getColor(), p.getZona(), imagen});
 		}
 	}
+
 
 
 	/**
@@ -82,8 +84,35 @@ public class Controller implements ActionListener{
 		vf.getVli().getPli().getBtnRegistrarse().addActionListener(this);
 		vf.getVli().getPli().getBtnRegistrarse().setActionCommand("btnRegistrarse");
 
+
 		vf.getVpli().getPanelCardLayout().getPagphb().getBotonAgregar().addActionListener(this);
 		vf.getVpli().getPanelCardLayout().getPagphb().getBotonAgregar().setActionCommand("btnAgregarPhb");
+
+		vf.getVpli().getAgregarPhb().addActionListener(this);
+		vf.getVpli().getAgregarPhb().setActionCommand("agregarPhb");
+		vf.getVpli().getAgregarPhc().addActionListener(this);
+		vf.getVpli().getAgregarPhc().setActionCommand("agregarPhc");
+		vf.getVpli().getAgregarPoj().addActionListener(this);
+		vf.getVpli().getAgregarPoj().setActionCommand("agregarPoj");
+		vf.getVpli().getAgregarPor().addActionListener(this);
+		vf.getVpli().getAgregarPor().setActionCommand("agregarPor");
+		vf.getVpli().getAgregarPoe().addActionListener(this);
+		vf.getVpli().getAgregarPoe().setActionCommand("agregarPoe");
+		vf.getVpli().getAgregarPop().addActionListener(this);
+		vf.getVpli().getAgregarPop().setActionCommand("agregarPop");
+
+		vf.getVpli().getActualizarPhb().addActionListener(this);
+		vf.getVpli().getActualizarPhb().setActionCommand("actualizarPhb");
+		vf.getVpli().getActualizarPhc().addActionListener(this);
+		vf.getVpli().getActualizarPhc().setActionCommand("actualizarPhc");
+		vf.getVpli().getActualizarPoj().addActionListener(this);
+		vf.getVpli().getActualizarPoj().setActionCommand("actualizarPoj");
+		vf.getVpli().getActualizarPor().addActionListener(this);
+		vf.getVpli().getActualizarPor().setActionCommand("actualizarPor");
+		vf.getVpli().getActualizarPoe().addActionListener(this);
+		vf.getVpli().getActualizarPoe().setActionCommand("actualizarPoe");
+		vf.getVpli().getActualizarPop().addActionListener(this);
+		vf.getVpli().getActualizarPop().setActionCommand("actualizarPop");
 
 		vf.getVpli().getAgregarPhb().addActionListener(this);
 		vf.getVpli().getAgregarPhb().setActionCommand("agregarPhb");
@@ -240,13 +269,19 @@ public class Controller implements ActionListener{
 		break;
 		case "btnIngresar":{
 			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
+			String password = vf.getVli().getPli().getDatoContraseña().getText();
 			if(!usuario.isEmpty()) {
 				vf.getVpli().setVisible(true);
 				vf.getVli().setVisible(false);
 			}else {
 				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
 			}
-
+			if(!password.isEmpty() || password.length() > 3) {
+				vf.getVpli().setVisible(true);
+				vf.getVli().setVisible(false);
+			}else {
+				JOptionPane.showMessageDialog(null, "El campo contraseña debe ser valido");
+			}
 
 		}
 		break;

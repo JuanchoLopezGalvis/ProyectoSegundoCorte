@@ -7,7 +7,7 @@ import java.io.Serializable;
  * La clase ProductoOficina es una clase hija de la clase Producto
  * y representa los productos de oficina.
  */
-public class ProductoOficina extends Producto implements Serializable{
+public abstract class ProductoOficina extends Producto implements Serializable{
 	
 	/**
 	 * El uso del producto en la oficina

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * La clase ProductoOcio es una clase hija de la clase Producto
  * y representa los productos de ocio.
  */
-public class ProductoOcio extends Producto implements Serializable{
+public abstract class ProductoOcio extends Producto implements Serializable{
 	
 	/**
 	 * El nivel de calidad del producto para el uso
