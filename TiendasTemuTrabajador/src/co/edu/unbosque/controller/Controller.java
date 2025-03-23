@@ -26,6 +26,9 @@ import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener{
 
+	/**
+	 * Instancia de la {@link ModelFacade} para acceder a los metodos de la logica de los productos.
+	 */
 	private ModelFacade mf;
 	/**
 	 * Instacia de la {@link ViewFacade} para acceder a todas las
@@ -57,6 +60,11 @@ public class Controller implements ActionListener{
 	}
 
 
+	/**
+	 * La funcion cargarProductosHogarBanioEnTabla se encargara de cargar
+	 * los productos de hogar de baño que se encuentran en la base de datos en la tabla
+	 * de la ventana de listar productos de hogar.
+	 */
 	public void cargarProductosHogarBanioEnTabla() {
 		DefaultTableModel modelo = (DefaultTableModel) vf.getVpli().getPanelCardLayout().getPlphb().getTabla().getModel();
 		modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
