@@ -21,7 +21,7 @@ import javax.swing.text.NumberFormatter;
 
 /**
  * Esta clase se encargara de crear el panel que permitira agregar un producto de hogar de baño.
- *
+ *Esta clase extiende de {@link JPanel} y ademas implementa la interfaz {@link ActionListener}.
  */
 public class PanelAgregarProductoHogarBanio extends JPanel{
 
@@ -105,7 +105,7 @@ public class PanelAgregarProductoHogarBanio extends JPanel{
 
 	/**
 	 * Este metodo se encargara de inicializar los componentes de la clase
-	 * {@link PanelAgregarProductoHogarCocina}
+	 * {@link PanelAgregarProductoHogarBanio}
 	 */
 	public PanelAgregarProductoHogarBanio() {
 		setSize(1250, 650);

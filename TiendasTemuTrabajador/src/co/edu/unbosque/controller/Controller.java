@@ -15,6 +15,11 @@ import javax.swing.table.DefaultTableModel;
 
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.ProductoHogarBanio;
+import co.edu.unbosque.model.ProductoHogarCocina;
+import co.edu.unbosque.model.ProductoOcioJuguete;
+import co.edu.unbosque.model.ProductoOcioRopa;
+import co.edu.unbosque.model.ProductoOficinaElectrodomestico;
+import co.edu.unbosque.model.ProductoOficinaPapeleria;
 import co.edu.unbosque.view.ViewFacade;
 
 /**
@@ -59,27 +64,6 @@ public class Controller implements ActionListener{
 
 	}
 
-
-	/**
-	 * La funcion cargarProductosHogarBanioEnTabla se encargara de cargar
-	 * los productos de hogar de baño que se encuentran en la base de datos en la tabla
-	 * de la ventana de listar productos de hogar.
-	 */
-	public void cargarProductosHogarBanioEnTabla() {
-		DefaultTableModel modelo = (DefaultTableModel) vf.getVpli().getPanelCardLayout().getPlphb().getTabla().getModel();
-		modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
-
-
-		for (ProductoHogarBanio p : mf.getProductoHogarBanioDAO().getListaProductosHogarBanio()) {
-			Image imagenEscalada = p.getImagen().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-			ImageIcon imagen = new ImageIcon(imagenEscalada);
-
-			modelo.addRow(new Object[]{p.getNombre(), p.getPrecio(), p.getCantidad(), p.getMarca(),  p.getMaterial(), p.getColor(), p.getZona(), imagen});
-		}
-	}
-
-
-
 	/**
 	 * La funcion asignarLectores se encargara de asignarle
 	 * a cada uno de los botones de las ventanas del aplicativo
@@ -95,6 +79,17 @@ public class Controller implements ActionListener{
 
 		vf.getVpli().getPanelCardLayout().getPagphb().getBotonAgregar().addActionListener(this);
 		vf.getVpli().getPanelCardLayout().getPagphb().getBotonAgregar().setActionCommand("btnAgregarPhb");
+		vf.getVpli().getPanelCardLayout().getPagphc().getBotonAgregar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPagphc().getBotonAgregar().setActionCommand("btnAgregarPhc");
+		vf.getVpli().getPanelCardLayout().getPagpoj().getBotonAgregar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPagpoj().getBotonAgregar().setActionCommand("btnAgregarPoj");
+		vf.getVpli().getPanelCardLayout().getPagpor().getBotonAgregar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPagpor().getBotonAgregar().setActionCommand("btnAgregarPor");
+		vf.getVpli().getPanelCardLayout().getPagpoe().getBotonAgregar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPagpoe().getBotonAgregar().setActionCommand("btnAgregarPoe");
+		vf.getVpli().getPanelCardLayout().getPagpop().getBotonAgregar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPagpop().getBotonAgregar().setActionCommand("btnAgregarPop");
+
 
 		vf.getVpli().getAgregarPhb().addActionListener(this);
 		vf.getVpli().getAgregarPhb().setActionCommand("agregarPhb");
@@ -221,10 +216,227 @@ public class Controller implements ActionListener{
 			}
 
 			mf.getProductoHogarBanioDAO().guardar(new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona));
-			cargarProductosHogarBanioEnTabla();
+			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla());
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoMaterial().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoColor().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphb().getDatoZona().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphb().setImagenProducto(null);		
 			JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
 
 		}
+		break;
+		case "btnAgregarPhc":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPagphc().getDatoMarca().getText();
+			String material = vf.getVpli().getPanelCardLayout().getPagphc().getDatoMaterial().getText();
+			String color = vf.getVpli().getPanelCardLayout().getPagphc().getDatoColor().getText();
+			String funcionalidad = vf.getVpli().getPanelCardLayout().getPagphc().getDatoFuncionalidad().getText();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPagphc().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty() || funcionalidad.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+
+			mf.getProductoHogarCocinaDAO().guardar(new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad));
+			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla());
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoMaterial().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoColor().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphc().getDatoFuncionalidad().setText("");
+			vf.getVpli().getPanelCardLayout().getPagphc().setImagenProducto(null);
+			JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
+		}
+		break;
+		case "btnAgregarPoj":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoMarca().getText();
+			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNivelCalidad().getSelectedItem().toString();
+			Number edadRecomendadaObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoEdadRecomendada().getValue();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPagpoj().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("")  ) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null || edadRecomendadaObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+			int edadRecomendada = edadRecomendadaObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOcioJugueteDAO().guardar(new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada));
+			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla());
+			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNivelCalidad().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoEdadRecomendada().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpoj().setImagenProducto(null);
+			JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
+		}
+		break;
+		case "btnAgregarPor":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPagpor().getDatoMarca().getText();
+			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPagpor().getDatoNivelCalidad().getSelectedItem().toString();
+			String talla = vf.getVpli().getPanelCardLayout().getPagpor().getDatoTalla().getSelectedItem().toString();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPagpor().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("") || talla.equals("")) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOcioRopaDAO().guardar(new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla));
+			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla());
+			vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpor().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpor().getDatoNivelCalidad().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPagpor().getDatoTalla().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPagpor().setImagenProducto(null);
+			JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
+		}
+		break;
+		case "btnAgregarPoe":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoMarca().getText();
+			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNivelRuido().getSelectedItem().toString();
+			String consumoEnergetico = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoConsumoEnergetico().getSelectedItem().toString();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPagpoe().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || consumoEnergetico.equals("") ) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOficinaElectrodomesticoDAO().guardar(new ProductoOficinaElectrodomestico(nombre, precio, cantidad, marca, imagen, nivelDeRuido, consumoEnergetico));
+			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla());
+			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNivelRuido().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoConsumoEnergetico().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPagpoe().setImagenProducto(null);
+			JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
+			}
+		break;			
+		case "btnAgregarPop":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPagpop().getDatoMarca().getText();
+			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPagpop().getDatoNivelRuido().getSelectedItem().toString();
+			String funcion = vf.getVpli().getPanelCardLayout().getPagpop().getDatoFuncion().getText();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPagpop().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || funcion.isEmpty() ) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOficinaPapeleriaDAO().guardar(new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion));
+			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla());
+			vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPagpop().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpop().getDatoNivelRuido().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPagpop().getDatoFuncion().setText("");
+			vf.getVpli().getPanelCardLayout().getPagpop().setImagenProducto(null);
+			JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
+			}
 		break;
 		case "btnRegistrarse":{
 			vf.getVsu().setVisible(true);
@@ -394,3 +606,4 @@ public class Controller implements ActionListener{
 
 	}
 }
+

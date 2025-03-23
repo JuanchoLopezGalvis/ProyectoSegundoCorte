@@ -1,5 +1,8 @@
 package co.edu.unbosque.model.persistence;
 
+import javax.swing.JPanel;
+import javax.swing.JTable;
+
 /**
  * La interfaz {@link OperacionDAO} es la encargada de manejar las operaciones de la base de datos.
  * 
@@ -11,6 +14,6 @@ public interface OperacionDAO <C> {
 	public C buscar();
 	public void eliminar();
 	public void actualizar(C c);
-	public void listar();
+	public void listar(JTable tabla);
 
 }
