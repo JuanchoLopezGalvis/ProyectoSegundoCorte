@@ -14,6 +14,10 @@ import java.io.IOException;
 public class Trabajador {
 	 private String usuario;
 	    private String contraseña;
+	
+	public Trabajador() {
+			// TODO Auto-generated constructor stub
+		}
 
 	    public Trabajador(String usuario, String contraseña) {
 	        this.usuario = usuario;
