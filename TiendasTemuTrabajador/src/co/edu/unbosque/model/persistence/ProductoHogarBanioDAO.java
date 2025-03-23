@@ -2,9 +2,11 @@ package co.edu.unbosque.model.persistence;
 
 import java.awt.Image;
 
+
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -46,8 +48,9 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 		
 	}
 
+
 	@Override
-	public void listar(JTable tabla) {
+	public void listar(JTable tabla, JComboBox<String> comboBox) {
 			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 			modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
 
@@ -57,6 +60,10 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 				ImageIcon imagen = new ImageIcon(imagenEscalada);
 
 				modelo.addRow(new Object[]{p.getNombre(), p.getPrecio(), p.getCantidad(), p.getMarca(),  p.getMaterial(), p.getColor(), p.getZona(), imagen});
+			}
+			comboBox.removeAllItems();
+			for (ProductoHogarBanio p : listaProductosHogarBanio) {
+				comboBox.addItem(p.getNombre());
 			}
 		}
 		

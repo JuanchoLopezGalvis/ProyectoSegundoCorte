@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -43,7 +44,7 @@ public class ProductoHogarCocinaDAO implements OperacionDAO<ProductoHogarCocina>
 	}
 
 	@Override
-	public void listar(JTable tabla) {
+	public void listar(JTable tabla, JComboBox<String> comboBox) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
 

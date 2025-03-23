@@ -1,5 +1,6 @@
 package co.edu.unbosque.model.persistence;
 
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -14,6 +15,6 @@ public interface OperacionDAO <C> {
 	public C buscar();
 	public void eliminar();
 	public void actualizar(C c);
-	public void listar(JTable tabla);
+	public void listar(JTable tabla, JComboBox<String> comboBox);
 
 }

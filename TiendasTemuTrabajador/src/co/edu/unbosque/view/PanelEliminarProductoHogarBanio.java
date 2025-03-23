@@ -60,4 +60,20 @@ public class PanelEliminarProductoHogarBanio extends JPanel{
 		}
 	}
 
+	public BotonRedondeado getBotonEliminar() {
+		return botonEliminar;
+	}
+
+	public void setBotonEliminar(BotonRedondeado botonEliminar) {
+		this.botonEliminar = botonEliminar;
+	}
+
+	public JComboBox<String> getProductosExistentes() {
+		return productosExistentes;
+	}
+
+	public void setProductosExistentes(JComboBox<String> productosExistentes) {
+		this.productosExistentes = productosExistentes;
+	}
+
 }

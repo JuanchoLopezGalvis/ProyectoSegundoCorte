@@ -60,4 +60,30 @@ public class PanelEliminarProductoOcioJuguete extends JPanel{
 		}
 	}
 
+	public BotonRedondeado getBotonEliminar() {
+		return botonEliminar;
+	}
+
+	public void setBotonEliminar(BotonRedondeado botonEliminar) {
+		this.botonEliminar = botonEliminar;
+	}
+
+	public Image getImagenFondo() {
+		return imagenFondo;
+	}
+
+	public void setImagenFondo(Image imagenFondo) {
+		this.imagenFondo = imagenFondo;
+	}
+
+	public JComboBox<String> getProductosExistentes() {
+		return productosExistentes;
+	}
+
+	public void setProductosExistentes(JComboBox<String> productosExistentes) {
+		this.productosExistentes = productosExistentes;
+	}
+	
+	
+
 }
