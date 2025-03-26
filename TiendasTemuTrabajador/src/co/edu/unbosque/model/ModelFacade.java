@@ -6,6 +6,7 @@ import co.edu.unbosque.model.persistence.ProductoOcioJugueteDAO;
 import co.edu.unbosque.model.persistence.ProductoOcioRopaDAO;
 import co.edu.unbosque.model.persistence.ProductoOficinaElectrodomesticoDAO;
 import co.edu.unbosque.model.persistence.ProductoOficinaPapeleriaDAO;
+import co.edu.unbosque.model.persistence.TrabajadorDAO;
 
 public class ModelFacade {
 	
@@ -15,6 +16,7 @@ public class ModelFacade {
 	private ProductoOcioRopaDAO productoOcioRopaDAO;
 	private ProductoOficinaPapeleriaDAO productoOficinaPapeleriaDAO;
 	private ProductoOficinaElectrodomesticoDAO productoOficinaElectrodomesticoDAO;
+	private TrabajadorDAO trabajadorDAO;
 	
 	public ModelFacade() {
 		productoHogarBanioDAO  = new ProductoHogarBanioDAO();
@@ -23,6 +25,7 @@ public class ModelFacade {
 		productoOcioRopaDAO    = new ProductoOcioRopaDAO();
 		productoOficinaPapeleriaDAO = new ProductoOficinaPapeleriaDAO();
 		productoOficinaElectrodomesticoDAO = new ProductoOficinaElectrodomesticoDAO();
+		trabajadorDAO = new TrabajadorDAO();
 	}
 
 	public ProductoHogarBanioDAO getProductoHogarBanioDAO() {
@@ -59,6 +62,14 @@ public class ModelFacade {
 
 	public ProductoOficinaPapeleriaDAO getProductoOficinaPapeleriaDAO() {
 		return productoOficinaPapeleriaDAO;
+	}
+
+	public TrabajadorDAO getTrabajadorDAO() {
+		return trabajadorDAO;
+	}
+
+	public void setTrabajadorDAO(TrabajadorDAO trabajadorDAO) {
+		this.trabajadorDAO = trabajadorDAO;
 	}
 
 	public void setProductoOficinaPapeleriaDAO(ProductoOficinaPapeleriaDAO productoOficinaPapeleriaDAO) {

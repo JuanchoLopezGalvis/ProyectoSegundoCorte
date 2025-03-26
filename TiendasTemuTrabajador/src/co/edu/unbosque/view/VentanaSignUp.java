@@ -16,4 +16,12 @@ public class VentanaSignUp extends JFrame{
 		add(panelSignUp);
 	}
 
+	public PanelSignUp getPanelSignUp() {
+		return panelSignUp;
+	}
+
+	public void setPanelSignUp(PanelSignUp panelSignUp) {
+		this.panelSignUp = panelSignUp;
+	}
+
 }

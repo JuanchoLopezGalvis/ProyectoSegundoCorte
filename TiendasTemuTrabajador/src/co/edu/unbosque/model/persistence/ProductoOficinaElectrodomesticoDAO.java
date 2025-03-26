@@ -8,18 +8,25 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import co.edu.unbosque.model.ProductoOcioRopa;
 import co.edu.unbosque.model.ProductoOficinaElectrodomestico;
 
 public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<ProductoOficinaElectrodomestico>{
 
 	
 	private ArrayList<ProductoOficinaElectrodomestico> listaProductosOficinaElectrodomestico;
+	private final String TEXT_FILE_NAME = "productoOficinaElectrodomestico.csv";
+	private final String SERIAL_FILE_NAME = "productoOficinaElectrodomestico.dat";
 
 	public ProductoOficinaElectrodomesticoDAO() {
 		listaProductosOficinaElectrodomestico = new ArrayList<ProductoOficinaElectrodomestico>();
+		leerArchivoSerializado();
 	}
 	@Override
-	public void guardar(ProductoOficinaElectrodomestico c) {
+	public void guardar(ProductoOficinaElectrodomestico nuevoProducto) {
+		listaProductosOficinaElectrodomestico.add(nuevoProducto);
+		escribirArchivo();
+		escribirArchivoSerializado();
 		// TODO Auto-generated method stub
 		
 	}
@@ -32,12 +39,16 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 
 	@Override
 	public void eliminar() {
+		escribirArchivo();
+		escribirArchivoSerializado();
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void actualizar(ProductoOficinaElectrodomestico c) {
+		escribirArchivo();
+		escribirArchivoSerializado();
 		// TODO Auto-generated method stub
 		
 	}
@@ -48,12 +59,56 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 		DefaultTableModel model = (DefaultTableModel) tabla.getModel();
 		model.setRowCount(0);
 		
+		comboBox.removeAllItems();
 		for (ProductoOficinaElectrodomestico p : listaProductosOficinaElectrodomestico) {
+			comboBox.addItem(p.getNombre());
 			Image imagenEscalada = p.getImagen().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			ImageIcon imagen = new ImageIcon(imagenEscalada);
 			model.addRow(new Object[] {p.getNombre(), p.getPrecio(), p.getCantidad(), p.getMarca(), p.getNivelRuido() , p.getConsumoEnergetico(), imagen});
 		}
 		
+	}
+	
+	public void escribirArchivo() {
+	    StringBuilder contenido = new StringBuilder();
+	    for (ProductoOficinaElectrodomestico producto : listaProductosOficinaElectrodomestico) {
+	        String imagenBase64 = producto.getImagenBase64().replace("\n", "").replace("\r", "");
+
+	        contenido.append(producto.getNombre()).append(";");
+	        contenido.append(producto.getPrecio()).append(";");
+	        contenido.append(producto.getCantidad()).append(";");
+	        contenido.append(producto.getMarca()).append(";");
+	        contenido.append(producto.getNivelRuido()).append(";");
+	        contenido.append(producto.getConsumoEnergetico()).append(";");
+	        contenido.append(imagenBase64).append("\n"); 
+	    }
+	    FileManager.escribirEnArchivoDeTexto(TEXT_FILE_NAME, contenido.toString());
+	}
+	
+
+	public void escribirArchivoSerializado() {
+
+		FileManager.escribirArchivoSerializado(SERIAL_FILE_NAME, listaProductosOficinaElectrodomestico);
+
+	}
+	
+	public void leerArchivoSerializado() {
+		
+		listaProductosOficinaElectrodomestico = (ArrayList<ProductoOficinaElectrodomestico>) FileManager.leerArchivoSerializado(SERIAL_FILE_NAME);
+		
+		if (listaProductosOficinaElectrodomestico == null ) {
+			listaProductosOficinaElectrodomestico = new ArrayList<>();			
+		}
+		
+		
+	}
+	
+	public ArrayList<ProductoOficinaElectrodomestico> getListaProductosOficinaElectrodomestico() {
+		return listaProductosOficinaElectrodomestico;
+	}
+	public void setListaProductosOficinaElectrodomestico(
+			ArrayList<ProductoOficinaElectrodomestico> listaProductosOficinaElectrodomestico) {
+		this.listaProductosOficinaElectrodomestico = listaProductosOficinaElectrodomestico;
 	}
 	
 

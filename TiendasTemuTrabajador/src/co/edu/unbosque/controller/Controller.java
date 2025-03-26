@@ -20,6 +20,7 @@ import co.edu.unbosque.model.ProductoOcioJuguete;
 import co.edu.unbosque.model.ProductoOcioRopa;
 import co.edu.unbosque.model.ProductoOficinaElectrodomestico;
 import co.edu.unbosque.model.ProductoOficinaPapeleria;
+import co.edu.unbosque.model.Trabajador;
 import co.edu.unbosque.model.persistence.FileManager;
 import co.edu.unbosque.view.ViewFacade;
 
@@ -97,7 +98,11 @@ public class Controller implements ActionListener{
 		vf.getVpli().getPanelCardLayout().getPagpoe().getBotonAgregar().setActionCommand("btnAgregarPoe");
 		vf.getVpli().getPanelCardLayout().getPagpop().getBotonAgregar().addActionListener(this);
 		vf.getVpli().getPanelCardLayout().getPagpop().getBotonAgregar().setActionCommand("btnAgregarPop");
+		vf.getVsu().getPanelSignUp().getBotonAgregarTrabajador().addActionListener(this);
+		vf.getVsu().getPanelSignUp().getBotonAgregarTrabajador().setActionCommand("btnAgregarTrabajador");
 
+		vf.getVpli().getRegresarAlInicio().addActionListener(this);
+		vf.getVpli().getRegresarAlInicio().setActionCommand("volverAlInicio");
 
 		vf.getVpli().getAgregarPhb().addActionListener(this);
 		vf.getVpli().getAgregarPhb().setActionCommand("agregarPhb");
@@ -193,6 +198,43 @@ public class Controller implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "volverAlInicio":{
+			vf.getVpli().setVisible(false);
+			vf.getVli().setVisible(true);
+		}
+		break;
+		case "btnAgregarTrabajador":{
+			String usuario = vf.getVsu().getPanelSignUp().getDatoUsuario().getText();
+			String contraseña = new String(vf.getVsu().getPanelSignUp().getDatoContraseña().getPassword());
+			String contraseñaConfirmacion = new String(vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().getPassword());
+			Image imagen = vf.getVsu().getPanelSignUp().getImagenTrabajador();
+			// Verificar si los campos de texto están vacíos
+			if (usuario.isEmpty() || contraseña.isEmpty() || contraseñaConfirmacion.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si las contraseñas coinciden
+			if (!contraseña.equals(contraseñaConfirmacion)) {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+				return;
+			}
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+			
+
+			mf.getTrabajadorDAO().guardar(new Trabajador(usuario, contraseña, imagen));
+			JOptionPane.showMessageDialog(null, "Trabajador agregado correctamente");
+			vf.getVsu().getPanelSignUp().getDatoUsuario().setText("");
+			vf.getVsu().getPanelSignUp().getDatoContraseña().setText("");
+			vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().setText("");
+			vf.getVsu().getPanelSignUp().setImagenTrabajador(null);
+			break;		
+		}
 		case "btnAgregarPhb":{
 			String nombre = vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().getText();
 			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().getValue();
@@ -498,18 +540,18 @@ public class Controller implements ActionListener{
 		case "btnIngresar":{
 			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
 			String password = vf.getVli().getPli().getDatoContraseña().getText();
-			if(!usuario.isEmpty()) {
+			if(mf.getTrabajadorDAO().verificarExistencia(usuario, password)) {
 				vf.getVpli().setVisible(true);
 				vf.getVli().setVisible(false);
 			}else {
-				JOptionPane.showMessageDialog(null, "El campo usuario esta vacio");
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
 			}
-			if(!password.isEmpty() || password.length() > 3) {
-				vf.getVpli().setVisible(true);
-				vf.getVli().setVisible(false);
-			}else {
-				JOptionPane.showMessageDialog(null, "El campo contraseña debe ser valido");
-			}
+//			if(!password.isEmpty() || password.length() > 3) {
+//				vf.getVpli().setVisible(true);
+//				vf.getVli().setVisible(false);
+//			}else {
+//				JOptionPane.showMessageDialog(null, "El campo contraseña debe ser valido");
+//			}
 
 		}
 		break;

@@ -28,7 +28,8 @@ public class VentanaPostLogIn extends JFrame{
 	 * productoOcioRopa es el menu que contendra las opciones de los productos de ocio ropa
 	 * productoOficinaElectrodomestico es el menu que contendra las opciones de los productos de oficina electrodomestico
 	 */
-	private JMenu productoHogarBanio, productoHogarCocina, productoOcioJuguete, productoOcioRopa, productoOficinaElectrodomestico, productoOficianPapeleria;
+	private JMenu menu, productoHogarBanio, productoHogarCocina, productoOcioJuguete, productoOcioRopa, productoOficinaElectrodomestico, productoOficianPapeleria;
+	private JMenuItem regresarAlInicio;
 	/**
 	 * agregarPhb es la opcion de agregar un producto de hogar baño
 	 * listarPhb es la opcion de listar un producto de hogar baño
@@ -91,6 +92,7 @@ public class VentanaPostLogIn extends JFrame{
 		panelCardLayout = new PanelCardLayout();
 		barraMenu = new JMenuBar();
 
+		menu = new JMenu("Menu");
 		productoHogarBanio = new JMenu("Producto Hogar Baño");
 		productoHogarCocina = new JMenu("Producto Hogar Cocina");
 		productoOcioJuguete = new JMenu("Producto Ocio Juguete");
@@ -98,6 +100,8 @@ public class VentanaPostLogIn extends JFrame{
 		productoOficinaElectrodomestico = new JMenu("Producto Oficina Electrodomestico");
 		productoOficianPapeleria = new JMenu("Producto Oficina Papeleria");
 
+		regresarAlInicio = new JMenuItem("Regresar al inicio");
+		
 		agregarPhb = new JMenuItem("Agregar");
 		listarPhb = new JMenuItem("Listar");
 		eliminarPhb = new JMenuItem("Eliminar");
@@ -157,7 +161,10 @@ public class VentanaPostLogIn extends JFrame{
 		productoOficianPapeleria.add(listarPop);
 		productoOficianPapeleria.add(eliminarPop);
 		productoOficianPapeleria.add(actualizarPop);
+		
+		menu.add(regresarAlInicio);
 
+		barraMenu.add(menu);
 		barraMenu.add(productoHogarBanio);
 		barraMenu.add(productoHogarCocina);
 		barraMenu.add(productoOcioJuguete);
@@ -166,6 +173,7 @@ public class VentanaPostLogIn extends JFrame{
 		barraMenu.add(productoOficianPapeleria);
 
 		barraMenu.setBackground(Color.DARK_GRAY);
+		menu.setForeground(Color.white);
 		productoHogarCocina.setForeground(Color.white);
 		productoHogarBanio.setForeground(Color.white);
 		productoOcioJuguete.setForeground(Color.white);
@@ -649,6 +657,16 @@ public class VentanaPostLogIn extends JFrame{
 	 */
 	public void setActualizarPop(JMenuItem actualizarPop) {
 		this.actualizarPop = actualizarPop;
+	}
+
+
+	public JMenuItem getRegresarAlInicio() {
+		return regresarAlInicio;
+	}
+
+
+	public void setRegresarAlInicio(JMenuItem regresarAlInicio) {
+		this.regresarAlInicio = regresarAlInicio;
 	}
 
 

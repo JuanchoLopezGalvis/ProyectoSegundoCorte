@@ -38,12 +38,16 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 
 	@Override
 	public void eliminar() {
+		escribirArchivo();
+		escribirArchivoSerializado();
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void actualizar(ProductoHogarBanio c) {
+		escribirArchivo();
+		escribirArchivoSerializado();
 		// TODO Auto-generated method stub
 		
 	}
@@ -55,15 +59,13 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 			modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
 
 
+			comboBox.removeAllItems();
 			for (ProductoHogarBanio p : listaProductosHogarBanio) {
+				comboBox.addItem(p.getNombre());
 				Image imagenEscalada = p.getImagen().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 				ImageIcon imagen = new ImageIcon(imagenEscalada);
 
 				modelo.addRow(new Object[]{p.getNombre(), p.getPrecio(), p.getCantidad(), p.getMarca(),  p.getMaterial(), p.getColor(), p.getZona(), imagen});
-			}
-			comboBox.removeAllItems();
-			for (ProductoHogarBanio p : listaProductosHogarBanio) {
-				comboBox.addItem(p.getNombre());
 			}
 		}
 		
@@ -78,7 +80,8 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 	        contenido.append(producto.getMarca()).append(";");
 	        contenido.append(producto.getMaterial()).append(";");
 	        contenido.append(producto.getColor()).append(";");
-	        contenido.append(imagenBase64).append("\n"); // Salto de línea solo al final del producto
+	        contenido.append(producto.getZona()).append(";");
+	        contenido.append(imagenBase64).append("\n"); 
 	    }
 	    FileManager.escribirEnArchivoDeTexto(TEXT_FILE_NAME, contenido.toString());
 	}
