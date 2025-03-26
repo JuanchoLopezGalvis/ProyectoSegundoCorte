@@ -2,7 +2,7 @@ package co.edu.unbosque.controller;
 
 import co.edu.unbosque.util.exception.NegativeNumberException;
 import co.edu.unbosque.util.exception.NumberInStringException;
-import co.edu.unbosque.util.exception.NumberOutOfBoundException;
+//+import co.edu.unbosque.util.exception.NumberOutOfBoundException;
 
 public class ExceptionChecker {
 
@@ -19,11 +19,11 @@ public class ExceptionChecker {
 		}
 	}
 
-	public static void NumberOutOfBoundsException(int num) throws NumberOutOfBoundException {
-		if (num >= 20 || num == 0) {
-			throw new NumberOutOfBoundException();
-		}
-		}
+//	public static void NumberOutOfBoundsException(int num) throws NumberOutOfBoundException {
+//		if (num >= 20 || num == 0) {
+//			throw new NumberOutOfBoundException();
+//		}
+//		}
 
 	
 //	public static void InputMismatchException () throws InputMismatchException{
