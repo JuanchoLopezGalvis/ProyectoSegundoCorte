@@ -37,7 +37,8 @@ public class TrabajadorDAO implements OperacionDAO<Trabajador> {
 	}
 
 	@Override
-	public void eliminar() {
+	public void eliminar(JComboBox<String> comboBox) {
+		// TODO Auto-generated method stub
 		
 	}
 

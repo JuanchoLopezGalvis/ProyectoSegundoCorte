@@ -13,7 +13,7 @@ public interface OperacionDAO <C> {
 	
 	public void guardar(C c);
 	public C buscar();
-	public void eliminar();
+	public void eliminar(JComboBox<String> comboBox);
 	public void actualizar(C c);
 	public void listar(JTable tabla, JComboBox<String> comboBox);
 

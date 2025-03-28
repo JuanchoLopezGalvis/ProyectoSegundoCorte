@@ -100,7 +100,33 @@ public class Controller implements ActionListener{
 		vf.getVpli().getPanelCardLayout().getPagpop().getBotonAgregar().setActionCommand("btnAgregarPop");
 		vf.getVsu().getPanelSignUp().getBotonAgregarTrabajador().addActionListener(this);
 		vf.getVsu().getPanelSignUp().getBotonAgregarTrabajador().setActionCommand("btnAgregarTrabajador");
-
+		
+		vf.getVpli().getPanelCardLayout().getPephb().getBotonEliminar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPephb().getBotonEliminar().setActionCommand("btnEliminarPhb");
+		vf.getVpli().getPanelCardLayout().getPephc().getBotonEliminar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPephc().getBotonEliminar().setActionCommand("btnEliminarPhc");
+		vf.getVpli().getPanelCardLayout().getPepoj().getBotonEliminar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPepoj().getBotonEliminar().setActionCommand("btnEliminarPoj");
+		vf.getVpli().getPanelCardLayout().getPepor().getBotonEliminar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPepor().getBotonEliminar().setActionCommand("btnEliminarPor");
+		vf.getVpli().getPanelCardLayout().getPepoe().getBotonEliminar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPepoe().getBotonEliminar().setActionCommand("btnEliminarPoe");
+		vf.getVpli().getPanelCardLayout().getPepop().getBotonEliminar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPepop().getBotonEliminar().setActionCommand("btnEliminarPop");
+		
+		vf.getVpli().getPanelCardLayout().getPacphb().getBotonActualizar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPacphb().getBotonActualizar().setActionCommand("btnActualizarPhb");
+		vf.getVpli().getPanelCardLayout().getPacphc().getBotonActualizar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPacphc().getBotonActualizar().setActionCommand("btnActualizarPhc");
+		vf.getVpli().getPanelCardLayout().getPacpoj().getBotonActualizar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPacpoj().getBotonActualizar().setActionCommand("btnActualizarPoj");
+		vf.getVpli().getPanelCardLayout().getPacpor().getBotonActualizar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPacpor().getBotonActualizar().setActionCommand("btnActualizarPor");
+		vf.getVpli().getPanelCardLayout().getPacpoe().getBotonActualizar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPacpoe().getBotonActualizar().setActionCommand("btnActualizarPoe");
+		vf.getVpli().getPanelCardLayout().getPacpop().getBotonActualizar().addActionListener(this);
+		vf.getVpli().getPanelCardLayout().getPacpop().getBotonActualizar().setActionCommand("btnActualizarPop");
+		
 		vf.getVpli().getRegresarAlInicio().addActionListener(this);
 		vf.getVpli().getRegresarAlInicio().setActionCommand("volverAlInicio");
 
@@ -198,6 +224,36 @@ public class Controller implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "btnEliminarPhb":{
+			mf.getProductoHogarBanioDAO().eliminar(vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());
+			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(), vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());		
+		}
+		break;
+		case "btnEliminarPhc":{
+			mf.getProductoHogarCocinaDAO().eliminar(vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes());
+			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes());
+		}
+		break;
+		case "btnEliminarPoj":{
+			mf.getProductoOcioJugueteDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes());
+			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes());
+		}
+		break;
+		case "btnEliminarPor":{
+			mf.getProductoOcioRopaDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes());
+			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes());
+		}
+		break;
+		case "btnEliminarPoe":{
+			mf.getProductoOficinaElectrodomesticoDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes());
+			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes());
+		}
+		break;
+		case "btnEliminarPop":{
+			mf.getProductoOficinaPapeleriaDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes());
+			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes());
+		}
+		break;
 		case "volverAlInicio":{
 			vf.getVpli().setVisible(false);
 			vf.getVli().setVisible(true);

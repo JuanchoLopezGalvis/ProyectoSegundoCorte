@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,12 +37,22 @@ public class ProductoOcioJugueteDAO implements OperacionDAO<ProductoOcioJuguete>
 	}
 
 	@Override
-	public void eliminar() {
-		escribirArchivo();
-		escribirArchivoSerializado();
-
-		// TODO Auto-generated method stub
-
+	public void eliminar(JComboBox<String> comboBox) {
+		String seleccion = (String) comboBox.getSelectedItem();
+		if (!listaProductosOcioJuguete.isEmpty()) {
+			for (int i = 0; i < listaProductosOcioJuguete.size(); i++) {
+				if (listaProductosOcioJuguete.get(i).getNombre().equals(seleccion)){
+					int index = i;
+					listaProductosOcioJuguete.remove(index);
+					escribirArchivo();
+					escribirArchivoSerializado();
+					JOptionPane.showMessageDialog(null, "Producto eliminado");
+					break;
+				}
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No hay productos para eliminar");
+		}
 	}
 
 	@Override
@@ -66,38 +77,38 @@ public class ProductoOcioJugueteDAO implements OperacionDAO<ProductoOcioJuguete>
 		}
 
 	}
-	
-	public void escribirArchivo() {
-	    StringBuilder contenido = new StringBuilder();
-	    for (ProductoOcioJuguete producto : listaProductosOcioJuguete) {
-	        String imagenBase64 = producto.getImagenBase64().replace("\n", "").replace("\r", "");
 
-	        contenido.append(producto.getNombre()).append(";");
-	        contenido.append(producto.getPrecio()).append(";");
-	        contenido.append(producto.getCantidad()).append(";");
-	        contenido.append(producto.getMarca()).append(";");
-	        contenido.append(producto.getNivelCalidad()).append(";");
-	        contenido.append(producto.getEdadRecomendada()).append(";");
-	        contenido.append(imagenBase64).append("\n"); 
-	    }
-	    FileManager.escribirEnArchivoDeTexto(TEXT_FILE_NAME, contenido.toString());
+	public void escribirArchivo() {
+		StringBuilder contenido = new StringBuilder();
+		for (ProductoOcioJuguete producto : listaProductosOcioJuguete) {
+			String imagenBase64 = producto.getImagenBase64().replace("\n", "").replace("\r", "");
+
+			contenido.append(producto.getNombre()).append(";");
+			contenido.append(producto.getPrecio()).append(";");
+			contenido.append(producto.getCantidad()).append(";");
+			contenido.append(producto.getMarca()).append(";");
+			contenido.append(producto.getNivelCalidad()).append(";");
+			contenido.append(producto.getEdadRecomendada()).append(";");
+			contenido.append(imagenBase64).append("\n"); 
+		}
+		FileManager.escribirEnArchivoDeTexto(TEXT_FILE_NAME, contenido.toString());
 	}
-	
+
 	public void escribirArchivoSerializado() {
 
 		FileManager.escribirArchivoSerializado(SERIAL_FILE_NAME, listaProductosOcioJuguete);
 
 	}
-	
+
 	public void leerArchivoSerializado() {
-		
+
 		listaProductosOcioJuguete = (ArrayList<ProductoOcioJuguete>) FileManager.leerArchivoSerializado(SERIAL_FILE_NAME);
-		
+
 		if (listaProductosOcioJuguete == null ) {
 			listaProductosOcioJuguete = new ArrayList<>();			
 		}
-		
-		
+
+
 	}
 
 	public ArrayList<ProductoOcioJuguete> getListaProductosOcioJuguete() {

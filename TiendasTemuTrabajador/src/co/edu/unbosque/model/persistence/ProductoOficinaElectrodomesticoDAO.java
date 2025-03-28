@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,11 +39,22 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 	}
 
 	@Override
-	public void eliminar() {
-		escribirArchivo();
-		escribirArchivoSerializado();
-		// TODO Auto-generated method stub
-		
+	public void eliminar(JComboBox<String> comboBox) {
+		String seleccion = (String) comboBox.getSelectedItem();
+		if (!listaProductosOficinaElectrodomestico.isEmpty()) {
+			for (int i = 0; i < listaProductosOficinaElectrodomestico.size(); i++) {
+				if (listaProductosOficinaElectrodomestico.get(i).getNombre().equals(seleccion)){
+					int index = i;
+					listaProductosOficinaElectrodomestico.remove(index);
+					escribirArchivo();
+					escribirArchivoSerializado();
+					JOptionPane.showMessageDialog(null, "Producto eliminado");
+					break;
+				}
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No hay productos para eliminar");
+		}
 	}
 
 	@Override
