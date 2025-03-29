@@ -224,6 +224,253 @@ public class Controller implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "btnActualizarPhb":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPacphb().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacphb().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacphb().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPacphb().getDatoMarca().getText();
+			String material = vf.getVpli().getPanelCardLayout().getPacphb().getDatoMaterial().getText();
+			String color = vf.getVpli().getPanelCardLayout().getPacphb().getDatoColor().getText();
+			String zona = vf.getVpli().getPanelCardLayout().getPacphb().getDatoZona().getText();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPacphb().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty() || zona.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoHogarBanioDAO().actualizar(new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona), vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes(),  "Producto actualizado", "No hay productos para actualizar");
+			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoMaterial().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoColor().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphb().getDatoZona().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphb().setImagenProducto(null);		
+
+		}
+		break;
+		case "btnActualizarPhc":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPacphc().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacphc().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacphc().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPacphc().getDatoMarca().getText();
+			String material = vf.getVpli().getPanelCardLayout().getPacphc().getDatoMaterial().getText();
+			String color = vf.getVpli().getPanelCardLayout().getPacphc().getDatoColor().getText();
+			String funcionalidad = vf.getVpli().getPanelCardLayout().getPacphc().getDatoFuncionalidad().getText();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPacphc().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty() || funcionalidad.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+
+			mf.getProductoHogarCocinaDAO().actualizar(new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad), vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes(), "Producto actualizado", "No hay productos para actualizar");
+			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoMaterial().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoColor().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphc().getDatoFuncionalidad().setText("");
+			vf.getVpli().getPanelCardLayout().getPacphc().setImagenProducto(null);
+		}
+		break;
+		case "btnActualizarPoj":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoMarca().getText();
+			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNivelCalidad().getSelectedItem().toString();
+			Number edadRecomendadaObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoEdadRecomendada().getValue();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPacpoj().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("")  ) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null || edadRecomendadaObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+			int edadRecomendada = edadRecomendadaObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOcioJugueteDAO().actualizar(new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada), vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes(), "Producto actualizado", "No hay productos para actualizar");
+			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
+			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNivelCalidad().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoEdadRecomendada().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpoj().setImagenProducto(null);
+		}
+		break;
+		case "btnActualizarPor":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPacpor().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpor().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpor().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPacpor().getDatoMarca().getText();
+			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPacpor().getDatoNivelCalidad().getSelectedItem().toString();
+			String talla = vf.getVpli().getPanelCardLayout().getPacpor().getDatoTalla().getSelectedItem().toString();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPacpor().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("") || talla.equals("")) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOcioRopaDAO().actualizar(new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla), vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes(), "Producto actualizado", "No hay productos para actualizar");
+			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
+			vf.getVpli().getPanelCardLayout().getPacpor().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpor().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpor().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpor().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpor().getDatoNivelCalidad().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPacpor().getDatoTalla().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPacpor().setImagenProducto(null);
+		}
+		break;
+		case "btnActualizarPoe":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoe().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoe().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoMarca().getText();
+			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNivelRuido().getSelectedItem().toString();
+			String consumoEnergetico = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoConsumoEnergetico().getSelectedItem().toString();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPacpoe().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || consumoEnergetico.equals("") ) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOficinaElectrodomesticoDAO().actualizar(new ProductoOficinaElectrodomestico(nombre, precio, cantidad, marca, imagen, nivelDeRuido, consumoEnergetico), vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes(), "Producto actualizado", "No hay productos para actualizar");
+			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
+			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNivelRuido().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoConsumoEnergetico().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPacpoe().setImagenProducto(null);
+			}
+		break;			
+		case "btnActualizarPop":{
+			String nombre = vf.getVpli().getPanelCardLayout().getPacpop().getDatoNombre().getText();
+			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpop().getDatoPrecio().getValue();
+			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpop().getDatoCantidad().getValue();
+			String marca = vf.getVpli().getPanelCardLayout().getPacpop().getDatoMarca().getText();
+			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPacpop().getDatoNivelRuido().getSelectedItem().toString();
+			String funcion = vf.getVpli().getPanelCardLayout().getPacpop().getDatoFuncion().getText();
+			Image imagen = vf.getVpli().getPanelCardLayout().getPacpop().getImagenProducto();
+			// Verificar si los campos de texto están vacíos
+			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || funcion.isEmpty() ) {
+				JOptionPane.showMessageDialog(null, "Todos los campos de texto son obligatorios");
+				return;
+			}
+
+			// Verificar si los valores de los JSpinner son nulos
+			if (precioObj == null || cantidadObj == null) {
+				JOptionPane.showMessageDialog(null, "Debe ingresar un precio y una cantidad válidos");
+				return;
+			}
+
+			double precio = precioObj.doubleValue();
+			int cantidad = cantidadObj.intValue();
+
+			// Verificar que la imagen no sea nula
+			if (imagen == null) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen");
+				return;
+			}
+
+			mf.getProductoOficinaPapeleriaDAO().actualizar(new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion), vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes(), "Producto actualizado", "No hay productos para actualizar");
+			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
+			vf.getVpli().getPanelCardLayout().getPacpop().getDatoNombre().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpop().getDatoPrecio().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpop().getDatoCantidad().setValue(0);
+			vf.getVpli().getPanelCardLayout().getPacpop().getDatoMarca().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpop().getDatoNivelRuido().setSelectedIndex(0);
+			vf.getVpli().getPanelCardLayout().getPacpop().getDatoFuncion().setText("");
+			vf.getVpli().getPanelCardLayout().getPacpop().setImagenProducto(null);
+			}
+		break;
 		case "btnEliminarPhb":{
 			mf.getProductoHogarBanioDAO().eliminar(vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());
 			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(), vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());		
@@ -289,8 +536,8 @@ public class Controller implements ActionListener{
 			vf.getVsu().getPanelSignUp().getDatoContraseña().setText("");
 			vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().setText("");
 			vf.getVsu().getPanelSignUp().setImagenTrabajador(null);
-			break;		
 		}
+		break;		
 		case "btnAgregarPhb":{
 			String nombre = vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().getText();
 			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().getValue();
@@ -594,14 +841,14 @@ public class Controller implements ActionListener{
 		}
 		break;
 		case "btnIngresar":{
-			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
-			String password = vf.getVli().getPli().getDatoContraseña().getText();
-			if(mf.getTrabajadorDAO().verificarExistencia(usuario, password)) {
+//			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
+//			String password = vf.getVli().getPli().getDatoContraseña().getText();
+//			if(mf.getTrabajadorDAO().verificarExistencia(usuario, password)) {
 				vf.getVpli().setVisible(true);
 				vf.getVli().setVisible(false);
-			}else {
-				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
-			}
+//			}else {
+//				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+//			}
 //			if(!password.isEmpty() || password.length() > 3) {
 //				vf.getVpli().setVisible(true);
 //				vf.getVli().setVisible(false);

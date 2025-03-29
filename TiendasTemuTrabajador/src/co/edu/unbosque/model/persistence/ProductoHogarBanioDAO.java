@@ -86,13 +86,26 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 	 * Método que se encarga de actualizar un producto de hogar y baño
 	 * en la lista de productos de hogar y baño y de escribir en el archivo de texto y serializado.
 	 * @param c es el producto de hogar y baño que se va a actualizar
+	 * @param comboBox es el comboBox que contiene los productos de hogar y baño
+	 * @param confirmacion es el mensaje de confirmación
+	 * @param denegacion es el mensaje de denegación
 	 */
 	@Override
-	public void actualizar(ProductoHogarBanio c) {
-		escribirArchivo();
-		escribirArchivoSerializado();
-		// TODO Auto-generated method stub
-
+	public void actualizar(ProductoHogarBanio c, JComboBox<String> comboBox, String confirmacion, String denegacion) {
+		String seleccion = (String) comboBox.getSelectedItem();
+		if (!listaProductosHogarBanio.isEmpty()) {
+			for (int i = 0; i < listaProductosHogarBanio.size(); i++) {
+				if (listaProductosHogarBanio.get(i).getNombre().equals(seleccion)){
+					listaProductosHogarBanio.set(i, c);
+					escribirArchivo();
+					escribirArchivoSerializado();
+					JOptionPane.showMessageDialog(null, confirmacion);
+					break;
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, denegacion);
+		}
 	}
 
 

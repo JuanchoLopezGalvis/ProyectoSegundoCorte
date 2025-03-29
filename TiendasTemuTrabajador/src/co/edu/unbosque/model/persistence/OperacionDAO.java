@@ -28,8 +28,11 @@ public interface OperacionDAO <C> {
 	 * Actualiza un objeto en la lista y en el archivo txt y serializado.
 	 * 
 	 * @param c es el objeto que se va a actualizar.
+	 * @param comboBox es el comboBox que contiene los objetos a actualizar.
+	 * @param confirmacion es el mensaje de confirmación.
+	 * @param denegacion es el mensaje de denegación.
 	 */
-	public void actualizar(C c);
+	public void actualizar(C c, JComboBox<String> comboBox, String confirmacion, String denegacion);
 	/**
 	 * Lista los objetos.
 	 * 

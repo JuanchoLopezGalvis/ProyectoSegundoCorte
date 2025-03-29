@@ -84,13 +84,26 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 	 * Este método se encarga de actualizar un producto de ocio y ropa
 	 * en la lista de productos de ocio y ropa y de escribir en el archivo de texto y serializado.
 	 * @param c es el producto de ocio y ropa que se va a actualizar
+	 * @param comboBox es el comboBox que contiene los productos de ocio y ropa
+	 * @param confirmacion es el mensaje de confirmación
+	 * @param denegacion es el mensaje de denegación
 	 */
 	@Override
-	public void actualizar(ProductoOcioRopa c) {
-		escribirArchivo();
-		escribirArchivoSerializado();
-		// TODO Auto-generated method stub
-
+	public void actualizar(ProductoOcioRopa c, JComboBox<String> comboBox, String confirmacion, String denegacion) {
+		String seleccion = (String) comboBox.getSelectedItem();
+		if (!listaProductosOcioRopa.isEmpty()) {
+			for (int i = 0; i < listaProductosOcioRopa.size(); i++) {
+				if (listaProductosOcioRopa.get(i).getNombre().equals(seleccion)){
+					listaProductosOcioRopa.set(i, c);
+					escribirArchivo();
+					escribirArchivoSerializado();
+					JOptionPane.showMessageDialog(null, confirmacion);
+					break;
+				}
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, denegacion);
+		}
 	}
 
 	/**

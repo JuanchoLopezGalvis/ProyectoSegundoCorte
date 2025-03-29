@@ -6,7 +6,9 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -15,10 +17,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.NumberFormatter;
 
 public class PanelActualizarProductoOcioJuguete extends JPanel{
 
+	/**
+	 * Este atributo es el encargado de guardar la imagen del producto.
+	 */
+	private Image imagenProducto;
 	/**
 	 * Este atributo es el encargado de guardar la imagen de fondo del panel.
 	 */
@@ -187,17 +194,25 @@ public class PanelActualizarProductoOcioJuguete extends JPanel{
 		add(etiquetaEdadRecomendada);
 		add(datoEdadRecomendada);
 		seleccionImagen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				int result = fileChooser.showOpenDialog(PanelActualizarProductoOcioJuguete.this);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-				} else {
-					System.out.println("File selection cancelled.");
-				}
-			}
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        JFileChooser fileChooser = new JFileChooser();
+		        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png");
+		        fileChooser.setFileFilter(filter);
+		        fileChooser.setAcceptAllFileFilterUsed(false);
+		        int result = fileChooser.showOpenDialog(PanelActualizarProductoOcioJuguete.this);
+		        if (result == JFileChooser.APPROVE_OPTION) {
+		            File selectedFile = fileChooser.getSelectedFile();
+		            try {
+		                imagenProducto = ImageIO.read(selectedFile);
+		                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+		            } catch (IOException ex) {
+		                ex.printStackTrace();
+		            }
+		        } else {
+		            System.out.println("File selection cancelled.");
+		        }
+		    }
 		});
 		add(seleccionImagen);
 	}
@@ -453,5 +468,20 @@ public class PanelActualizarProductoOcioJuguete extends JPanel{
 	 */
 	public void setEtiquetaProductosExistentes(JLabel etiquetaProductosExistentes) {
 		this.etiquetaProductosExistentes = etiquetaProductosExistentes;
+	}
+	/**
+	 * Este metodo se encargara de retornar la imagen del producto.
+	 * @return imagenFondo
+	 */
+	public Image getImagenProducto() {
+		return imagenProducto;
+	}
+
+	/**
+	 * Este metodo se encargara de modificar la imagen del producto.
+	 * @param imagenProducto
+	 */
+	public void setImagenProducto(Image imagenProducto) {
+		this.imagenProducto = imagenProducto;
 	}
 }

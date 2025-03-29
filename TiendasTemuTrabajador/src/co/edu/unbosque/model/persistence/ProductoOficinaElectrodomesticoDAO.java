@@ -37,6 +37,8 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 	}
 	/**
 	 * Este método se encarga de guardar un producto de oficina y electrodomestico
+	 * en la lista de productos de oficina y electrodomestico y de escribir en el archivo de texto y serializado.
+	 * @param nuevoProducto es el producto de oficina y electrodomestico que se va a guardar
 	 */
 	@Override
 	public void guardar(ProductoOficinaElectrodomestico nuevoProducto) {
@@ -55,6 +57,7 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 
 	/**
 	 * Este método se encarga de eliminar un producto de oficina y electrodomestico
+	 * @param comboBox es el comboBox que contiene los productos de oficina y electrodomestico
 	 */
 	@Override
 	public void eliminar(JComboBox<String> comboBox) {
@@ -77,13 +80,27 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 
 	/**
 	 * Este método se encarga de actualizar un producto de oficina y electrodomestico
+	 * @param c es el producto de oficina y electrodomestico que se va a actualizar
+	 * @param comboBox es el comboBox que contiene los productos de oficina y electrodomestico
+	 * @param confirmacion es el mensaje de confirmación
+	 * @param denegacion es el mensaje de denegación
 	 */
 	@Override
-	public void actualizar(ProductoOficinaElectrodomestico c) {
-		escribirArchivo();
-		escribirArchivoSerializado();
-		// TODO Auto-generated method stub
-		
+	public void actualizar(ProductoOficinaElectrodomestico c, JComboBox<String> comboBox, String confirmacion, String denegacion) {
+		String seleccion = (String) comboBox.getSelectedItem();
+		if (!listaProductosOficinaElectrodomestico.isEmpty()) {
+			for (int i = 0; i < listaProductosOficinaElectrodomestico.size(); i++) {
+				if (listaProductosOficinaElectrodomestico.get(i).getNombre().equals(seleccion)){
+					listaProductosOficinaElectrodomestico.set(i, c);
+					escribirArchivo();
+					escribirArchivoSerializado();
+					JOptionPane.showMessageDialog(null, confirmacion);
+					break;
+				}
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, denegacion);
+		}
 	}
 
 	/**

@@ -43,7 +43,7 @@ public class TrabajadorDAO implements OperacionDAO<Trabajador> {
 	}
 
 	@Override
-	public void actualizar(Trabajador c) {
+	public void actualizar(Trabajador c, JComboBox<String> comboBox, String confirmacion, String denegacion) {
 		// TODO Auto-generated method stub
 		
 	}

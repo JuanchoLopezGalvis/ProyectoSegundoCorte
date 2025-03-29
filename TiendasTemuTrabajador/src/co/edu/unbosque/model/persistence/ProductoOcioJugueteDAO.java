@@ -85,13 +85,26 @@ public class ProductoOcioJugueteDAO implements OperacionDAO<ProductoOcioJuguete>
 	 * Este método se encarga de actualizar un producto de ocio y juguete
 	 * en la lista de productos de ocio y juguete y de escribir en el archivo de texto y serializado.
 	 * @param c es el producto de ocio y juguete que se va a actualizar
+	 * @param comboBox es el comboBox que contiene los productos de ocio y juguete
+	 * @param confirmacion es el mensaje de confirmación
+	 * @param denegacion es el mensaje de denegación
 	 */
 	@Override
-	public void actualizar(ProductoOcioJuguete c) {
-		escribirArchivo();
-		escribirArchivoSerializado();
-		// TODO Auto-generated method stub
-
+	public void actualizar(ProductoOcioJuguete c, JComboBox<String> comboBox, String confirmacion, String denegacion) {
+		String seleccion = (String) comboBox.getSelectedItem();
+		if (!listaProductosOcioJuguete.isEmpty()) {
+			for (int i = 0; i < listaProductosOcioJuguete.size(); i++) {
+				if (listaProductosOcioJuguete.get(i).getNombre().equals(seleccion)){
+					listaProductosOcioJuguete.set(i, c);
+					escribirArchivo();
+					escribirArchivoSerializado();
+					JOptionPane.showMessageDialog(null, confirmacion);
+					break;
+				}
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, denegacion);
+		}
 	}
 
 	/**
