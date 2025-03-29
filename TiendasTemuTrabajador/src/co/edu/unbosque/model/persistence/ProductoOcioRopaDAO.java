@@ -12,17 +12,38 @@ import javax.swing.table.DefaultTableModel;
 import co.edu.unbosque.model.ProductoOcioJuguete;
 import co.edu.unbosque.model.ProductoOcioRopa;
 
+/**
+ * Clase que se encarga de la persistencia de los productos de ocio y ropa
+ */
 public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 
+	/**
+	 * Este atributo representa una lista de productos de ocio y ropa
+	 */
 	private ArrayList<ProductoOcioRopa> listaProductosOcioRopa;
+	/**
+	 * Este atributo representa el nombre del archivo de texto
+	 */
 	private final String TEXT_FILE_NAME = "productoOcioRopa.csv";
+	/**
+	 * Este atributo representa el nombre del archivo serializado
+	 */
 	private final String SERIAL_FILE_NAME = "productoOcioRopa.dat";
 
+	/**
+	 * Este constructor se encarga de inicializar la lista de productos de ocio y ropa
+	 * y de leer el archivo serializado.
+	 */
 	public ProductoOcioRopaDAO() {
 		listaProductosOcioRopa = new ArrayList<ProductoOcioRopa>();
 		leerArchivoSerializado();
 	}
 
+	/**
+	 * Este método se encarga de guardar un producto de ocio y ropa
+	 * en la lista de productos de ocio y ropa y de escribir en el archivo de texto y serializado.
+	 * @param nuevoProducto es el producto de ocio y ropa que se va a guardar
+	 */
 	@Override
 	public void guardar(ProductoOcioRopa nuevoProducto) {
 		listaProductosOcioRopa.add(nuevoProducto);
@@ -36,6 +57,11 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 		return null;
 	}
 
+	/**
+	 * Este método se encarga de eliminar un producto de ocio y ropa
+	 * de la lista de productos de ocio y ropa y de escribir en el archivo de texto y serializado.
+	 * @param comboBox es el comboBox que contiene los productos de ocio y ropa
+	 */
 	@Override
 	public void eliminar(JComboBox<String> comboBox) {
 		String seleccion = (String) comboBox.getSelectedItem();
@@ -54,7 +80,11 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 			JOptionPane.showMessageDialog(null, "No hay productos para eliminar");
 		}
 	}
-
+	/**
+	 * Este método se encarga de actualizar un producto de ocio y ropa
+	 * en la lista de productos de ocio y ropa y de escribir en el archivo de texto y serializado.
+	 * @param c es el producto de ocio y ropa que se va a actualizar
+	 */
 	@Override
 	public void actualizar(ProductoOcioRopa c) {
 		escribirArchivo();
@@ -63,6 +93,13 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 
 	}
 
+	/**
+	 * Este método se encarga de listar los productos de ocio y ropa
+	 * en la tabla de productos de ocio y ropa y de llenar los comboBox con los productos de ocio y ropa.
+	 * @param tabla es la tabla donde se van a listar los productos de ocio y ropa
+	 * @param comboBox es el comboBox que contiene los productos de ocio y ropa
+	 * @param comboBox2 es el comboBox que contiene los productos de ocio y ropa
+	 */
 	@Override
 	public void listar(JTable tabla, JComboBox<String> comboBox, JComboBox<String> comboBox2) {
 
@@ -79,7 +116,9 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 		}
 
 	}
-
+	/**
+	 * Este método se encarga de escribir en el archivo de texto
+	 */
 	public void escribirArchivo() {
 		StringBuilder contenido = new StringBuilder();
 		for (ProductoOcioRopa producto : listaProductosOcioRopa) {
@@ -96,12 +135,18 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 		FileManager.escribirEnArchivoDeTexto(TEXT_FILE_NAME, contenido.toString());
 	}
 
+	/**
+	 * Este método se encarga de escribir en el archivo serializado
+	 */
 	public void escribirArchivoSerializado() {
 
 		FileManager.escribirArchivoSerializado(SERIAL_FILE_NAME, listaProductosOcioRopa);
 
 	}
 
+	/**
+	 * Este método se encarga de leer el archivo serializado
+	 */
 	public void leerArchivoSerializado() {
 
 		listaProductosOcioRopa = (ArrayList<ProductoOcioRopa>) FileManager.leerArchivoSerializado(SERIAL_FILE_NAME);
@@ -113,10 +158,18 @@ public class ProductoOcioRopaDAO implements OperacionDAO<ProductoOcioRopa> {
 
 	}
 
+	/**
+	 * Este método se encarga de retornar la lista de productos de ocio y ropa
+	 * @return la lista de productos de ocio y ropa
+	 */
 	public ArrayList<ProductoOcioRopa> getListaProductosOcioRopa() {
 		return listaProductosOcioRopa;
 	}
 
+	/**
+	 * Este método se encarga de modificar la lista de productos de ocio y ropa
+	 * @param listaProductosOcioRopa es la lista de productos de ocio y ropa
+	 */
 	public void setListaProductosOcioRopa(ArrayList<ProductoOcioRopa> listaProductosOcioRopa) {
 		this.listaProductosOcioRopa = listaProductosOcioRopa;
 	}

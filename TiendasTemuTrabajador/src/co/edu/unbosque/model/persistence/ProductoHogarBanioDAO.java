@@ -13,16 +13,38 @@ import javax.swing.table.DefaultTableModel;
 
 import co.edu.unbosque.model.ProductoHogarBanio;
 
+/**
+ * Clase que se encarga de la persistencia de los productos de hogar y baño
+ */
 public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 
+	/**
+	 * Atributo que representa una lista de productos de hogar y baño
+	 */
 	private ArrayList<ProductoHogarBanio> listaProductosHogarBanio;
+	/**
+	 * Atributo que representa el nombre del archivo de texto
+	 */
 	private final String TEXT_FILE_NAME = "productoHogarBanio.csv";
+	/**
+	 * Atributo que representa el nombre del archivo serializado
+	 */
 	private final String SERIAL_FILE_NAME = "productoHogarBanio.dat";
 
+	/**
+	 * Constructor que se encarga de inicializar la lista de productos de hogar y baño
+	 * y de leer el archivo serializado
+	 */
 	public ProductoHogarBanioDAO() {
 		listaProductosHogarBanio = new ArrayList<ProductoHogarBanio>();
 		leerArchivoSerializado();
 	}
+	
+	/**
+	 * Método que se encarga de guardar un producto de hogar y baño
+	 * en la lista de productos de hogar y baño y de escribir en el archivo de texto y serializado.
+	 * @param nuevoProducto es el producto de hogar y baño que se va a guardar
+	 */
 	@Override
 	public void guardar(ProductoHogarBanio nuevoProducto) {
 		listaProductosHogarBanio.add(nuevoProducto);
@@ -30,13 +52,17 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 		escribirArchivoSerializado();
 
 	}
-
 	@Override
 	public ProductoHogarBanio buscar() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Método que se encarga de eliminar un producto de hogar y baño
+	 * de la lista de productos de hogar y baño y de escribir en el archivo de texto y serializado.
+	 * @param comboBox es el comboBox que contiene los productos de hogar y baño
+	 */
 	@Override
 	public void eliminar(JComboBox<String> comboBox) {
 		String seleccion = (String) comboBox.getSelectedItem();
@@ -56,6 +82,11 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 		}
 	}
 
+	/**
+	 * Método que se encarga de actualizar un producto de hogar y baño
+	 * en la lista de productos de hogar y baño y de escribir en el archivo de texto y serializado.
+	 * @param c es el producto de hogar y baño que se va a actualizar
+	 */
 	@Override
 	public void actualizar(ProductoHogarBanio c) {
 		escribirArchivo();
@@ -65,6 +96,13 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 	}
 
 
+	/**
+	 * Método que se encarga de listar los productos de hogar y baño
+	 * en la tabla de productos de hogar y baño y en los comboBox de productos de hogar y baño
+	 * @param tabla es la tabla donde se van a listar los productos de hogar y baño
+	 * @param comboBox es el comboBox que contiene los productos de hogar y baño
+	 * @param comboBox2 es el comboBox que contiene los productos de hogar y baño
+	 */
 	@Override
 	public void listar(JTable tabla, JComboBox<String> comboBox, JComboBox<String> comboBox2) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -81,6 +119,9 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 		}
 	}
 
+	/**
+	 * Método que se encarga de escribir en el archivo de texto
+	 */
 	public void escribirArchivo() {
 		StringBuilder contenido = new StringBuilder();
 		for (ProductoHogarBanio producto : listaProductosHogarBanio) {
@@ -99,12 +140,18 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 		FileManager.escribirEnArchivoDeTexto(TEXT_FILE_NAME, contenido.toString());
 	}
 
+	/**
+	 * Método que se encarga de escribir en el archivo serializado
+	 */
 	public void escribirArchivoSerializado() {
 
 		FileManager.escribirArchivoSerializado(SERIAL_FILE_NAME, listaProductosHogarBanio);
 
 	}
 
+	/**
+	 * Método que se encarga de leer el archivo serializado
+	 */
 	public void leerArchivoSerializado() {
 
 		listaProductosHogarBanio = (ArrayList<ProductoHogarBanio>) FileManager.leerArchivoSerializado(SERIAL_FILE_NAME);
@@ -115,9 +162,17 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 
 
 	}
+	/**
+	 * Método que retorna la lista de productos de hogar y baño
+	 * @return listaProductosHogarBanio es la lista de productos de hogar y baño
+	 */
 	public ArrayList<ProductoHogarBanio> getListaProductosHogarBanio() {
 		return listaProductosHogarBanio;
 	}
+	/**
+	 * Método que modifica la lista de productos de hogar y baño
+	 * @param listaProductosHogarBanio es la lista de productos de hogar y baño
+	 */
 	public void setListaProductosHogarBanio(ArrayList<ProductoHogarBanio> listaProductosHogarBanio) {
 		this.listaProductosHogarBanio = listaProductosHogarBanio;
 	}

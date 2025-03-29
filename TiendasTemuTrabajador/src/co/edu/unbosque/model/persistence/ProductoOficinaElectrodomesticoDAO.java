@@ -14,15 +14,30 @@ import co.edu.unbosque.model.ProductoOficinaElectrodomestico;
 
 public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<ProductoOficinaElectrodomestico>{
 
-	
+	/**
+	 * Este atributo representa una lista de productos de oficina y electrodomestico
+	 */
 	private ArrayList<ProductoOficinaElectrodomestico> listaProductosOficinaElectrodomestico;
+	/**
+	 * Este atributo representa el nombre del archivo de texto
+	 */
 	private final String TEXT_FILE_NAME = "productoOficinaElectrodomestico.csv";
+	/**
+	 * Este atributo representa el nombre del archivo serializado
+	 */
 	private final String SERIAL_FILE_NAME = "productoOficinaElectrodomestico.dat";
 
+	/**
+	 * Este constructor se encarga de inicializar la lista de productos de oficina y electrodomestico
+	 * y de leer el archivo serializado.
+	 */
 	public ProductoOficinaElectrodomesticoDAO() {
 		listaProductosOficinaElectrodomestico = new ArrayList<ProductoOficinaElectrodomestico>();
 		leerArchivoSerializado();
 	}
+	/**
+	 * Este método se encarga de guardar un producto de oficina y electrodomestico
+	 */
 	@Override
 	public void guardar(ProductoOficinaElectrodomestico nuevoProducto) {
 		listaProductosOficinaElectrodomestico.add(nuevoProducto);
@@ -38,6 +53,9 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 		return null;
 	}
 
+	/**
+	 * Este método se encarga de eliminar un producto de oficina y electrodomestico
+	 */
 	@Override
 	public void eliminar(JComboBox<String> comboBox) {
 		String seleccion = (String) comboBox.getSelectedItem();
@@ -57,6 +75,9 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 		}
 	}
 
+	/**
+	 * Este método se encarga de actualizar un producto de oficina y electrodomestico
+	 */
 	@Override
 	public void actualizar(ProductoOficinaElectrodomestico c) {
 		escribirArchivo();
@@ -65,6 +86,12 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 		
 	}
 
+	/**
+	 * Este método se encarga de listar los productos de oficina y electrodomestico
+	 * @param tabla es la tabla donde se van a listar los productos
+	 * @param comboBox es el comboBox que contiene los productos
+	 * @param comboBox2 es el comboBox que contiene los productos
+	 */
 	@Override
 	public void listar(JTable tabla, JComboBox<String> comboBox, JComboBox<String> comboBox2) {
 		
@@ -82,6 +109,9 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 		
 	}
 	
+	/**
+	 * Este método se encarga de escribir en el archivo de texto
+	 */
 	public void escribirArchivo() {
 	    StringBuilder contenido = new StringBuilder();
 	    for (ProductoOficinaElectrodomestico producto : listaProductosOficinaElectrodomestico) {
@@ -99,12 +129,18 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 	}
 	
 
+	/**
+	 * Este método se encarga de escribir en el archivo serializado
+	 */
 	public void escribirArchivoSerializado() {
 
 		FileManager.escribirArchivoSerializado(SERIAL_FILE_NAME, listaProductosOficinaElectrodomestico);
 
 	}
 	
+	/**
+	 * Este método se encarga de leer el archivo serializado
+	 */
 	public void leerArchivoSerializado() {
 		
 		listaProductosOficinaElectrodomestico = (ArrayList<ProductoOficinaElectrodomestico>) FileManager.leerArchivoSerializado(SERIAL_FILE_NAME);
@@ -116,9 +152,17 @@ public class ProductoOficinaElectrodomesticoDAO implements OperacionDAO<Producto
 		
 	}
 	
+	/**
+	 * Este método se encarga de obtener la lista de productos de oficina y electrodomestico
+	 * @return la lista de productos de oficina y electrodomestico
+	 */
 	public ArrayList<ProductoOficinaElectrodomestico> getListaProductosOficinaElectrodomestico() {
 		return listaProductosOficinaElectrodomestico;
 	}
+	/**
+	 * Este método se encarga de modificar la lista de productos de oficina y electrodomestico
+	 * @param listaProductosOficinaElectrodomestico es la nueva lista de productos de oficina y electrodomestico
+	 */
 	public void setListaProductosOficinaElectrodomestico(
 			ArrayList<ProductoOficinaElectrodomestico> listaProductosOficinaElectrodomestico) {
 		this.listaProductosOficinaElectrodomestico = listaProductosOficinaElectrodomestico;
