@@ -52,12 +52,12 @@ public class Controller implements ActionListener{
 	public Controller() {
 		vf = new ViewFacade();
 		mf = new ModelFacade();
-		mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(), vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());
-		mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes());
-		mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes());
-		mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes());
-		mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes());
-		mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes());
+		mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(), vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());
+		mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
+		mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
+		mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
+		mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
+		mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
 	}
 	/**
 	 * La funcion run permite el inicio de la ejecución
@@ -226,32 +226,32 @@ public class Controller implements ActionListener{
 		switch (e.getActionCommand()) {
 		case "btnEliminarPhb":{
 			mf.getProductoHogarBanioDAO().eliminar(vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());
-			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(), vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());		
+			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(), vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());		
 		}
 		break;
 		case "btnEliminarPhc":{
 			mf.getProductoHogarCocinaDAO().eliminar(vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes());
-			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes());
+			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
 		}
 		break;
 		case "btnEliminarPoj":{
 			mf.getProductoOcioJugueteDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes());
-			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes());
+			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
 		}
 		break;
 		case "btnEliminarPor":{
 			mf.getProductoOcioRopaDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes());
-			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes());
+			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
 		}
 		break;
 		case "btnEliminarPoe":{
 			mf.getProductoOficinaElectrodomesticoDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes());
-			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes());
+			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
 		}
 		break;
 		case "btnEliminarPop":{
 			mf.getProductoOficinaPapeleriaDAO().eliminar(vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes());
-			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes());
+			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
 		}
 		break;
 		case "volverAlInicio":{
@@ -322,7 +322,7 @@ public class Controller implements ActionListener{
 			}
 
 			mf.getProductoHogarBanioDAO().guardar(new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona));
-			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());
+			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());
 			vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().setText("");
 			vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().setValue(0);
 			vf.getVpli().getPanelCardLayout().getPagphb().getDatoCantidad().setValue(0);
@@ -367,7 +367,7 @@ public class Controller implements ActionListener{
 
 
 			mf.getProductoHogarCocinaDAO().guardar(new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad));
-			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes());
+			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(), vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
 			vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().setText("");
 			vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().setValue(0);
 			vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().setValue(0);
@@ -410,7 +410,7 @@ public class Controller implements ActionListener{
 			}
 
 			mf.getProductoOcioJugueteDAO().guardar(new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada));
-			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes());
+			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(), vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
 			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().setText("");
 			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().setValue(0);
 			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().setValue(0);
@@ -451,7 +451,7 @@ public class Controller implements ActionListener{
 			}
 
 			mf.getProductoOcioRopaDAO().guardar(new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla));
-			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes());
+			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(), vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
 			vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().setText("");
 			vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().setValue(0);
 			vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().setValue(0);
@@ -492,7 +492,7 @@ public class Controller implements ActionListener{
 			}
 
 			mf.getProductoOficinaElectrodomesticoDAO().guardar(new ProductoOficinaElectrodomestico(nombre, precio, cantidad, marca, imagen, nivelDeRuido, consumoEnergetico));
-			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes());
+			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(), vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
 			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().setText("");
 			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().setValue(0);
 			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().setValue(0);
@@ -533,7 +533,7 @@ public class Controller implements ActionListener{
 			}
 
 			mf.getProductoOficinaPapeleriaDAO().guardar(new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion));
-			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes());
+			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(), vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(), vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
 			vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().setText("");
 			vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().setValue(0);
 			vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().setValue(0);

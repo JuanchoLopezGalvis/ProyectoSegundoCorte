@@ -66,14 +66,14 @@ public class ProductoHogarBanioDAO implements OperacionDAO<ProductoHogarBanio>{
 
 
 	@Override
-	public void listar(JTable tabla, JComboBox<String> comboBox) {
+	public void listar(JTable tabla, JComboBox<String> comboBox, JComboBox<String> comboBox2) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
-
-
 		comboBox.removeAllItems();
+		comboBox2.removeAllItems();
 		for (ProductoHogarBanio p : listaProductosHogarBanio) {
 			comboBox.addItem(p.getNombre());
+			comboBox2.addItem(p.getNombre());
 			Image imagenEscalada = p.getImagen().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			ImageIcon imagen = new ImageIcon(imagenEscalada);
 

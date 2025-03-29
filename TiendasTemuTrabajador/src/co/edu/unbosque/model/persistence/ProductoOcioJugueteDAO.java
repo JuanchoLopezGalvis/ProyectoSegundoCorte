@@ -64,13 +64,14 @@ public class ProductoOcioJugueteDAO implements OperacionDAO<ProductoOcioJuguete>
 	}
 
 	@Override
-	public void listar(JTable tabla, JComboBox<String> comboBox) {
+	public void listar(JTable tabla, JComboBox<String> comboBox, JComboBox<String> comboBox2) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		modelo.setRowCount(0);  // Limpiar la tabla antes de actualizarla
-
 		comboBox.removeAllItems();
+		comboBox2.removeAllItems();
 		for (ProductoOcioJuguete p : listaProductosOcioJuguete) {
 			comboBox.addItem(p.getNombre());
+			comboBox2.addItem(p.getNombre());
 			Image imagenEscalada = p.getImagen().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			ImageIcon imagen = new ImageIcon(imagenEscalada);
 			modelo.addRow(new Object[]{p.getNombre(), p.getPrecio(), p.getCantidad(), p.getMarca(), p.getNivelCalidad(), p.getEdadRecomendada(), imagen});

@@ -15,6 +15,6 @@ public interface OperacionDAO <C> {
 	public C buscar();
 	public void eliminar(JComboBox<String> comboBox);
 	public void actualizar(C c);
-	public void listar(JTable tabla, JComboBox<String> comboBox);
+	public void listar(JTable tabla, JComboBox<String> comboBox, JComboBox<String> comboBox2);
 
 }

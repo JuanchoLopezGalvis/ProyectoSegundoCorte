@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -90,7 +91,14 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 	 * Este atributo es el encargado de guardar la etiqueta que indica la imagen del producto.
 	 */
 	private JLabel etiquetaImagen;
-	//private Image imagenProducto;
+	/**
+	 * Este atributo es el encargado de guardar el combo box que permitira seleccionar los productos existentes.
+	 */
+	private JComboBox<String > productosExistentes;
+	/**
+	 * Este atributo es el encargado de guardar la etiqueta que indica los productos existentes.
+	 */
+	private JLabel etiquetaProductosExistentes;
 
 	/**
 	 * Este metodo se encargara de inicializar los componentes de la clase
@@ -100,6 +108,7 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 		setSize(1250, 650);
 		setLayout(null);
 		setBackground(Color.black);
+		productosExistentes = new JComboBox<String>();
 		imagenFondo = new ImageIcon(getClass().getResource("/Recursos/actu.png")).getImage();
 		seleccionImagen = new BotonRedondeado("Seleccionar", 20, Color.DARK_GRAY, Color.decode("#f67704"), Color.white);
 		botonActualizar = new BotonRedondeado("Actualizar", 20, Color.DARK_GRAY, Color.decode("#f67704"), Color.white);
@@ -124,6 +133,7 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 		NumberFormatter formatter2 = (NumberFormatter) txt2.getFormatter();
 		formatter2.setAllowsInvalid(false);  // No permite caracteres no numéricos
 		formatter2.setMinimum(0); 
+		etiquetaProductosExistentes = new JLabel("Seleccione el producto:");
 		etiquetaNombre = new JLabel("Nombre:");
 		etiquetaPrecio = new JLabel("Precio:");
 		etiquetaCantidad = new JLabel("Cantidad:");
@@ -132,6 +142,8 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 		etiquetaColor = new JLabel("Color:");
 		etiquetaZona = new JLabel("Zona de uso:");
 		etiquetaImagen = new JLabel("Imagen:");
+		etiquetaProductosExistentes.setBounds(750, 30, 200, 30);
+		productosExistentes.setBounds(950, 30, 200, 30);
 		etiquetaNombre.setBounds(750, 80, 100, 30);
 		datoNombre.setBounds(950, 80, 200, 30);
 		etiquetaPrecio.setBounds(750, 130, 100, 30);
@@ -149,6 +161,9 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 		etiquetaImagen.setBounds(750, 430, 100, 30);
 		seleccionImagen.setBounds(950, 430, 200, 30);
 		botonActualizar.setBounds(840, 500, 200, 30);
+		etiquetaProductosExistentes.setForeground(Color.white);
+		productosExistentes.setBackground(Color.DARK_GRAY);
+		productosExistentes.setForeground(Color.white);
 		etiquetaNombre.setForeground(Color.white);
 		etiquetaPrecio.setForeground(Color.white);
 		etiquetaCantidad.setForeground(Color.white);
@@ -159,6 +174,8 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 		etiquetaImagen.setForeground(Color.white);
 
 
+		add(etiquetaProductosExistentes);
+		add(productosExistentes);
 		add(etiquetaImagen);
 		add(botonActualizar);
 		add(etiquetaNombre);
@@ -443,7 +460,34 @@ public class PanelActualizarProductoHogarBanio extends JPanel{
 	public void setEtiquetaImagen(JLabel etiquetaImagen) {
 		this.etiquetaImagen = etiquetaImagen;
 	}
-
+	/**
+	 * Este metodo se encargara de retornar la comboBox de los productos existentes.
+	 * @return productosExistentes
+	 */
+	public JComboBox<String> getProductosExistentes() {
+		return productosExistentes;
+	}
+	/**
+	 * Este metodo se encargara de modificar la comboBox de los productos existentes.
+	 * @param productosExistentes
+	 */
+	public void setProductosExistentes(JComboBox<String> productosExistentes) {
+		this.productosExistentes = productosExistentes;
+	}
+	/**
+	 * Este metodo se encargara de retornar la etiqueta de los productos existentes.
+	 * @return etiquetaProductosExistentes
+	 */
+	public JLabel getEtiquetaProductosExistentes() {
+		return etiquetaProductosExistentes;
+	}
+	/**
+	 * Este metodo se encargara de modificar la etiqueta de los productos existentes.
+	 * @param etiquetaProductosExistentes
+	 */
+	public void setEtiquetaProductosExistentes(JLabel etiquetaProductosExistentes) {
+		this.etiquetaProductosExistentes = etiquetaProductosExistentes;
+	}
 
 
 }
