@@ -639,13 +639,13 @@ public class Controller implements ActionListener{
 		}
 			break;
 		case "btnAgregarTrabajador": {
+			case "btnAgregarTrabajador": {
+			try {
+
 			String usuario = vf.getVsu().getPanelSignUp().getDatoUsuario().getText();
 			String contraseña = new String(vf.getVsu().getPanelSignUp().getDatoContraseña().getPassword());
-			String contraseñaConfirmacion = new String(
-					vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().getPassword());
+			String contraseñaConfirmacion = new String(vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().getPassword());
 			Image imagen = vf.getVsu().getPanelSignUp().getImagenTrabajador();
-			// Verificar si los campos de texto están vacíos
-
 			try {
 				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
 					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
@@ -658,32 +658,38 @@ public class Controller implements ActionListener{
 			} catch (IOException e2) {
 				e2.printStackTrace();
 			}
-			if (usuario.isEmpty() || contraseña.isEmpty() || contraseñaConfirmacion.isEmpty()) {
-				JOptionPane.showMessageDialog(null,
-						prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+			ExceptionChecker.checkStringField(usuario, prop.getProperty("archivosdepropiedades.excepciones.usuario"));
+		    ExceptionChecker.checkStringField(contraseña, prop.getProperty("archivosdepropiedades.excepciones.contraseña"));
+		    ExceptionChecker.checkStringField(contraseñaConfirmacion,prop.getProperty("archivosdepropiedades.excepciones.contraseña2"));
+		    ExceptionChecker.checkPasswordField(contraseña, prop.getProperty("archivosdepropiedades.excepciones.contraseña"));
 
-			// Verificar si las contraseñas coinciden
 			if (!contraseña.equals(contraseñaConfirmacion)) {
 				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show2"));
 				return;
 			}
-
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
-
+			ExceptionChecker.checkImageField(imagen,  prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
 			mf.getTrabajadorDAO().guardar(new Trabajador(usuario, contraseña, imagen));
 			JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show4"));
 			vf.getVsu().getPanelSignUp().getDatoUsuario().setText("");
 			vf.getVsu().getPanelSignUp().getDatoContraseña().setText("");
 			vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().setText("");
 			vf.getVsu().getPanelSignUp().setImagenTrabajador(null);
-				vf.getVsu().dispose();
+			vf.getVsu().dispose();
 			
+			} catch (EmptyStringFieldException e1) {
+			    System.out.println("Error capturado: " + e1.getMessage()); 
+			    JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+			catch (InvalidPasswordException e2) {
+			    System.out.println("Error de contraseña: " + e2.getMessage()); 
+			    JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		
+		catch (EmptyImageFieldException e2) {
+			
+			System.out.println("Error de imagen: " + e2.getMessage()); 
+		    JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 		}
 			break;
 		case "btnAgregarPhb": {
