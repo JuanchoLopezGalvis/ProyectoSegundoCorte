@@ -682,6 +682,9 @@ public class Controller implements ActionListener{
 			vf.getVsu().getPanelSignUp().getDatoContraseña().setText("");
 			vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().setText("");
 			vf.getVsu().getPanelSignUp().setImagenTrabajador(null);
+				if (!usuario.isEmpty() || !contraseña.isEmpty()||contraseñaConfirmacion.isEmpty()||imagen != null) {
+				vf.getVsu().dispose();
+			}
 		}
 			break;
 		case "btnAgregarPhb": {
