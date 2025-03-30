@@ -127,6 +127,12 @@ public class PanelSignUp extends JPanel{
 	}
 	public void setBotonAgregarTrabajador(BotonRedondeado botonAgregarTrabajador) {
 		this.botonAgregarTrabajador = botonAgregarTrabajador;
+	}
+	public BotonRedondeado getSeleccionImagen() {
+		return seleccionImagen;
+	}
+	public void setSeleccionImagen(BotonRedondeado seleccionImagen) {
+		this.seleccionImagen = seleccionImagen;
 	}	
 
 }

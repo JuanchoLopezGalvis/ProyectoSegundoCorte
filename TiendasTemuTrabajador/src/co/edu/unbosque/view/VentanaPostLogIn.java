@@ -670,4 +670,74 @@ public class VentanaPostLogIn extends JFrame{
 	}
 
 
+	public JMenu getMenu() {
+		return menu;
+	}
+
+
+	public void setMenu(JMenu menu) {
+		this.menu = menu;
+	}
+
+
+	public JMenu getProductoHogarBanio() {
+		return productoHogarBanio;
+	}
+
+
+	public void setProductoHogarBanio(JMenu productoHogarBanio) {
+		this.productoHogarBanio = productoHogarBanio;
+	}
+
+
+	public JMenu getProductoHogarCocina() {
+		return productoHogarCocina;
+	}
+
+
+	public void setProductoHogarCocina(JMenu productoHogarCocina) {
+		this.productoHogarCocina = productoHogarCocina;
+	}
+
+
+	public JMenu getProductoOcioJuguete() {
+		return productoOcioJuguete;
+	}
+
+
+	public void setProductoOcioJuguete(JMenu productoOcioJuguete) {
+		this.productoOcioJuguete = productoOcioJuguete;
+	}
+
+
+	public JMenu getProductoOcioRopa() {
+		return productoOcioRopa;
+	}
+
+
+	public void setProductoOcioRopa(JMenu productoOcioRopa) {
+		this.productoOcioRopa = productoOcioRopa;
+	}
+
+
+	public JMenu getProductoOficinaElectrodomestico() {
+		return productoOficinaElectrodomestico;
+	}
+
+
+	public void setProductoOficinaElectrodomestico(JMenu productoOficinaElectrodomestico) {
+		this.productoOficinaElectrodomestico = productoOficinaElectrodomestico;
+	}
+
+
+	public JMenu getProductoOficianPapeleria() {
+		return productoOficianPapeleria;
+	}
+
+
+	public void setProductoOficianPapeleria(JMenu productoOficianPapeleria) {
+		this.productoOficianPapeleria = productoOficianPapeleria;
+	}
+
+
 }

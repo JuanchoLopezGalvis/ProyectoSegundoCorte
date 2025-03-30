@@ -83,6 +83,14 @@ public class PanelEliminarProductoOficinaPapeleria extends JPanel{
 	public void setProductosExistentes(JComboBox<String> productosExistentes) {
 		this.productosExistentes = productosExistentes;
 	}
+
+	public Image getImagenFondo() {
+		return imagenFondo;
+	}
+
+	public void setImagenFondo(Image imagenFondo) {
+		this.imagenFondo = imagenFondo;
+	}
 	
 	
 

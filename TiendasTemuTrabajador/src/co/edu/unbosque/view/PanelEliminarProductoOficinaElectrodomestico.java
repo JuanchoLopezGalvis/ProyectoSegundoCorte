@@ -83,6 +83,14 @@ public class PanelEliminarProductoOficinaElectrodomestico extends JPanel{
 	public void setProductosExistentes(JComboBox<String> productosExistentes) {
 		this.productosExistentes = productosExistentes;
 	}
+
+	public JLabel getEtiqueta1() {
+		return etiqueta1;
+	}
+
+	public void setEtiqueta1(JLabel etiqueta1) {
+		this.etiqueta1 = etiqueta1;
+	}
 	
 	
 

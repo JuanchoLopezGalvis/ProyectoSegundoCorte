@@ -76,4 +76,20 @@ public class PanelEliminarProductoHogarBanio extends JPanel{
 		this.productosExistentes = productosExistentes;
 	}
 
+	public JLabel getEtiqueta1() {
+		return etiqueta1;
+	}
+
+	public void setEtiqueta1(JLabel etiqueta1) {
+		this.etiqueta1 = etiqueta1;
+	}
+
+	public Image getImagenFondo() {
+		return imagenFondo;
+	}
+
+	public void setImagenFondo(Image imagenFondo) {
+		this.imagenFondo = imagenFondo;
+	}
+
 }

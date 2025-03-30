@@ -518,5 +518,11 @@ public class PanelActualizarProductoHogarCocina extends JPanel{
 	public void setImagenProducto(Image imagenProducto) {
 		this.imagenProducto = imagenProducto;
 	}
+	public JLabel getEtiquetaImagen() {
+		return etiquetaImagen;
+	}
+	public void setEtiquetaImagen(JLabel etiquetaImagen) {
+		this.etiquetaImagen = etiquetaImagen;
+	}
     
 }

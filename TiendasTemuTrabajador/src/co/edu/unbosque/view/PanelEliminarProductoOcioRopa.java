@@ -84,5 +84,13 @@ public class PanelEliminarProductoOcioRopa extends JPanel{
 		this.productosExistentes = productosExistentes;
 	}
 
+	public Image getImagenFondo() {
+		return imagenFondo;
+	}
+
+	public void setImagenFondo(Image imagenFondo) {
+		this.imagenFondo = imagenFondo;
+	}
+
 	
 }
