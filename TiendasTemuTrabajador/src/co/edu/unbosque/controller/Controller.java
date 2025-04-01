@@ -9,9 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.ProductoHogarBanio;
@@ -22,6 +20,13 @@ import co.edu.unbosque.model.ProductoOficinaElectrodomestico;
 import co.edu.unbosque.model.ProductoOficinaPapeleria;
 import co.edu.unbosque.model.Trabajador;
 import co.edu.unbosque.model.persistence.FileManager;
+import co.edu.unbosque.util.exception.EmptyImageFieldException;
+import co.edu.unbosque.util.exception.EmptyNumberFieldException;
+import co.edu.unbosque.util.exception.EmptyStringFieldException;
+import co.edu.unbosque.util.exception.InvalidPasswordException;
+import co.edu.unbosque.util.exception.NegativeNumberException;
+import co.edu.unbosque.util.exception.NumberInStringException;
+import co.edu.unbosque.util.exception.WhitespaceFieldException;
 import co.edu.unbosque.view.ViewFacade;
 
 /**
@@ -225,373 +230,508 @@ public class Controller implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "btnActualizarPhb": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPacphb().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacphb().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacphb().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPacphb().getDatoMarca().getText();
-			String material = vf.getVpli().getPanelCardLayout().getPacphb().getDatoMaterial().getText();
-			String color = vf.getVpli().getPanelCardLayout().getPacphb().getDatoColor().getText();
-			String zona = vf.getVpli().getPanelCardLayout().getPacphb().getDatoZona().getText();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPacphb().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades según el idioma seleccionado
+		        if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		            prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		        } else {
+		            prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		        }
+		    } catch (FileNotFoundException e2) {
+		        e2.printStackTrace();
+		    } catch (IOException e2) {
+		        e2.printStackTrace();
+		    }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty() || zona.isEmpty()) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		    try {
+		        // Obtener datos del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPacphb().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacphb().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacphb().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPacphb().getDatoMarca().getText();
+		        String material = vf.getVpli().getPanelCardLayout().getPacphb().getDatoMaterial().getText();
+		        String color = vf.getVpli().getPanelCardLayout().getPacphb().getDatoColor().getText();
+		        String zona = vf.getVpli().getPanelCardLayout().getPacphb().getDatoZona().getText();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPacphb().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Verificar que los campos de texto no estén vacíos
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(material, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(color, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(zona, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // Verificar que los campos de texto NO contengan números
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(material, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(color, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(zona, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Verificar que los valores numéricos no sean nulos
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoHogarBanioDAO().actualizar(
-					new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona),
-					vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes(), prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
-					prop.getProperty("archivosdepropiedades.panelactualizarpro.show8"));
-			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoMaterial().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoColor().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphb().getDatoZona().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphb().setImagenProducto(null);
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
 
+		        // Verificar que los valores numéricos no sean negativos
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        // Verificar que la imagen no sea nula
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar el producto
+		        mf.getProductoHogarBanioDAO().actualizar(
+		            new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona),
+		            vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes(), 
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show8")
+		        );
+		        String mensajeLog = "Producto actualizado: " + nombre + " - " + java.time.LocalDateTime.now();
+		        FileManager.registrarCambio(mensajeLog);
+		        // Actualizar la tabla con los productos
+		        mf.getProductoHogarBanioDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoMaterial().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoColor().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphb().getDatoZona().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphb().setImagenProducto(null);
+
+		    } catch (EmptyStringFieldException | NumberInStringException | EmptyNumberFieldException | NegativeNumberException | EmptyImageFieldException e3) {
+		        JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+break;
 		case "btnActualizarPhc": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPacphc().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacphc().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacphc().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPacphc().getDatoMarca().getText();
-			String material = vf.getVpli().getPanelCardLayout().getPacphc().getDatoMaterial().getText();
-			String color = vf.getVpli().getPanelCardLayout().getPacphc().getDatoColor().getText();
-			String funcionalidad = vf.getVpli().getPanelCardLayout().getPacphc().getDatoFuncionalidad().getText();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPacphc().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eIo) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.");
+		            return;
+		        } catch (IOException eIo) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.");
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty()
-					|| funcionalidad.isEmpty()) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPacphc().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacphc().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacphc().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPacphc().getDatoMarca().getText();
+		        String material = vf.getVpli().getPanelCardLayout().getPacphc().getDatoMaterial().getText();
+		        String color = vf.getVpli().getPanelCardLayout().getPacphc().getDatoColor().getText();
+		        String funcionalidad = vf.getVpli().getPanelCardLayout().getPacphc().getDatoFuncionalidad().getText();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPacphc().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(material, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(color, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(funcionalidad, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // Verificar que los campos de texto no contengan números
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(material, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(color, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(funcionalidad, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
+		        
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
 
-			mf.getProductoHogarCocinaDAO().actualizar(
-					new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad),
-					vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes(), prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
-					prop.getProperty("archivosdepropiedades.panelactualizarpro.show8"));
-			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoMaterial().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoColor().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphc().getDatoFuncionalidad().setText("");
-			vf.getVpli().getPanelCardLayout().getPacphc().setImagenProducto(null);
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoHogarCocinaDAO().actualizar(
+		            new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad),
+		            vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes(),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show8")
+		        );
+		        String mensajeLog = "Producto actualizado: " + nombre + " - " + java.time.LocalDateTime.now();
+		        FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoHogarCocinaDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlphc().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoMaterial().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoColor().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphc().getDatoFuncionalidad().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacphc().setImagenProducto(null);
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null,"Error");
+		    }
 		}
-			break;
+		break;
+
 		case "btnActualizarPoj": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoMarca().getText();
-			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNivelCalidad()
-					.getSelectedItem().toString();
-			Number edadRecomendadaObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoEdadRecomendada()
-					.getValue();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPacpoj().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("")) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoMarca().getText();
+		        String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNivelCalidad().getSelectedItem().toString();
+		        Number edadRecomendadaObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoj().getDatoEdadRecomendada().getValue();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPacpoj().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null || edadRecomendadaObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeCalidad, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
-			int edadRecomendada = edadRecomendadaObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeCalidad, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null,  prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
+		        ExceptionChecker.checkNumberField(edadRecomendadaObj, 0); // Asegurar que no sea nulo
 
-			mf.getProductoOcioJugueteDAO().actualizar(
-					new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada),
-					vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes(), prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
-					prop.getProperty("archivosdepropiedades.panelactualizarpro.show8"));
-			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNivelCalidad().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPacpoj().getDatoEdadRecomendada().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpoj().setImagenProducto(null);
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+		        int edadRecomendada = edadRecomendadaObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber(edadRecomendada, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOcioJugueteDAO().actualizar(
+		            new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada),
+		            vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes(),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show8")
+		        );
+		        String mensajeLog = "Producto actualizado: " + nombre + " - " + java.time.LocalDateTime.now();
+		        FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOcioJugueteDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpoj().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoj().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoj().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpoj().getDatoNivelCalidad().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoj().getDatoEdadRecomendada().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoj().setImagenProducto(null);
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Error");
+		    }
 		}
-			break;
+		break;
+
 		case "btnActualizarPor": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPacpor().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpor().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpor().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPacpor().getDatoMarca().getText();
-			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPacpor().getDatoNivelCalidad()
-					.getSelectedItem().toString();
-			String talla = vf.getVpli().getPanelCardLayout().getPacpor().getDatoTalla().getSelectedItem().toString();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPacpor().getImagenProducto();
 			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("") || talla.equals("")) {
-				JOptionPane.showMessageDialog(null,prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPacpor().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpor().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpor().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPacpor().getDatoMarca().getText();
+		        String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPacpor().getDatoNivelCalidad().getSelectedItem().toString();
+		        String talla = vf.getVpli().getPanelCardLayout().getPacpor().getDatoTalla().getSelectedItem().toString();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPacpor().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeCalidad, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(talla, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeCalidad, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(talla, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoOcioRopaDAO().actualizar(
-					new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla),
-					vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes(), prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
-					prop.getProperty("archivosdepropiedades.panelactualizarpro.show8"));
-			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPacpor().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpor().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpor().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpor().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpor().getDatoNivelCalidad().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPacpor().getDatoTalla().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPacpor().setImagenProducto(null);
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOcioRopaDAO().actualizar(
+		            new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla),
+		            vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes(),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show8")
+		        );
+		        String mensajeLog = "Producto actualizado: " + nombre + " - " + java.time.LocalDateTime.now();
+		        FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOcioRopaDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpor().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPacpor().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpor().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpor().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpor().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpor().getDatoNivelCalidad().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPacpor().getDatoTalla().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPacpor().setImagenProducto(null);
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnActualizarPoe": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoe().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoe().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoMarca().getText();
-			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNivelRuido().getSelectedItem()
-					.toString();
-			String consumoEnergetico = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoConsumoEnergetico()
-					.getSelectedItem().toString();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPacpoe().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || consumoEnergetico.equals("")) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoe().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpoe().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoMarca().getText();
+		        String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNivelRuido().getSelectedItem().toString();
+		        String consumoEnergetico = vf.getVpli().getPanelCardLayout().getPacpoe().getDatoConsumoEnergetico().getSelectedItem().toString();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPacpoe().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeRuido, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(consumoEnergetico, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeRuido, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(consumoEnergetico, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoOficinaElectrodomesticoDAO().actualizar(
-					new ProductoOficinaElectrodomestico(nombre, precio, cantidad, marca, imagen, nivelDeRuido,
-							consumoEnergetico),
-					vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes(),  prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
-					 prop.getProperty("archivosdepropiedades.panelactualizarpro.show8"));
-			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNivelRuido().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPacpoe().getDatoConsumoEnergetico().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPacpoe().setImagenProducto(null);
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOficinaElectrodomesticoDAO().actualizar(
+		            new ProductoOficinaElectrodomestico(nombre, precio, cantidad, marca, imagen, nivelDeRuido, consumoEnergetico),
+		            vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes(),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show8")
+		        );
+		        String mensajeLog = "Producto actualizado: " + nombre + " - " + java.time.LocalDateTime.now();
+		        FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOficinaElectrodomesticoDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpoe().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoe().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoe().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpoe().getDatoNivelRuido().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoe().getDatoConsumoEnergetico().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPacpoe().setImagenProducto(null);
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Error");
+		    }
 		}
-			break;
+		break;
+
 		case "btnActualizarPop": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPacpop().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpop().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpop().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPacpop().getDatoMarca().getText();
-			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPacpop().getDatoNivelRuido().getSelectedItem()
-					.toString();
-			String funcion = vf.getVpli().getPanelCardLayout().getPacpop().getDatoFuncion().getText();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPacpop().getImagenProducto();
-			
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || funcion.isEmpty()) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPacpop().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPacpop().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPacpop().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPacpop().getDatoMarca().getText();
+		        String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPacpop().getDatoNivelRuido().getSelectedItem().toString();
+		        String funcion = vf.getVpli().getPanelCardLayout().getPacpop().getDatoFuncion().getText();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPacpop().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeRuido, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(funcion, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeRuido, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(funcion, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoOficinaPapeleriaDAO().actualizar(
-					new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion),
-					vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes(),  prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
-					prop.getProperty("archivosdepropiedades.panelactualizarpro.show8"));
-			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPacpop().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpop().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpop().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPacpop().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpop().getDatoNivelRuido().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPacpop().getDatoFuncion().setText("");
-			vf.getVpli().getPanelCardLayout().getPacpop().setImagenProducto(null);
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOficinaPapeleriaDAO().actualizar(
+		            new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion),
+		            vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes(),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show7"),
+		            prop.getProperty("archivosdepropiedades.panelactualizarpro.show8")
+		        );
+
+		        String mensajeLog = "Producto actualizado: " + nombre + " - " + java.time.LocalDateTime.now();
+		        FileManager.registrarCambio(mensajeLog);
+		        
+		        mf.getProductoOficinaPapeleriaDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpop().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPacpop().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpop().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpop().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPacpop().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpop().getDatoNivelRuido().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPacpop().getDatoFuncion().setText("");
+		        vf.getVpli().getPanelCardLayout().getPacpop().setImagenProducto(null);
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnEliminarPhb": {
 			mf.getProductoHogarBanioDAO()
 					.eliminar(vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes());
 			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),
 					vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),
 					vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());
+			String mensajeLog = "Producto eliminado - " + java.time.LocalDateTime.now();
+			FileManager.registrarCambio(mensajeLog);
 		}
 			break;
 		case "btnEliminarPhc": {
@@ -600,6 +740,8 @@ public class Controller implements ActionListener{
 			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(),
 					vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(),
 					vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
+			String mensajeLog = "Producto eliminado - " + java.time.LocalDateTime.now();
+			FileManager.registrarCambio(mensajeLog);
 		}
 			break;
 		case "btnEliminarPoj": {
@@ -608,6 +750,8 @@ public class Controller implements ActionListener{
 			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(),
 					vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(),
 					vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
+			String mensajeLog = "Producto eliminado - " + java.time.LocalDateTime.now();
+			FileManager.registrarCambio(mensajeLog);
 		}
 			break;
 		case "btnEliminarPor": {
@@ -615,6 +759,8 @@ public class Controller implements ActionListener{
 			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(),
 					vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(),
 					vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
+			String mensajeLog = "Producto eliminado - " + java.time.LocalDateTime.now();
+			FileManager.registrarCambio(mensajeLog);
 		}
 			break;
 		case "btnEliminarPoe": {
@@ -623,6 +769,8 @@ public class Controller implements ActionListener{
 			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(),
 					vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(),
 					vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
+			String mensajeLog = "Producto eliminado - " + java.time.LocalDateTime.now();
+			FileManager.registrarCambio(mensajeLog);
 		}
 			break;
 		case "btnEliminarPop": {
@@ -631,6 +779,8 @@ public class Controller implements ActionListener{
 			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(),
 					vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(),
 					vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
+			String mensajeLog = "Producto eliminado - " + java.time.LocalDateTime.now();
+			FileManager.registrarCambio(mensajeLog);
 		}
 			break;
 		case "volverAlInicio": {
@@ -639,13 +789,15 @@ public class Controller implements ActionListener{
 		}
 			break;
 		case "btnAgregarTrabajador": {
-			case "btnAgregarTrabajador": {
 			try {
-
+				
+			
 			String usuario = vf.getVsu().getPanelSignUp().getDatoUsuario().getText();
 			String contraseña = new String(vf.getVsu().getPanelSignUp().getDatoContraseña().getPassword());
 			String contraseñaConfirmacion = new String(vf.getVsu().getPanelSignUp().getDatoContraseñaConfirmacion().getPassword());
 			Image imagen = vf.getVsu().getPanelSignUp().getImagenTrabajador();
+			// Verificar si los campos de texto están vacíos
+
 			try {
 				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
 					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
@@ -658,17 +810,34 @@ public class Controller implements ActionListener{
 			} catch (IOException e2) {
 				e2.printStackTrace();
 			}
+//			System.out.println("Usuario mensaje: " + prop.getProperty("archivosdepropiedades.excepciones.usuario"));
+//			System.out.println("Contraseña mensaje: " + prop.getProperty("archivosdepropiedades.excepciones.contraseña"));
+//			System.out.println("Confirmación mensaje: " + prop.getProperty("archivosdepropiedades.excepciones.contraseña2"));
 			ExceptionChecker.checkStringField(usuario, prop.getProperty("archivosdepropiedades.excepciones.usuario"));
 		    ExceptionChecker.checkStringField(contraseña, prop.getProperty("archivosdepropiedades.excepciones.contraseña"));
 		    ExceptionChecker.checkStringField(contraseñaConfirmacion,prop.getProperty("archivosdepropiedades.excepciones.contraseña2"));
-		    ExceptionChecker.checkPasswordField(contraseña, prop.getProperty("archivosdepropiedades.excepciones.contraseña"));
 
+		    // Validar la contraseña
+		    ExceptionChecker.checkPasswordField(contraseña, prop.getProperty("archivosdepropiedades.excepciones.contraseña"));
+			// Verificar si las contraseñas coinciden
 			if (!contraseña.equals(contraseñaConfirmacion)) {
 				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show2"));
 				return;
 			}
+			if (mf.getTrabajadorDAO().verificarExistenciaUsuario(usuario)) {
+			    JOptionPane.showMessageDialog(null, prop.getProperty("veterinaria.excepcion.usuarioInvalido "), "Error", JOptionPane.ERROR_MESSAGE);
+			    return;
+			}
+
+			// Verificar que la imagen no sea nula
 			ExceptionChecker.checkImageField(imagen,  prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+			
 			mf.getTrabajadorDAO().guardar(new Trabajador(usuario, contraseña, imagen));
+
+	        // Registrar en el log quién hizo el cambio
+	        String mensajeLog = "Nuevo trabajador agregado: " + usuario  + java.time.LocalDateTime.now();
+	        FileManager.registrarCambio(mensajeLog);
+	        
 			JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show4"));
 			vf.getVsu().getPanelSignUp().getDatoUsuario().setText("");
 			vf.getVsu().getPanelSignUp().getDatoContraseña().setText("");
@@ -693,356 +862,495 @@ public class Controller implements ActionListener{
 		}
 			break;
 		case "btnAgregarPhb": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagphb().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPagphb().getDatoMarca().getText();
-			String material = vf.getVpli().getPanelCardLayout().getPagphb().getDatoMaterial().getText();
-			String color = vf.getVpli().getPanelCardLayout().getPagphb().getDatoColor().getText();
-			String zona = vf.getVpli().getPanelCardLayout().getPagphb().getDatoZona().getText();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPagphb().getImagenProducto();
-			// Verificar si los campos de texto están vacíos
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty() || zona.isEmpty()) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagphb().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPagphb().getDatoMarca().getText();
+		        String material = vf.getVpli().getPanelCardLayout().getPagphb().getDatoMaterial().getText();
+		        String color = vf.getVpli().getPanelCardLayout().getPagphb().getDatoColor().getText();
+		        String zona = vf.getVpli().getPanelCardLayout().getPagphb().getDatoZona().getText();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPagphb().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(material, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(color, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(zona, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(material, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(color, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(zona, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoHogarBanioDAO()
-					.guardar(new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona));
-			mf.getProductoHogarBanioDAO().listar(vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoMaterial().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoColor().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphb().getDatoZona().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphb().setImagenProducto(null);
-			JOptionPane.showMessageDialog(null,  prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
 
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoHogarBanioDAO().guardar(
+		            new ProductoHogarBanio(nombre, precio, cantidad, marca, imagen, material, color, zona)
+		        );
+		        String mensajeLog = "Producto agregado - " + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoHogarBanioDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlphb().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPephb().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacphb().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoMaterial().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoColor().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphb().getDatoZona().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphb().setImagenProducto(null);
+
+		        // Mostrar mensaje de éxito
+		        JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnAgregarPhc": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPagphc().getDatoMarca().getText();
-			String material = vf.getVpli().getPanelCardLayout().getPagphc().getDatoMaterial().getText();
-			String color = vf.getVpli().getPanelCardLayout().getPagphc().getDatoColor().getText();
-			String funcionalidad = vf.getVpli().getPanelCardLayout().getPagphc().getDatoFuncionalidad().getText();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPagphc().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || material.isEmpty() || color.isEmpty()
-					|| funcionalidad.isEmpty()) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPagphc().getDatoMarca().getText();
+		        String material = vf.getVpli().getPanelCardLayout().getPagphc().getDatoMaterial().getText();
+		        String color = vf.getVpli().getPanelCardLayout().getPagphc().getDatoColor().getText();
+		        String funcionalidad = vf.getVpli().getPanelCardLayout().getPagphc().getDatoFuncionalidad().getText();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPagphc().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(material, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(color, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(funcionalidad, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(material, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(color, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(funcionalidad, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoHogarCocinaDAO().guardar(
-					new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad));
-			mf.getProductoHogarCocinaDAO().listar(vf.getVpli().getPanelCardLayout().getPlphc().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoMaterial().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoColor().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphc().getDatoFuncionalidad().setText("");
-			vf.getVpli().getPanelCardLayout().getPagphc().setImagenProducto(null);
-			JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoHogarCocinaDAO().guardar(
+		            new ProductoHogarCocina(nombre, precio, cantidad, marca, imagen, material, color, funcionalidad)
+		        );
+		        String mensajeLog = "Producto agregado - " + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoHogarCocinaDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlphc().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPephc().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacphc().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoMaterial().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoColor().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphc().getDatoFuncionalidad().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagphc().setImagenProducto(null);
+
+		        // Mostrar mensaje de éxito
+		        JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnAgregarPoj": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoMarca().getText();
-			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNivelCalidad()
-					.getSelectedItem().toString();
-			Number edadRecomendadaObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoEdadRecomendada()
-					.getValue();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPagpoj().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("")) {
-				JOptionPane.showMessageDialog(null,  prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoMarca().getText();
+		        String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNivelCalidad().getSelectedItem().toString();
+		        Number edadRecomendadaObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoj().getDatoEdadRecomendada().getValue();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPagpoj().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null || edadRecomendadaObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeCalidad, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
-			int edadRecomendada = edadRecomendadaObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeCalidad, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj, edadRecomendadaObj);
 
-			mf.getProductoOcioJugueteDAO().guardar(
-					new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada));
-			mf.getProductoOcioJugueteDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNivelCalidad().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPagpoj().getDatoEdadRecomendada().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpoj().setImagenProducto(null);
-			JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+		        int edadRecomendada = edadRecomendadaObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber(edadRecomendada, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOcioJugueteDAO().guardar(
+		            new ProductoOcioJuguete(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, edadRecomendada)
+		        );
+		        String mensajeLog = "Producto agregado - " + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOcioJugueteDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpoj().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepoj().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpoj().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpoj().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoj().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoj().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpoj().getDatoNivelCalidad().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoj().getDatoEdadRecomendada().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoj().setImagenProducto(null);
+
+		        // Mostrar mensaje de éxito
+		        JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnAgregarPor": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPagpor().getDatoMarca().getText();
-			String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPagpor().getDatoNivelCalidad()
-					.getSelectedItem().toString();
-			String talla = vf.getVpli().getPanelCardLayout().getPagpor().getDatoTalla().getSelectedItem().toString();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPagpor().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeCalidad.equals("") || talla.equals("")) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPagpor().getDatoMarca().getText();
+		        String nivelDeCalidad = vf.getVpli().getPanelCardLayout().getPagpor().getDatoNivelCalidad().getSelectedItem().toString();
+		        String talla = vf.getVpli().getPanelCardLayout().getPagpor().getDatoTalla().getSelectedItem().toString();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPagpor().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeCalidad, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(talla, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeCalidad, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(talla, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoOcioRopaDAO()
-					.guardar(new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla));
-			mf.getProductoOcioRopaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpor().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpor().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpor().getDatoNivelCalidad().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPagpor().getDatoTalla().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPagpor().setImagenProducto(null);
-			JOptionPane.showMessageDialog(null,  prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOcioRopaDAO().guardar(
+		            new ProductoOcioRopa(nombre, precio, cantidad, marca, imagen, nivelDeCalidad, talla)
+		        );
+		        String mensajeLog = "Producto agregado - " + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOcioRopaDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpor().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepor().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpor().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPagpor().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpor().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpor().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpor().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpor().getDatoNivelCalidad().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPagpor().getDatoTalla().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPagpor().setImagenProducto(null);
+
+		        JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnAgregarPoe": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoMarca().getText();
-			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNivelRuido().getSelectedItem()
-					.toString();
-			String consumoEnergetico = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoConsumoEnergetico()
-					.getSelectedItem().toString();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPagpoe().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || consumoEnergetico.equals("")) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoMarca().getText();
+		        String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNivelRuido().getSelectedItem().toString();
+		        String consumoEnergetico = vf.getVpli().getPanelCardLayout().getPagpoe().getDatoConsumoEnergetico().getSelectedItem().toString();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPagpoe().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeRuido, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(consumoEnergetico, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeRuido, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(consumoEnergetico, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoOficinaElectrodomesticoDAO().guardar(new ProductoOficinaElectrodomestico(nombre, precio,
-					cantidad, marca, imagen, nivelDeRuido, consumoEnergetico));
-			mf.getProductoOficinaElectrodomesticoDAO().listar(vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNivelRuido().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPagpoe().getDatoConsumoEnergetico().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPagpoe().setImagenProducto(null);
-			JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOficinaElectrodomesticoDAO().guardar(
+		            new ProductoOficinaElectrodomestico(nombre, precio, cantidad, marca, imagen, nivelDeRuido, consumoEnergetico)
+		        );
+		        String mensajeLog = "Producto agregado - " + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOficinaElectrodomesticoDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpoe().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepoe().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpoe().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpoe().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoe().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoe().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpoe().getDatoNivelRuido().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoe().getDatoConsumoEnergetico().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPagpoe().setImagenProducto(null);
+
+		        JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "btnAgregarPop": {
-			String nombre = vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().getText();
-			Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().getValue();
-			Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().getValue();
-			String marca = vf.getVpli().getPanelCardLayout().getPagpop().getDatoMarca().getText();
-			String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPagpop().getDatoNivelRuido().getSelectedItem()
-					.toString();
-			String funcion = vf.getVpli().getPanelCardLayout().getPagpop().getDatoFuncion().getText();
-			Image imagen = vf.getVpli().getPanelCardLayout().getPagpop().getImagenProducto();
-			try {
-				if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		    try {
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				} else {
-					prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-			
-			// Verificar si los campos de texto están vacíos
-			if (nombre.isEmpty() || marca.isEmpty() || nivelDeRuido.equals("") || funcion.isEmpty()) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
-				return;
-			}
+		        // Obtener valores del formulario
+		        String nombre = vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().getText();
+		        Number precioObj = (Number) vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().getValue();
+		        Number cantidadObj = (Number) vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().getValue();
+		        String marca = vf.getVpli().getPanelCardLayout().getPagpop().getDatoMarca().getText();
+		        String nivelDeRuido = vf.getVpli().getPanelCardLayout().getPagpop().getDatoNivelRuido().getSelectedItem().toString();
+		        String funcion = vf.getVpli().getPanelCardLayout().getPagpop().getDatoFuncion().getText();
+		        Image imagen = vf.getVpli().getPanelCardLayout().getPagpop().getImagenProducto();
 
-			// Verificar si los valores de los JSpinner son nulos
-			if (precioObj == null || cantidadObj == null) {
-				JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show5"));
-				return;
-			}
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(nombre, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(marca, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(nivelDeRuido, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
+		        ExceptionChecker.checkStringField(funcion, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show1"));
 
-			double precio = precioObj.doubleValue();
-			int cantidad = cantidadObj.intValue();
+		        // **Validar que los campos de texto no contengan números**
+		        ExceptionChecker.checkNumberInString(nombre, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(marca, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(nivelDeRuido, prop.getProperty("archivosdepropiedades.excepciones.producto"));
+		        ExceptionChecker.checkNumberInString(funcion, prop.getProperty("archivosdepropiedades.excepciones.producto"));
 
-			// Verificar que la imagen no sea nula
-			if (imagen == null) {
-				JOptionPane.showMessageDialog(null,  prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
-				return;
-			}
+		        // Validaciones numéricas
+		        ExceptionChecker.checkNumberField(precioObj, cantidadObj);
 
-			mf.getProductoOficinaPapeleriaDAO().guardar(
-					new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion));
-			mf.getProductoOficinaPapeleriaDAO().listar(vf.getVpli().getPanelCardLayout().getPlpop().getTabla(),
-					vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(),
-					vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes());
-			vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().setValue(0);
-			vf.getVpli().getPanelCardLayout().getPagpop().getDatoMarca().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpop().getDatoNivelRuido().setSelectedIndex(0);
-			vf.getVpli().getPanelCardLayout().getPagpop().getDatoFuncion().setText("");
-			vf.getVpli().getPanelCardLayout().getPagpop().setImagenProducto(null);
-			JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+		        double precio = precioObj.doubleValue();
+		        int cantidad = cantidadObj.intValue();
+
+		        ExceptionChecker.checkNegativeNumber(cantidad, prop.getProperty("archivosdepropiedades.excepciones.price"));
+		        ExceptionChecker.checkNegativeNumber((int) precio, prop.getProperty("archivosdepropiedades.excepciones.price"));
+
+		        ExceptionChecker.checkImageField(imagen, prop.getProperty("archivosdepropiedades.panelagregartrabajador.show3"));
+
+		        // Guardar producto en la base de datos
+		        mf.getProductoOficinaPapeleriaDAO().guardar(
+		            new ProductoOficinaPapeleria(nombre, precio, cantidad, marca, imagen, nivelDeRuido, funcion)
+		        );
+		        String mensajeLog = "Producto agregado - " + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        mf.getProductoOficinaPapeleriaDAO().listar(
+		            vf.getVpli().getPanelCardLayout().getPlpop().getTabla(),
+		            vf.getVpli().getPanelCardLayout().getPepop().getProductosExistentes(),
+		            vf.getVpli().getPanelCardLayout().getPacpop().getProductosExistentes()
+		        );
+
+		        // Limpiar los campos del formulario
+		        vf.getVpli().getPanelCardLayout().getPagpop().getDatoNombre().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpop().getDatoPrecio().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpop().getDatoCantidad().setValue(0);
+		        vf.getVpli().getPanelCardLayout().getPagpop().getDatoMarca().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpop().getDatoNivelRuido().setSelectedIndex(0);
+		        vf.getVpli().getPanelCardLayout().getPagpop().getDatoFuncion().setText("");
+		        vf.getVpli().getPanelCardLayout().getPagpop().setImagenProducto(null);
+
+		        JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.panelagregarproducto.show6"));
+
+		    } catch (EmptyStringFieldException | EmptyNumberFieldException | EmptyImageFieldException | NegativeNumberException | NumberInStringException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
 		case "btnRegistrarse": {
 			vf.getVsu().setVisible(true);
 		}
@@ -1752,33 +2060,52 @@ public class Controller implements ActionListener{
 		}
 			break;
 		case "btnIngresar": {
-			String usuario = vf.getVli().getPli().getDatoUsuario().getText();
-			String password = vf.getVli().getPli().getDatoContraseña().getText();
-			if (mf.getTrabajadorDAO().verificarExistencia(usuario, password)) {
-				vf.getVpli().setVisible(true);
-				vf.getVli().setVisible(false);
-			} else {
+		    try {
+		        // Obtener valores del formulario
+		        String usuario = vf.getVli().getPli().getDatoUsuario().getText();
+		        String password = vf.getVli().getPli().getDatoContraseña().getText();
 
-				try {
-					if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
-						prop.load(new FileInputStream(
-								new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		        // Cargar propiedades de idioma
+		        try {
+		            if (vf.getVli().getPli().getCheckEspañol().isSelected()) {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosespañol.properties")));
+		            } else {
+		                prop.load(new FileInputStream(new File("src/co/edu/unbosque/controller/textosingles.properties")));
+		            }
+		        } catch (FileNotFoundException eF) {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        } catch (IOException eIO) {
+		            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de propiedades.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+		        String mensajeLog = "Ingresó - " +usuario + java.time.LocalDateTime.now();
+				FileManager.registrarCambio(mensajeLog);
+		        // Validaciones con ExceptionChecker
+		        ExceptionChecker.checkStringField(usuario, prop.getProperty("archivosdepropiedades.excepciones.usuario"));
+		        ExceptionChecker.checkStringField(password, prop.getProperty("archivosdepropiedades.excepciones.usuario"));
 
-					} else {
-						prop.load(new FileInputStream(
-								new File("src/co/edu/unbosque/controller/textosingles.properties")));
-					}
-				} catch (FileNotFoundException e2) {
-					e2.printStackTrace();
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null,
-						prop.getProperty("archivosdepropiedades.mensejeusuarioincorrecto.show"));
-			}
+		        // Validar que el usuario y contraseña no contengan espacios
+		        ExceptionChecker.checkWhitespace(usuario, prop.getProperty("archivosdepropiedades.excepciones.espacios"));
+		        ExceptionChecker.checkWhitespace(password, prop.getProperty("archivosdepropiedades.excepciones.espacios"));
 
+		        // Validar credenciales
+		        if (mf.getTrabajadorDAO().verificarExistencia(usuario, password)) {
+		            vf.getVpli().setVisible(true);
+		            vf.getVli().setVisible(false);
+		            JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.menu.bienvenido"));
+		        } else {
+		            JOptionPane.showMessageDialog(null, prop.getProperty("archivosdepropiedades.mensejeusuarioincorrecto.show"));
+		        }
+
+		    } catch (EmptyStringFieldException | WhitespaceFieldException eMe) {
+		        JOptionPane.showMessageDialog(null, eMe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception eAll) {
+		        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		}
-			break;
+		break;
+
 		case "actualizarPhb": {
 			vf.getVpli().getPanelCardLayout().mostrarPanel("pacphb");
 		}
